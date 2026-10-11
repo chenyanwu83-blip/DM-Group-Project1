@@ -1,0 +1,103 @@
+\documentclass[a4paper,12pt]{article}
+
+% Packages
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{geometry}
+\usepackage{fancyhdr}
+\usepackage{setspace}
+\usepackage{titlesec}  % For title formatting
+\usepackage{booktabs}
+\usepackage[hidelinks]{hyperref}
+\usepackage{float}
+
+\geometry{margin=1in}
+\setstretch{1.5}
+
+% Header and Footer
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{Comparative Data Mining Group Project}
+\fancyhead[R]{\thepage}
+
+% 标题格式
+\titleformat{\section}{\normalfont\Large\bfseries}{\thesection}{1em}{}
+
+% 封面页
+\title{
+    \vspace{2cm} % 保持图片间距不变
+    \centering
+    \includegraphics[width=1\textwidth]{LU.jpg} \\ % 让图片居中，并调整大小
+    \vspace{1cm} % 保持图片间距不变
+    \textbf{\Huge Comparative Data Mining on German Credit and Thyroid Disease} \\
+    \vspace{1cm} % 保持图片间距不变
+    \large CDS535 - Data Mining \\
+    \vspace{0.5cm} % 保持图片间距不变
+    \large 2026
+}
+\author{
+    \begin{minipage}{\textwidth}
+        \centering
+        Team name: to be confirmed \\
+        Member A (student ID to be confirmed) \\
+        Member B (student ID to be confirmed) \\
+        Member C (student ID to be confirmed) \\
+        Member D (student ID to be confirmed) \\
+        Member E (student ID to be confirmed)
+    \end{minipage} \\[25pt]
+    \begin{minipage}{\textwidth}
+        \centering
+        \textbf{GitHub:} \url{https://github.com/chenyanwu83-blip/DM-Group-Project1}
+    \end{minipage}
+}
+\date{}
+
+
+
+
+\begin{document}
+
+% Title Page
+\maketitle
+\thispagestyle{empty}
+\newpage
+\thispagestyle{empty}
+\begin{abstract}
+% TODO(E): Replace with a 150--200 word abstract after D supplies verified results.
+\noindent This report compares data mining workflows on the UCI Statlog German Credit Data and the sick subset of the UCI Thyroid Disease collection. The final abstract will summarize the methods and verified findings after the experiments are complete.
+\newline
+
+\noindent \textbf{Keywords}: classification, class imbalance, association rules, UCI datasets
+\end{abstract}
+\newpage
+\thispagestyle{empty}
+\tableofcontents
+\thispagestyle{empty}
+\newpage
+
+
+
+
+
+% Table of Contents
+% Start page numbering from the Table of Contents
+\setcounter{page}{1}  % Start counting from 1
+
+\input{sections/sec1_requirement}
+\input{sections/sec2_introduction}
+\input{sections/sec3a_creditg}
+\input{sections/sec3b_sick}
+\input{sections/sec4_algorithms}
+\input{sections/sec5_training}
+\input{sections/sec6_results}
+\input{sections/sec6x_unsupervised}
+\input{sections/sec7_conclusion}
+
+% Bibliography (if required)
+\bibliographystyle{plain}
+\bibliography{references}
+
+\clearpage
+\input{sections/sec8_contribution}
+
+\end{document}
