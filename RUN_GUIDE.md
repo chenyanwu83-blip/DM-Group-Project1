@@ -29,6 +29,7 @@ source ~/venvs/dm-group/bin/activate
 ~/venvs/dm-group/bin/python PreExperiment.py      # 决策树 + 10 折 CV 基线
 ~/venvs/dm-group/bin/python src/a1_creditg_source.py  # credit-g 来源记录 + SHA-256（需联网核验）
 ~/venvs/dm-group/bin/python src/a2a3_creditg_schema_stats.py  # A2 字段字典 + A3 质量统计
+~/venvs/dm-group/bin/python src/a4_creditg_eda.py      # A4 三张探索图 + 图注（figures/）
 ```
 
 ## 基线数字（2026-10-11 本机复跑，供双机一致性核对）
@@ -42,6 +43,8 @@ source ~/venvs/dm-group/bin/activate
 - data/metadata/credit-g_source.md — A1 来源记录（SHA-256 + BibTeX）
 - results/credit-g_schema.xlsx — A2 字段字典（21 列）+ 数值五数概括
 - results/stats/credit-g_stats.md — A3 质量统计（shape/类别分布/缺失/重复，供 D 核对）
+- figures/fig1~fig3 + credit-g_fig_captions.md — A4 探索图与图注（数字自动生成）
+- configs/spec_creditg.md — A5 预处理规格单 v1.0（2026-10-12 冻结）
 
 ## 常见问题
 - **pip/ensurepip 报 `invalid literal for int()` 或 mac_ver 空**：本机 Homebrew Python 在 macOS 26 上解析版本号失败，改用 uv（它会自动下载可用的托管 Python）。
