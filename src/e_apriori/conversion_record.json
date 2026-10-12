@@ -1,0 +1,150 @@
+{
+  "status": "e2_final_under_A_clarification_group_spec_addendum_pending",
+  "input_path": "data/raw/credit-g.csv",
+  "input_sha256": "d0baf9fddd41e5a6af0ba84e6037a415f11384dd40c494186563a2d3b68f5c25",
+  "spec_path": "src/e_apriori/discretization_spec.json",
+  "spec_sha256": "366c4258b0c32b5f122fd89be086f15d49b860c708c7da4775519a7c3b292e3b",
+  "a5_commit": "64a17e4ce68a892ec7a9256afb3e337f722258cf",
+  "a5_spec_sha256": "561d54508918b09973867d487b878fe57bc5f0bb56cf49f011d6422bd8b48ccd",
+  "a5_clarification_sha256": "39d7a00130046f577cc298ee1813200e9c7709019ddb4084d7ffba21718f583a",
+  "sklearn_version": "1.9.1",
+  "rows": 1000,
+  "source_columns": [
+    "checking_status",
+    "duration",
+    "credit_history",
+    "purpose",
+    "credit_amount",
+    "savings_status",
+    "employment",
+    "installment_commitment",
+    "personal_status",
+    "other_parties",
+    "residence_since",
+    "property_magnitude",
+    "age",
+    "other_payment_plans",
+    "housing",
+    "existing_credits",
+    "job",
+    "num_dependents",
+    "own_telephone",
+    "foreign_worker",
+    "class"
+  ],
+  "numeric_columns": [
+    "duration",
+    "credit_amount",
+    "installment_commitment",
+    "residence_since",
+    "age",
+    "existing_credits",
+    "num_dependents"
+  ],
+  "transaction_items": 85,
+  "class_counts": {
+    "good": 700,
+    "bad": 300
+  },
+  "binning": {
+    "duration": {
+      "method": "sklearn.preprocessing.KBinsDiscretizer",
+      "requested_bins": 5,
+      "actual_bins": 5,
+      "edges": [
+        4.0,
+        12.0,
+        15.0,
+        24.0,
+        30.0,
+        72.0
+      ],
+      "counts": {
+        "q1_of_5": 180,
+        "q2_of_5": 187,
+        "q3_of_5": 219,
+        "q4_of_5": 201,
+        "q5_of_5": 213
+      }
+    },
+    "credit_amount": {
+      "method": "sklearn.preprocessing.KBinsDiscretizer",
+      "requested_bins": 5,
+      "actual_bins": 5,
+      "edges": [
+        250.0,
+        1262.0,
+        1906.5,
+        2853.5,
+        4726.0,
+        18424.0
+      ],
+      "counts": {
+        "q1_of_5": 198,
+        "q2_of_5": 202,
+        "q3_of_5": 200,
+        "q4_of_5": 200,
+        "q5_of_5": 200
+      }
+    },
+    "age": {
+      "method": "sklearn.preprocessing.KBinsDiscretizer",
+      "requested_bins": 5,
+      "actual_bins": 5,
+      "edges": [
+        19.0,
+        26.0,
+        30.0,
+        36.0,
+        45.0,
+        75.0
+      ],
+      "counts": {
+        "q1_of_5": 190,
+        "q2_of_5": 181,
+        "q3_of_5": 217,
+        "q4_of_5": 211,
+        "q5_of_5": 201
+      }
+    }
+  },
+  "integer_category_columns": [
+    "installment_commitment",
+    "residence_since",
+    "existing_credits",
+    "num_dependents"
+  ],
+  "integer_category_policy": "A clarified: retain original discrete levels as column=value Apriori items; do not bin or exclude",
+  "integer_category_counts": {
+    "installment_commitment": {
+      "1": 136,
+      "2": 231,
+      "3": 157,
+      "4": 476
+    },
+    "residence_since": {
+      "1": 130,
+      "2": 308,
+      "3": 149,
+      "4": 413
+    },
+    "existing_credits": {
+      "1": 633,
+      "2": 333,
+      "3": 28,
+      "4": 6
+    },
+    "num_dependents": {
+      "1": 845,
+      "2": 155
+    }
+  },
+  "true_items_per_row_min": 21,
+  "true_items_per_row_max": 21,
+  "discretized_path": "src/e_apriori/credit_g_discretized.csv",
+  "discretized_sha256": "c4b88faef799110700ce6155c5d6dbd9c06c5af5ad9c8d5dbc8cd169ace9b2a5",
+  "output_path": "src/e_apriori/credit_g_transactions.csv",
+  "output_sha256": "8a067ddcba7c3885aba2883368ff69d1b04a27af83a473b67a510ab23fb38747",
+  "note": "One row per record; each original column contributes exactly one True item.",
+  "publication_note": "Path fields were normalized to repository-relative paths for public sharing; numerical results and SHA-256 hashes are unchanged. The status records the state when the data outputs were generated; PR #2 is now merged."
+}

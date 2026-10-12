@@ -1,0 +1,25 @@
+{
+  "status": "e2_final_under_A_clarification_group_spec_addendum_pending",
+  "source_dataset": "DM-Group-Project1/data/raw/credit-g.csv (A1-verified OpenML credit-g variant; SHA-256 d0baf9fddd41e5a6af0ba84e6037a415f11384dd40c494186563a2d3b68f5c25)",
+  "source_sha256": "d0baf9fddd41e5a6af0ba84e6037a415f11384dd40c494186563a2d3b68f5c25",
+  "a5_spec_file": "a5_source_spec_creditg.md",
+  "a5_spec_sha256": "561d54508918b09973867d487b878fe57bc5f0bb56cf49f011d6422bd8b48ccd",
+  "a5_commit": "64a17e4ce68a892ec7a9256afb3e337f722258cf",
+  "a5_clarification_file": "a5_four_fields_clarification.md",
+  "a5_clarification_sha256": "39d7a00130046f577cc298ee1813200e9c7709019ddb4084d7ffba21718f583a",
+  "class_column": "class",
+  "positive_class": "bad",
+  "discretizer": "sklearn.preprocessing.KBinsDiscretizer(n_bins=5, encode='ordinal', strategy='quantile')",
+  "quantile_bins": {
+    "duration": 5,
+    "credit_amount": 5,
+    "age": 5
+  },
+  "integer_category_columns": [
+    "installment_commitment",
+    "residence_since",
+    "existing_credits",
+    "num_dependents"
+  ],
+  "integer_category_policy": "A clarified: retain original discrete levels as column=value Apriori items; do not bin or exclude"
+}
