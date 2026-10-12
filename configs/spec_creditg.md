@@ -50,3 +50,8 @@
 - **问题**：OneHotEncoder 对 Logistic 是否必要（RQ4 的 credit-g 侧证据）
 - **设置**：`LogisticRegression(max_iter=1000)` × {编码=② OneHot vs ③ Ordinal} × 分层 10 折 CV，`scoring=['accuracy','f1','roc_auc']`（pos_label='bad'，其余超参同上表）
 - **结论**：（待跑，回填至本节 + results/a6_onehot_comparison.csv）
+
+
+## 附注：§1 ④ Apriori 数字档位列澄清（2026-10-12）
+
+`installment_commitment`、`residence_since`、`existing_credits`、`num_dependents` 保留原有整数档位，按 `column=value` 生成交易项（例如 `installment_commitment=4`）；不再分箱，也不排除。低支持度档位交由 Apriori 的 `min_support` 筛除。此澄清不改变 §1 ④ 对 `duration`、`credit_amount`、`age` 的五箱等频离散化参数。
