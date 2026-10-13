@@ -1,0 +1,46 @@
+{
+  "credit-g": {
+    "file": "data/raw/credit-g.csv",
+    "sha256": "d0baf9fddd41e5a6af0ba84e6037a415f11384dd40c494186563a2d3b68f5c25",
+    "target": "class",
+    "positive": "bad",
+    "negative": "good",
+    "seed": 42,
+    "test_size": 0.3,
+    "n_rows": 1000,
+    "n_train": 700,
+    "n_test": 300,
+    "test_label_counts": {
+      "good": 210,
+      "bad": 90
+    },
+    "index_type": "zero-based original CSV row position, excluding header",
+    "index_files": [
+      "train_idx_creditg.csv",
+      "holdout_idx_creditg.csv",
+      "cv_folds_credit-g.csv"
+    ]
+  },
+  "sick": {
+    "file": "data/raw/sick.csv",
+    "sha256": "3cc14348968e47c2e1e52ad350edf6b0b96b0578c27be9b29d10fe21740854ab",
+    "target": "Class",
+    "positive": "sick",
+    "negative": "negative",
+    "seed": 42,
+    "test_size": 0.3,
+    "n_rows": 3772,
+    "n_train": 2640,
+    "n_test": 1132,
+    "test_label_counts": {
+      "negative": 1063,
+      "sick": 69
+    },
+    "index_type": "zero-based original CSV row position, excluding header",
+    "index_files": [
+      "train_idx_sick.csv",
+      "holdout_idx_sick.csv",
+      "cv_folds_sick.csv"
+    ]
+  }
+}
