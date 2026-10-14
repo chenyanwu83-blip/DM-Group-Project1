@@ -1,0 +1,2 @@
+config_id,run_id,dataset,model,strategy,protocol,fold_id,seed,pos_label,neg_label,data_sha256,accuracy,precision,recall,f1,auc,kappa,balanced_accuracy,macro_f1,cost,n_eval,TN,FP,FN,TP,precision_undefined,recall_undefined,runtime_sec,notes
+creditg_zero_ref_v1,run1,credit-g,ZeroR,plain,holdout,1,42,bad,good,d0baf9fddd41e5a6af0ba84e6037a415f11384dd40c494186563a2d3b68f5c25,0.7,0.0,0.0,0.0,0.5,0.0,0.5,0.4117647058823529,1.5,300,210,0,90,0,True,False,0.0005555000097956508,Precision denominator is zero; reported as 0.
