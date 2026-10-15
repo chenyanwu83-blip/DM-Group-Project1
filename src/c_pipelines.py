@@ -69,15 +69,8 @@ def make_pre(short, linear=True):
                               ("num", _pipe(num_steps), num)])
 
 
-def build_pipe(short, model_key, strategy="plain"):
-    """组装: 预处理 → (可选 SMOTE) → 分类器。
-
-    strategy:
-      plain    无附加(基线)
-      smote    Pipeline 内 SMOTE(random_state=42), 仅训练折执行(imblearn 保证)
-      cost     class_weight 用冻结规格原键(credit-g 5:1 / sick 等代价对照)
-      threshold 不在此拼装 —— 需"内层5折OOF选τ"的包装器, 见 C2 回执/指南第六节, C4 验证后启用
-    """
+def _assemble(short, model_key, strategy):
+    """strategy ∈ {plain, smote, cost} → imblearn Pipeline。"""
     m, meta = MODELS[model_key], DATASETS[short]
     clf = m["cls"](**m["kw"])
     if strategy == "cost":
@@ -87,3 +80,23 @@ def build_pipe(short, model_key, strategy="plain"):
         steps.append(("smote", SMOTE(random_state=SEED)))
     steps.append(("clf", clf))
     return Pipeline(steps)
+
+
+def build_pipe(short, model_key, strategy="plain"):
+    """组装统一入口(run_experiment 的工厂每折调用一次)。
+
+    strategy:
+      plain     无附加(基线)
+      smote     Pipeline 内 SMOTE(random_state=42), 仅训练折执行(imblearn 保证)
+      cost      class_weight 用冻结规格原键(credit-g 5:1 / sick 等代价对照)
+      threshold C4: 返回 ThresholdClassifier 包装器 —— 内含整条 plain 子流水线,
+                内层 5 折 OOF 概率选 τ(0.05–0.95 步 0.05, max-F1) → 锁定
+                → 全训练折重拟合 → 按 τ 判; τ 不接触外层验证折(D1 红线)
+    """
+    if strategy == "threshold":
+        meta = DATASETS[short]
+        from src.c4_threshold import ThresholdClassifier   # 延迟导入避免环
+        return ThresholdClassifier(
+            make_base=lambda: _assemble(short, model_key, "plain"),
+            pos_label=meta["pos_label"], neg_label=meta["neg_label"], seed=SEED)
+    return _assemble(short, model_key, strategy)

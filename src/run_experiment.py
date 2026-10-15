@@ -2,7 +2,8 @@
 """C3: plain 基线矩阵统一实验入口(D2 接口版)。
 
 用法(仓库根目录):
-    python -m src.run_experiment --baseline                 # C3 全量: 8配置(4模型×2数据集)×2协议 + ZeroR 参照
+    python -m src.run_experiment --baseline                 # C3 全量: plain 8配置(4模型×2数据集)×2协议 + ZeroR 参照
+    python -m src.run_experiment --matrix --strategy threshold  # C4 全量: threshold 策略 8配置×2协议
     python -m src.run_experiment --dataset creditg --model lr --protocol cv10   # 单配置冒烟
     python -m src.run_experiment --zero                    # 只跑 ZeroR 参照
 
@@ -11,7 +12,7 @@
     - 指标一律调 src/evaluate.py 的 compute_metrics/aggregate_folds, 不自写公式;
     - 输出 results/{config_id}_{run_id}_folds/_summary.csv (cv10, D2 原文命名);
       holdout 同名加 _holdout 中缀(config_id 不含协议, 必须以此区分, 防覆盖);
-    - 列严格等于模板(FOLD_COLUMNS 28 列 / template.csv 46 列), 模板永远空表头;
+    - 列严格等于模板(fold_template 29 列 / template 49 列), 模板永远空表头;
     - 预测/正类概率/行位留档 results/preds/ 供 D3 核查;
     - 一个 records 列表只装同一 config × dataset × protocol, 绝不混装(D2 明令)。
 """
@@ -100,6 +101,9 @@ def run_cv10(short, make_estimator, config_id, model_display, strategy="plain"):
         row = _meta_row(rec, config_id, model_display, strategy,
                         "cv10", fold_id, sha, runtime)
         row["dataset"] = meta["dataset_d"]
+        if hasattr(est, "best_tau_"):    # C4: 锁定τ与内层OOF F1记入 notes(28列内唯一自由文本, 待D确认)
+            row["notes"] = f"tau={est.best_tau_:.2f};oof_f1={est.best_oof_f1_:.4f}" + \
+                (f";{row['notes']}" if row.get("notes") else "")
         fold_rows.append({key: row.get(key) for key in FOLD_COLUMNS})
         j = list(est.classes_).index(meta["pos_label"])
         pred_parts.append(pd.DataFrame({
@@ -133,6 +137,9 @@ def run_holdout(short, make_estimator, config_id, model_display, strategy="plain
                           dataset=meta["dataset_d"], classes=est.classes_)
     row = _meta_row(rec, config_id, model_display, strategy, "holdout", 1, sha, runtime)
     row["dataset"] = meta["dataset_d"]
+    if hasattr(est, "best_tau_"):        # C4: 同 cv10, 锁定τ留档 notes
+        row["notes"] = f"tau={est.best_tau_:.2f};oof_f1={est.best_oof_f1_:.4f}" + \
+            (f";{row['notes']}" if row.get("notes") else "")
     summary = aggregate_folds([rec], config_id=config_id, dataset=meta["dataset_d"],
                               model=model_display, strategy=strategy, protocol="holdout",
                               seed=SEED, run_id=RUN_ID, data_sha256=sha,
@@ -164,10 +171,13 @@ def main():
     ap = argparse.ArgumentParser(description="C3 plain baseline runner (D2 interface)")
     ap.add_argument("--baseline", action="store_true",
                     help="C3 全量: plain 8配置×{cv10,holdout} + ZeroR×2")
+    ap.add_argument("--matrix", action="store_true",
+                    help="C4 策略全量矩阵: 8配置×{cv10,holdout}, 策略由 --strategy 决定")
     ap.add_argument("--zero", action="store_true", help="只跑 ZeroR 参照")
     ap.add_argument("--dataset", choices=list(DATASETS))
     ap.add_argument("--model", choices=[k.lower() for k in MODELS])
-    ap.add_argument("--strategy", choices=["plain", "smote", "cost"], default="plain")
+    ap.add_argument("--strategy", choices=["plain", "smote", "cost", "threshold"],
+                    default="plain")
     ap.add_argument("--protocol", choices=["cv10", "holdout", "both"], default="both")
     args = ap.parse_args()
     if args.baseline:
@@ -176,6 +186,10 @@ def main():
                 one_config(short, key)
         for short in DATASETS:
             zero_r(short)
+    elif args.matrix:
+        for short in DATASETS:
+            for key in MODELS:
+                one_config(short, key, strategy=args.strategy)
     elif args.zero:
         for short in DATASETS:
             zero_r(short)
