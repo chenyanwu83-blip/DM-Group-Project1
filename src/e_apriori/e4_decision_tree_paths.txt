@@ -1,0 +1,50 @@
+credit-g plain holdout model, trained on the locked 700 training rows.
+Input SHA-256: d0baf9fddd41e5a6af0ba84e6037a415f11384dd40c494186563a2d3b68f5c25
+Category numbers below are OrdinalEncoder codes, not ordered meanings.
+
+DT: 300/300 saved holdout labels and probabilities matched.
+Decision tree: 6 levels, 13 leaves.
+Classes: ['bad', 'good']
+|--- cat__checking_status <= 1.50
+|   |--- num__duration <= 11.50
+|   |   |--- cat__purpose <= 4.50
+|   |   |   |--- weights: [11.00, 25.00] class: good
+|   |   |--- cat__purpose >  4.50
+|   |   |   |--- weights: [0.00, 24.00] class: good
+|   |--- num__duration >  11.50
+|   |   |--- num__duration <= 31.50
+|   |   |   |--- num__credit_amount <= 1381.50
+|   |   |   |   |--- num__duration <= 22.50
+|   |   |   |   |   |--- cat__other_parties <= 1.50
+|   |   |   |   |   |   |--- weights: [0.00, 8.00] class: good
+|   |   |   |   |   |--- cat__other_parties >  1.50
+|   |   |   |   |   |   |--- weights: [32.00, 18.00] class: bad
+|   |   |   |   |--- num__duration >  22.50
+|   |   |   |   |   |--- weights: [13.00, 0.00] class: bad
+|   |   |   |--- num__credit_amount >  1381.50
+|   |   |   |   |--- weights: [60.00, 110.00] class: good
+|   |   |--- num__duration >  31.50
+|   |   |   |--- cat__employment <= 3.50
+|   |   |   |   |--- weights: [51.00, 23.00] class: bad
+|   |   |   |--- cat__employment >  3.50
+|   |   |   |   |--- weights: [0.00, 5.00] class: good
+|--- cat__checking_status >  1.50
+|   |--- cat__purpose <= 4.50
+|   |   |--- num__credit_amount <= 4158.00
+|   |   |   |--- weights: [19.00, 115.00] class: good
+|   |   |--- num__credit_amount >  4158.00
+|   |   |   |--- weights: [14.00, 16.00] class: good
+|   |--- cat__purpose >  4.50
+|   |   |--- cat__checking_status <= 2.50
+|   |   |   |--- weights: [5.00, 11.00] class: good
+|   |   |--- cat__checking_status >  2.50
+|   |   |   |--- num__age <= 23.50
+|   |   |   |   |--- weights: [3.00, 3.00] class: bad
+|   |   |   |--- num__age >  23.50
+|   |   |   |   |--- weights: [2.00, 132.00] class: good
+
+checking_status codes: 0=0<=X<200, 1=<0, 2=>=200, 3=no checking
+purpose codes: 0=business, 1=domestic appliance, 2=education, 3=furniture/equipment, 4=new car, 5=other, 6=radio/tv, 7=repairs, 8=retraining, 9=used car
+employment codes: 0=1<=X<4, 1=4<=X<7, 2=<1, 3=>=7, 4=unemployed
+other_parties codes: 0=co applicant, 1=guarantor, 2=none
+RF: 300/300 saved holdout labels and probabilities matched.
