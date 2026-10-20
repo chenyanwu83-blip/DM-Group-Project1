@@ -1,0 +1,2 @@
+config_id,run_id,dataset,model,strategy,protocol,fold_id,seed,pos_label,neg_label,data_sha256,accuracy,precision,recall,f1,auc,kappa,balanced_accuracy,macro_f1,cost,n_eval,TN,FP,FN,TP,precision_undefined,recall_undefined,runtime_sec,notes
+creditg_lr_cost_v1,run1,credit-g,Logistic,cost,holdout,1,42,bad,good,d0baf9fddd41e5a6af0ba84e6037a415f11384dd40c494186563a2d3b68f5c25,0.6433333333333333,0.4484848484848485,0.8222222222222222,0.5803921568627451,0.7696825396825397,0.3141025641025641,0.6944444444444444,0.6351236146632566,0.57,300,119,91,16,74,False,False,0.011991791892796755,

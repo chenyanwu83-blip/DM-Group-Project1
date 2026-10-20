@@ -1,0 +1,31 @@
+column,n_missing,pct_missing
+TBG,3772,100.0
+T3,769,20.39
+T4U,387,10.26
+FTI,385,10.21
+TSH,369,9.78
+TT4,231,6.12
+sex,150,3.98
+age,1,0.03
+referral source,0,0.0
+TBG_measured,0,0.0
+FTI_measured,0,0.0
+T4U_measured,0,0.0
+TT4_measured,0,0.0
+T3_measured,0,0.0
+TSH_measured,0,0.0
+psych,0,0.0
+hypopituitary,0,0.0
+tumor,0,0.0
+goitre,0,0.0
+lithium,0,0.0
+query hyperthyroid,0,0.0
+query hypothyroid,0,0.0
+I131 treatment,0,0.0
+thyroid surgery,0,0.0
+pregnant,0,0.0
+sick,0,0.0
+on antithyroid medication,0,0.0
+query on thyroxine,0,0.0
+on thyroxine,0,0.0
+Class,0,0.0
