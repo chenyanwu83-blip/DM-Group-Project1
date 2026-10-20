@@ -1,0 +1,2 @@
+config_id,run_id,dataset,model,strategy,protocol,fold_id,seed,pos_label,neg_label,data_sha256,accuracy,precision,recall,f1,auc,kappa,balanced_accuracy,macro_f1,cost,n_eval,TN,FP,FN,TP,precision_undefined,recall_undefined,runtime_sec,notes
+sick_zero_ref_v1,run1,sick,ZeroR,plain,holdout,1,42,sick,negative,3cc14348968e47c2e1e52ad350edf6b0b96b0578c27be9b29d10fe21740854ab,0.9390459363957597,0.0,0.0,0.0,0.5,0.0,0.5,0.48428246013667425,,1132,1063,0,69,0,True,False,0.001309209008468315,Precision denominator is zero; reported as 0.

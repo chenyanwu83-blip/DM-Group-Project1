@@ -1,0 +1,2 @@
+config_id,run_id,dataset,model,strategy,protocol,fold_id,seed,pos_label,neg_label,data_sha256,accuracy,precision,recall,f1,auc,kappa,balanced_accuracy,macro_f1,cost,n_eval,TN,FP,FN,TP,precision_undefined,recall_undefined,runtime_sec,notes
+sick_rf_plain_v1,run1,sick,RandomForest,plain,holdout,1,42,sick,negative,3cc14348968e47c2e1e52ad350edf6b0b96b0578c27be9b29d10fe21740854ab,0.9858657243816255,0.9076923076923077,0.855072463768116,0.8805970149253731,0.9982071523034344,0.873092391989798,0.9247140305670307,0.9365426389180856,,1132,1057,6,10,59,False,False,0.10024791699834168,

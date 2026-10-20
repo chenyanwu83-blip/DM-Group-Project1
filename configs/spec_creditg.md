@@ -45,11 +45,19 @@
 | cost | `class_weight={'bad':5,'good':1}` | **官方 5:1 代价矩阵**（数据集随附：FN 误判 bad→good 的代价是 FP 的 5 倍）；credit-g 专属，RQ3 主证据 |
 | threshold | 训练折内 5 折 OOF 概率选 τ（0.05–0.95，步长 0.05，最大化 F1，pos_label='bad'）→ 锁定 → 全训练折重拟合 → 按 τ 判 | 阈值在测试前锁定，防泄漏 |
 
-## 4. A6 对照实验设计（结果今日回填）
+## 4. A6 对照实验设计（2026-10-17 已跑，结果回填）
 
 - **问题**：OneHotEncoder 对 Logistic 是否必要（RQ4 的 credit-g 侧证据）
-- **设置**：`LogisticRegression(max_iter=1000)` × {编码=② OneHot vs ③ Ordinal} × 分层 10 折 CV，`scoring=['accuracy','f1','roc_auc']`（pos_label='bad'，其余超参同上表）
-- **结论**：（待跑，回填至本节 + results/a6_onehot_comparison.csv）
+- **设置**：`LogisticRegression(max_iter=1000)` × {编码=② OneHot vs ③ Ordinal} × 分层 10 折 CV，`scoring=['accuracy','f1','roc_auc']`（pos_label='bad'，其余超参同上表）；另加补充归因组"序数+标准化"（非冻结配置，仅拆分编码/缩放效应）
+- **结果**（results/a6_onehot_comparison.csv，折级明细 a6_onehot_folds.csv，结论段 stats/a6_onehot_conclusion.md）：
+
+| 指标 | ② OneHot+Std（61 维） | ③ Ordinal 原样（20 维） | Δ(②−③) | 配对 t 检验 p |
+|---|---|---|---|---|
+| Accuracy | 0.7520±0.0290 | 0.7180±0.0496 | +0.0340 | 0.101 |
+| F1(bad) | 0.5307±0.0627 | 0.4057±0.1252 | **+0.1250** | **0.021** |
+| ROC-AUC | 0.7846±0.0412 | 0.7379±0.0556 | +0.0467 | **0.008** |
+
+- **结论**：One-hot 三项指标全面占优（F1/AUC 显著，p<0.05）。补充组（序数+标准化，F1=0.4150）仍贴近序数组而远离独热组 → 差距主因是**编码方式**（序数编码制造虚假顺序）而非缩放；缩放仅解决收敛（序数组 n_iter=1000 未收敛 vs 独热组 55 / 补充组 41）。②③分支维持冻结，A7 主矩阵照此执行。切分经自检与 D 锁定折表 cv_folds_credit-g.csv 逐折一致。
 
 
 ## 附注：§1 ④ Apriori 数字档位列澄清（2026-10-12）

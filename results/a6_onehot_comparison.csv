@@ -1,0 +1,4 @@
+config_id,dataset,model,strategy,encoding,note,protocol,n_features,accuracy_mean±std,f1_mean±std,roc_auc_mean±std,n_iter_full_fit,converged,runtime_s
+A6.1-creditg-logistic-onehot,credit-g,LogisticRegression,plain,onehot,规格单②（冻结）,"StratifiedKFold(10, shuffle, seed=42)",61,0.7520±0.0290,0.5307±0.0627,0.7846±0.0412,55,True,0.16
+A6.2-creditg-logistic-ordinal,credit-g,LogisticRegression,plain,ordinal,规格单③（冻结）,"StratifiedKFold(10, shuffle, seed=42)",20,0.7180±0.0496,0.4057±0.1252,0.7379±0.0556,1000,False,0.61
+A6.3-creditg-logistic-ordinal-scaled,credit-g,LogisticRegression,plain,ordinal_scaled,补充归因：序数+标准化（非冻结配置）,"StratifiedKFold(10, shuffle, seed=42)",20,0.7220±0.0439,0.4150±0.1101,0.7371±0.0550,41,True,0.15
