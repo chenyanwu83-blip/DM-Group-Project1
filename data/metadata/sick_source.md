@@ -10,5 +10,5 @@
   引用仍指向原始 UCI 来源：Frank et al., 2016; Dua & Graff, 2019）
 - 本地文件：data/raw/sick.csv（由 src/b1_make_sick_csv.py 生成）
 - 获取日期：2026-10-10
-- SHA-256：102c189f1e19029541427760ac780ae5e87cc0bfb8f5d8ee3968cab3f472397c
+- SHA-256：3cc14348968e47c2e1e52ad350edf6b0b96b0578c27be9b29d10fe21740854ab（2026-10-15 更新：组仓库现行 csv 由 C 的 load_data.py 统一生成，列名为 'TSH measured' 带空格版；与 results/split_manifest.json 锚定一致）
 - 规模：3,772 行 × 30 列（29 特征 + Class）

@@ -1,0 +1,2 @@
+config_id,run_id,dataset,model,strategy,protocol,fold_id,seed,pos_label,neg_label,data_sha256,accuracy,precision,recall,f1,auc,kappa,balanced_accuracy,macro_f1,cost,n_eval,TN,FP,FN,TP,precision_undefined,recall_undefined,runtime_sec,notes
+creditg_svc_smote_v1,run1,credit-g,SVC,smote,holdout,1,42,bad,good,d0baf9fddd41e5a6af0ba84e6037a415f11384dd40c494186563a2d3b68f5c25,0.71,0.5148514851485149,0.5777777777777777,0.5445026178010471,0.7681481481481481,0.33282208588957063,0.6722222222222223,0.6658943406853646,0.7966666666666666,300,161,49,38,52,False,False,0.10796737484633923,
