@@ -1,0 +1,327 @@
+config_id,protocol,check,result,detail
+creditg_dt_plain_v1,cv10,summary columns == D2 template,PASS,
+creditg_dt_plain_v1,cv10,folds columns == D2 template,PASS,
+creditg_dt_plain_v1,cv10,pos/neg label == D1 mapping,PASS,"pos=bad, neg=good"
+creditg_dt_plain_v1,cv10,seed == 42,PASS,
+creditg_dt_plain_v1,cv10,data_sha256 == split_manifest,PASS,
+creditg_dt_plain_v1,cv10,n_folds rows on disk,PASS,10
+creditg_dt_plain_v1,cv10,protocol field,PASS,
+creditg_dt_plain_v1,cv10,fold cm sums == n_eval,PASS,
+creditg_dt_plain_v1,cv10,fold cost == (5FN+FP)/N,PASS,
+creditg_dt_plain_v1,cv10,summary mean/std/n_valid == recomputed from folds,PASS,
+creditg_dt_plain_v1,cv10,pooled cm == sum of folds,PASS,"TN=633,FP=67,FN=219,TP=81"
+creditg_dt_plain_v1,cv10,preds cover locked rows exactly,PASS,1000 rows
+creditg_dt_plain_v1,cv10,preds y_true == raw data labels at row_idx,PASS,
+creditg_dt_plain_v1,cv10,proba_pos valid; y_pred==pos => proba>=0.5; neg-side excess within 0.10 band,PASS,pos-side violations=0; benign band rows=0 (max proba-0.5=0.0000); outside band=0
+creditg_dt_plain_v1,cv10,mean proba_pos(true pos) > mean proba_pos(true neg),PASS,0.3991 vs 0.2593
+creditg_dt_plain_v1,cv10,pooled cm/cost == evaluate.py(preds),PASS,"cm=[[633, 67], [219, 81]]"
+creditg_dt_plain_v1,holdout,summary columns == D2 template,PASS,
+creditg_dt_plain_v1,holdout,folds columns == D2 template,PASS,
+creditg_dt_plain_v1,holdout,pos/neg label == D1 mapping,PASS,"pos=bad, neg=good"
+creditg_dt_plain_v1,holdout,seed == 42,PASS,
+creditg_dt_plain_v1,holdout,data_sha256 == split_manifest,PASS,
+creditg_dt_plain_v1,holdout,n_folds rows on disk,PASS,1
+creditg_dt_plain_v1,holdout,protocol field,PASS,
+creditg_dt_plain_v1,holdout,fold cm sums == n_eval,PASS,
+creditg_dt_plain_v1,holdout,fold cost == (5FN+FP)/N,PASS,
+creditg_dt_plain_v1,holdout,summary mean/std/n_valid == recomputed from folds,PASS,
+creditg_dt_plain_v1,holdout,pooled cm == sum of folds,PASS,"TN=185,FP=25,FN=60,TP=30"
+creditg_dt_plain_v1,holdout,holdout std blank,PASS,
+creditg_dt_plain_v1,holdout,preds cover locked rows exactly,PASS,300 rows vs locked 300
+creditg_dt_plain_v1,holdout,preds y_true == raw data labels at row_idx,PASS,
+creditg_dt_plain_v1,holdout,proba_pos valid; y_pred==pos => proba>=0.5; neg-side excess within 0.10 band,PASS,pos-side violations=0; benign band rows=0 (max proba-0.5=0.0000); outside band=0
+creditg_dt_plain_v1,holdout,mean proba_pos(true pos) > mean proba_pos(true neg),PASS,0.4055 vs 0.2463
+creditg_dt_plain_v1,holdout,pooled cm/cost == evaluate.py(preds),PASS,"cm=[[185, 25], [60, 30]]"
+creditg_dt_plain_v1,holdout,holdout label counts == manifest,PASS,"{'good': 210, 'bad': 90}"
+creditg_rf_plain_v1,cv10,summary columns == D2 template,PASS,
+creditg_rf_plain_v1,cv10,folds columns == D2 template,PASS,
+creditg_rf_plain_v1,cv10,pos/neg label == D1 mapping,PASS,"pos=bad, neg=good"
+creditg_rf_plain_v1,cv10,seed == 42,PASS,
+creditg_rf_plain_v1,cv10,data_sha256 == split_manifest,PASS,
+creditg_rf_plain_v1,cv10,n_folds rows on disk,PASS,10
+creditg_rf_plain_v1,cv10,protocol field,PASS,
+creditg_rf_plain_v1,cv10,fold cm sums == n_eval,PASS,
+creditg_rf_plain_v1,cv10,fold cost == (5FN+FP)/N,PASS,
+creditg_rf_plain_v1,cv10,summary mean/std/n_valid == recomputed from folds,PASS,
+creditg_rf_plain_v1,cv10,pooled cm == sum of folds,PASS,"TN=643,FP=57,FN=180,TP=120"
+creditg_rf_plain_v1,cv10,preds cover locked rows exactly,PASS,1000 rows
+creditg_rf_plain_v1,cv10,preds y_true == raw data labels at row_idx,PASS,
+creditg_rf_plain_v1,cv10,proba_pos valid; y_pred==pos => proba>=0.5; neg-side excess within 0.10 band,PASS,pos-side violations=0; benign band rows=0 (max proba-0.5=0.0000); outside band=0
+creditg_rf_plain_v1,cv10,mean proba_pos(true pos) > mean proba_pos(true neg),PASS,0.4490 vs 0.2446
+creditg_rf_plain_v1,cv10,pooled cm/cost == evaluate.py(preds),PASS,"cm=[[643, 57], [180, 120]]"
+creditg_rf_plain_v1,holdout,summary columns == D2 template,PASS,
+creditg_rf_plain_v1,holdout,folds columns == D2 template,PASS,
+creditg_rf_plain_v1,holdout,pos/neg label == D1 mapping,PASS,"pos=bad, neg=good"
+creditg_rf_plain_v1,holdout,seed == 42,PASS,
+creditg_rf_plain_v1,holdout,data_sha256 == split_manifest,PASS,
+creditg_rf_plain_v1,holdout,n_folds rows on disk,PASS,1
+creditg_rf_plain_v1,holdout,protocol field,PASS,
+creditg_rf_plain_v1,holdout,fold cm sums == n_eval,PASS,
+creditg_rf_plain_v1,holdout,fold cost == (5FN+FP)/N,PASS,
+creditg_rf_plain_v1,holdout,summary mean/std/n_valid == recomputed from folds,PASS,
+creditg_rf_plain_v1,holdout,pooled cm == sum of folds,PASS,"TN=190,FP=20,FN=60,TP=30"
+creditg_rf_plain_v1,holdout,holdout std blank,PASS,
+creditg_rf_plain_v1,holdout,preds cover locked rows exactly,PASS,300 rows vs locked 300
+creditg_rf_plain_v1,holdout,preds y_true == raw data labels at row_idx,PASS,
+creditg_rf_plain_v1,holdout,proba_pos valid; y_pred==pos => proba>=0.5; neg-side excess within 0.10 band,PASS,pos-side violations=0; benign band rows=0 (max proba-0.5=0.0000); outside band=0
+creditg_rf_plain_v1,holdout,mean proba_pos(true pos) > mean proba_pos(true neg),PASS,0.4324 vs 0.2581
+creditg_rf_plain_v1,holdout,pooled cm/cost == evaluate.py(preds),PASS,"cm=[[190, 20], [60, 30]]"
+creditg_rf_plain_v1,holdout,holdout label counts == manifest,PASS,"{'good': 210, 'bad': 90}"
+creditg_lr_plain_v1,cv10,summary columns == D2 template,PASS,
+creditg_lr_plain_v1,cv10,folds columns == D2 template,PASS,
+creditg_lr_plain_v1,cv10,pos/neg label == D1 mapping,PASS,"pos=bad, neg=good"
+creditg_lr_plain_v1,cv10,seed == 42,PASS,
+creditg_lr_plain_v1,cv10,data_sha256 == split_manifest,PASS,
+creditg_lr_plain_v1,cv10,n_folds rows on disk,PASS,10
+creditg_lr_plain_v1,cv10,protocol field,PASS,
+creditg_lr_plain_v1,cv10,fold cm sums == n_eval,PASS,
+creditg_lr_plain_v1,cv10,fold cost == (5FN+FP)/N,PASS,
+creditg_lr_plain_v1,cv10,summary mean/std/n_valid == recomputed from folds,PASS,
+creditg_lr_plain_v1,cv10,pooled cm == sum of folds,PASS,"TN=611,FP=89,FN=159,TP=141"
+creditg_lr_plain_v1,cv10,preds cover locked rows exactly,PASS,1000 rows
+creditg_lr_plain_v1,cv10,preds y_true == raw data labels at row_idx,PASS,
+creditg_lr_plain_v1,cv10,proba_pos valid; y_pred==pos => proba>=0.5; neg-side excess within 0.10 band,PASS,pos-side violations=0; benign band rows=0 (max proba-0.5=0.0000); outside band=0
+creditg_lr_plain_v1,cv10,mean proba_pos(true pos) > mean proba_pos(true neg),PASS,0.4744 vs 0.2243
+creditg_lr_plain_v1,cv10,pooled cm/cost == evaluate.py(preds),PASS,"cm=[[611, 89], [159, 141]]"
+creditg_lr_plain_v1,holdout,summary columns == D2 template,PASS,
+creditg_lr_plain_v1,holdout,folds columns == D2 template,PASS,
+creditg_lr_plain_v1,holdout,pos/neg label == D1 mapping,PASS,"pos=bad, neg=good"
+creditg_lr_plain_v1,holdout,seed == 42,PASS,
+creditg_lr_plain_v1,holdout,data_sha256 == split_manifest,PASS,
+creditg_lr_plain_v1,holdout,n_folds rows on disk,PASS,1
+creditg_lr_plain_v1,holdout,protocol field,PASS,
+creditg_lr_plain_v1,holdout,fold cm sums == n_eval,PASS,
+creditg_lr_plain_v1,holdout,fold cost == (5FN+FP)/N,PASS,
+creditg_lr_plain_v1,holdout,summary mean/std/n_valid == recomputed from folds,PASS,
+creditg_lr_plain_v1,holdout,pooled cm == sum of folds,PASS,"TN=179,FP=31,FN=47,TP=43"
+creditg_lr_plain_v1,holdout,holdout std blank,PASS,
+creditg_lr_plain_v1,holdout,preds cover locked rows exactly,PASS,300 rows vs locked 300
+creditg_lr_plain_v1,holdout,preds y_true == raw data labels at row_idx,PASS,
+creditg_lr_plain_v1,holdout,proba_pos valid; y_pred==pos => proba>=0.5; neg-side excess within 0.10 band,PASS,pos-side violations=0; benign band rows=0 (max proba-0.5=0.0000); outside band=0
+creditg_lr_plain_v1,holdout,mean proba_pos(true pos) > mean proba_pos(true neg),PASS,0.4835 vs 0.2239
+creditg_lr_plain_v1,holdout,pooled cm/cost == evaluate.py(preds),PASS,"cm=[[179, 31], [47, 43]]"
+creditg_lr_plain_v1,holdout,holdout label counts == manifest,PASS,"{'good': 210, 'bad': 90}"
+creditg_svc_plain_v1,cv10,summary columns == D2 template,PASS,
+creditg_svc_plain_v1,cv10,folds columns == D2 template,PASS,
+creditg_svc_plain_v1,cv10,pos/neg label == D1 mapping,PASS,"pos=bad, neg=good"
+creditg_svc_plain_v1,cv10,seed == 42,PASS,
+creditg_svc_plain_v1,cv10,data_sha256 == split_manifest,PASS,
+creditg_svc_plain_v1,cv10,n_folds rows on disk,PASS,10
+creditg_svc_plain_v1,cv10,protocol field,PASS,
+creditg_svc_plain_v1,cv10,fold cm sums == n_eval,PASS,
+creditg_svc_plain_v1,cv10,fold cost == (5FN+FP)/N,PASS,
+creditg_svc_plain_v1,cv10,summary mean/std/n_valid == recomputed from folds,PASS,
+creditg_svc_plain_v1,cv10,pooled cm == sum of folds,PASS,"TN=650,FP=50,FN=182,TP=118"
+creditg_svc_plain_v1,cv10,preds cover locked rows exactly,PASS,1000 rows
+creditg_svc_plain_v1,cv10,preds y_true == raw data labels at row_idx,PASS,
+creditg_svc_plain_v1,cv10,proba_pos valid; y_pred==pos => proba>=0.5; neg-side excess within 0.10 band,PASS,pos-side violations=0; benign band rows=37 (max proba-0.5=0.0627); outside band=0
+creditg_svc_plain_v1,cv10,mean proba_pos(true pos) > mean proba_pos(true neg),PASS,0.4677 vs 0.2292
+creditg_svc_plain_v1,cv10,pooled cm/cost == evaluate.py(preds),PASS,"cm=[[650, 50], [182, 118]]"
+creditg_svc_plain_v1,holdout,summary columns == D2 template,PASS,
+creditg_svc_plain_v1,holdout,folds columns == D2 template,PASS,
+creditg_svc_plain_v1,holdout,pos/neg label == D1 mapping,PASS,"pos=bad, neg=good"
+creditg_svc_plain_v1,holdout,seed == 42,PASS,
+creditg_svc_plain_v1,holdout,data_sha256 == split_manifest,PASS,
+creditg_svc_plain_v1,holdout,n_folds rows on disk,PASS,1
+creditg_svc_plain_v1,holdout,protocol field,PASS,
+creditg_svc_plain_v1,holdout,fold cm sums == n_eval,PASS,
+creditg_svc_plain_v1,holdout,fold cost == (5FN+FP)/N,PASS,
+creditg_svc_plain_v1,holdout,summary mean/std/n_valid == recomputed from folds,PASS,
+creditg_svc_plain_v1,holdout,pooled cm == sum of folds,PASS,"TN=193,FP=17,FN=55,TP=35"
+creditg_svc_plain_v1,holdout,holdout std blank,PASS,
+creditg_svc_plain_v1,holdout,preds cover locked rows exactly,PASS,300 rows vs locked 300
+creditg_svc_plain_v1,holdout,preds y_true == raw data labels at row_idx,PASS,
+creditg_svc_plain_v1,holdout,proba_pos valid; y_pred==pos => proba>=0.5; neg-side excess within 0.10 band,PASS,pos-side violations=0; benign band rows=14 (max proba-0.5=0.0567); outside band=0
+creditg_svc_plain_v1,holdout,mean proba_pos(true pos) > mean proba_pos(true neg),PASS,0.4610 vs 0.2379
+creditg_svc_plain_v1,holdout,pooled cm/cost == evaluate.py(preds),PASS,"cm=[[193, 17], [55, 35]]"
+creditg_svc_plain_v1,holdout,holdout label counts == manifest,PASS,"{'good': 210, 'bad': 90}"
+sick_dt_plain_v1,cv10,summary columns == D2 template,PASS,
+sick_dt_plain_v1,cv10,folds columns == D2 template,PASS,
+sick_dt_plain_v1,cv10,pos/neg label == D1 mapping,PASS,"pos=sick, neg=negative"
+sick_dt_plain_v1,cv10,seed == 42,PASS,
+sick_dt_plain_v1,cv10,data_sha256 == split_manifest,PASS,
+sick_dt_plain_v1,cv10,n_folds rows on disk,PASS,10
+sick_dt_plain_v1,cv10,protocol field,PASS,
+sick_dt_plain_v1,cv10,fold cm sums == n_eval,PASS,
+sick_dt_plain_v1,cv10,summary mean/std/n_valid == recomputed from folds,PASS,
+sick_dt_plain_v1,cv10,pooled cm == sum of folds,PASS,"TN=3532,FP=9,FN=58,TP=173"
+sick_dt_plain_v1,cv10,preds cover locked rows exactly,PASS,3772 rows
+sick_dt_plain_v1,cv10,preds y_true == raw data labels at row_idx,PASS,
+sick_dt_plain_v1,cv10,proba_pos valid; y_pred==pos => proba>=0.5; neg-side excess within 0.10 band,PASS,pos-side violations=0; benign band rows=0 (max proba-0.5=0.0000); outside band=0
+sick_dt_plain_v1,cv10,mean proba_pos(true pos) > mean proba_pos(true neg),PASS,0.7874 vs 0.0148
+sick_dt_plain_v1,cv10,pooled cm/cost == evaluate.py(preds),PASS,"cm=[[3532, 9], [58, 173]]"
+sick_dt_plain_v1,holdout,summary columns == D2 template,PASS,
+sick_dt_plain_v1,holdout,folds columns == D2 template,PASS,
+sick_dt_plain_v1,holdout,pos/neg label == D1 mapping,PASS,"pos=sick, neg=negative"
+sick_dt_plain_v1,holdout,seed == 42,PASS,
+sick_dt_plain_v1,holdout,data_sha256 == split_manifest,PASS,
+sick_dt_plain_v1,holdout,n_folds rows on disk,PASS,1
+sick_dt_plain_v1,holdout,protocol field,PASS,
+sick_dt_plain_v1,holdout,fold cm sums == n_eval,PASS,
+sick_dt_plain_v1,holdout,summary mean/std/n_valid == recomputed from folds,PASS,
+sick_dt_plain_v1,holdout,pooled cm == sum of folds,PASS,"TN=1061,FP=2,FN=13,TP=56"
+sick_dt_plain_v1,holdout,holdout std blank,PASS,
+sick_dt_plain_v1,holdout,preds cover locked rows exactly,PASS,1132 rows vs locked 1132
+sick_dt_plain_v1,holdout,preds y_true == raw data labels at row_idx,PASS,
+sick_dt_plain_v1,holdout,proba_pos valid; y_pred==pos => proba>=0.5; neg-side excess within 0.10 band,PASS,pos-side violations=0; benign band rows=0 (max proba-0.5=0.0000); outside band=0
+sick_dt_plain_v1,holdout,mean proba_pos(true pos) > mean proba_pos(true neg),PASS,0.8558 vs 0.0138
+sick_dt_plain_v1,holdout,pooled cm/cost == evaluate.py(preds),PASS,"cm=[[1061, 2], [13, 56]]"
+sick_dt_plain_v1,holdout,holdout label counts == manifest,PASS,"{'negative': 1063, 'sick': 69}"
+sick_rf_plain_v1,cv10,summary columns == D2 template,PASS,
+sick_rf_plain_v1,cv10,folds columns == D2 template,PASS,
+sick_rf_plain_v1,cv10,pos/neg label == D1 mapping,PASS,"pos=sick, neg=negative"
+sick_rf_plain_v1,cv10,seed == 42,PASS,
+sick_rf_plain_v1,cv10,data_sha256 == split_manifest,PASS,
+sick_rf_plain_v1,cv10,n_folds rows on disk,PASS,10
+sick_rf_plain_v1,cv10,protocol field,PASS,
+sick_rf_plain_v1,cv10,fold cm sums == n_eval,PASS,
+sick_rf_plain_v1,cv10,summary mean/std/n_valid == recomputed from folds,PASS,
+sick_rf_plain_v1,cv10,pooled cm == sum of folds,PASS,"TN=3530,FP=11,FN=44,TP=187"
+sick_rf_plain_v1,cv10,preds cover locked rows exactly,PASS,3772 rows
+sick_rf_plain_v1,cv10,preds y_true == raw data labels at row_idx,PASS,
+sick_rf_plain_v1,cv10,proba_pos valid; y_pred==pos => proba>=0.5; neg-side excess within 0.10 band,PASS,pos-side violations=0; benign band rows=3 (max proba-0.5=0.0000); outside band=0
+sick_rf_plain_v1,cv10,mean proba_pos(true pos) > mean proba_pos(true neg),PASS,0.7440 vs 0.0162
+sick_rf_plain_v1,cv10,pooled cm/cost == evaluate.py(preds),PASS,"cm=[[3530, 11], [44, 187]]"
+sick_rf_plain_v1,holdout,summary columns == D2 template,PASS,
+sick_rf_plain_v1,holdout,folds columns == D2 template,PASS,
+sick_rf_plain_v1,holdout,pos/neg label == D1 mapping,PASS,"pos=sick, neg=negative"
+sick_rf_plain_v1,holdout,seed == 42,PASS,
+sick_rf_plain_v1,holdout,data_sha256 == split_manifest,PASS,
+sick_rf_plain_v1,holdout,n_folds rows on disk,PASS,1
+sick_rf_plain_v1,holdout,protocol field,PASS,
+sick_rf_plain_v1,holdout,fold cm sums == n_eval,PASS,
+sick_rf_plain_v1,holdout,summary mean/std/n_valid == recomputed from folds,PASS,
+sick_rf_plain_v1,holdout,pooled cm == sum of folds,PASS,"TN=1057,FP=6,FN=10,TP=59"
+sick_rf_plain_v1,holdout,holdout std blank,PASS,
+sick_rf_plain_v1,holdout,preds cover locked rows exactly,PASS,1132 rows vs locked 1132
+sick_rf_plain_v1,holdout,preds y_true == raw data labels at row_idx,PASS,
+sick_rf_plain_v1,holdout,proba_pos valid; y_pred==pos => proba>=0.5; neg-side excess within 0.10 band,PASS,pos-side violations=0; benign band rows=1 (max proba-0.5=0.0000); outside band=0
+sick_rf_plain_v1,holdout,mean proba_pos(true pos) > mean proba_pos(true neg),PASS,0.7819 vs 0.0192
+sick_rf_plain_v1,holdout,pooled cm/cost == evaluate.py(preds),PASS,"cm=[[1057, 6], [10, 59]]"
+sick_rf_plain_v1,holdout,holdout label counts == manifest,PASS,"{'negative': 1063, 'sick': 69}"
+sick_lr_plain_v1,cv10,summary columns == D2 template,PASS,
+sick_lr_plain_v1,cv10,folds columns == D2 template,PASS,
+sick_lr_plain_v1,cv10,pos/neg label == D1 mapping,PASS,"pos=sick, neg=negative"
+sick_lr_plain_v1,cv10,seed == 42,PASS,
+sick_lr_plain_v1,cv10,data_sha256 == split_manifest,PASS,
+sick_lr_plain_v1,cv10,n_folds rows on disk,PASS,10
+sick_lr_plain_v1,cv10,protocol field,PASS,
+sick_lr_plain_v1,cv10,fold cm sums == n_eval,PASS,
+sick_lr_plain_v1,cv10,summary mean/std/n_valid == recomputed from folds,PASS,
+sick_lr_plain_v1,cv10,pooled cm == sum of folds,PASS,"TN=3506,FP=35,FN=91,TP=140"
+sick_lr_plain_v1,cv10,preds cover locked rows exactly,PASS,3772 rows
+sick_lr_plain_v1,cv10,preds y_true == raw data labels at row_idx,PASS,
+sick_lr_plain_v1,cv10,proba_pos valid; y_pred==pos => proba>=0.5; neg-side excess within 0.10 band,PASS,pos-side violations=0; benign band rows=0 (max proba-0.5=0.0000); outside band=0
+sick_lr_plain_v1,cv10,mean proba_pos(true pos) > mean proba_pos(true neg),PASS,0.5460 vs 0.0297
+sick_lr_plain_v1,cv10,pooled cm/cost == evaluate.py(preds),PASS,"cm=[[3506, 35], [91, 140]]"
+sick_lr_plain_v1,holdout,summary columns == D2 template,PASS,
+sick_lr_plain_v1,holdout,folds columns == D2 template,PASS,
+sick_lr_plain_v1,holdout,pos/neg label == D1 mapping,PASS,"pos=sick, neg=negative"
+sick_lr_plain_v1,holdout,seed == 42,PASS,
+sick_lr_plain_v1,holdout,data_sha256 == split_manifest,PASS,
+sick_lr_plain_v1,holdout,n_folds rows on disk,PASS,1
+sick_lr_plain_v1,holdout,protocol field,PASS,
+sick_lr_plain_v1,holdout,fold cm sums == n_eval,PASS,
+sick_lr_plain_v1,holdout,summary mean/std/n_valid == recomputed from folds,PASS,
+sick_lr_plain_v1,holdout,pooled cm == sum of folds,PASS,"TN=1050,FP=13,FN=26,TP=43"
+sick_lr_plain_v1,holdout,holdout std blank,PASS,
+sick_lr_plain_v1,holdout,preds cover locked rows exactly,PASS,1132 rows vs locked 1132
+sick_lr_plain_v1,holdout,preds y_true == raw data labels at row_idx,PASS,
+sick_lr_plain_v1,holdout,proba_pos valid; y_pred==pos => proba>=0.5; neg-side excess within 0.10 band,PASS,pos-side violations=0; benign band rows=0 (max proba-0.5=0.0000); outside band=0
+sick_lr_plain_v1,holdout,mean proba_pos(true pos) > mean proba_pos(true neg),PASS,0.5625 vs 0.0320
+sick_lr_plain_v1,holdout,pooled cm/cost == evaluate.py(preds),PASS,"cm=[[1050, 13], [26, 43]]"
+sick_lr_plain_v1,holdout,holdout label counts == manifest,PASS,"{'negative': 1063, 'sick': 69}"
+sick_svc_plain_v1,cv10,summary columns == D2 template,PASS,
+sick_svc_plain_v1,cv10,folds columns == D2 template,PASS,
+sick_svc_plain_v1,cv10,pos/neg label == D1 mapping,PASS,"pos=sick, neg=negative"
+sick_svc_plain_v1,cv10,seed == 42,PASS,
+sick_svc_plain_v1,cv10,data_sha256 == split_manifest,PASS,
+sick_svc_plain_v1,cv10,n_folds rows on disk,PASS,10
+sick_svc_plain_v1,cv10,protocol field,PASS,
+sick_svc_plain_v1,cv10,fold cm sums == n_eval,PASS,
+sick_svc_plain_v1,cv10,summary mean/std/n_valid == recomputed from folds,PASS,
+sick_svc_plain_v1,cv10,pooled cm == sum of folds,PASS,"TN=3516,FP=25,FN=73,TP=158"
+sick_svc_plain_v1,cv10,preds cover locked rows exactly,PASS,3772 rows
+sick_svc_plain_v1,cv10,preds y_true == raw data labels at row_idx,PASS,
+sick_svc_plain_v1,cv10,proba_pos valid; y_pred==pos => proba>=0.5; neg-side excess within 0.10 band,PASS,pos-side violations=0; benign band rows=15 (max proba-0.5=0.0831); outside band=0
+sick_svc_plain_v1,cv10,mean proba_pos(true pos) > mean proba_pos(true neg),PASS,0.6734 vs 0.0220
+sick_svc_plain_v1,cv10,pooled cm/cost == evaluate.py(preds),PASS,"cm=[[3516, 25], [73, 158]]"
+sick_svc_plain_v1,holdout,summary columns == D2 template,PASS,
+sick_svc_plain_v1,holdout,folds columns == D2 template,PASS,
+sick_svc_plain_v1,holdout,pos/neg label == D1 mapping,PASS,"pos=sick, neg=negative"
+sick_svc_plain_v1,holdout,seed == 42,PASS,
+sick_svc_plain_v1,holdout,data_sha256 == split_manifest,PASS,
+sick_svc_plain_v1,holdout,n_folds rows on disk,PASS,1
+sick_svc_plain_v1,holdout,protocol field,PASS,
+sick_svc_plain_v1,holdout,fold cm sums == n_eval,PASS,
+sick_svc_plain_v1,holdout,summary mean/std/n_valid == recomputed from folds,PASS,
+sick_svc_plain_v1,holdout,pooled cm == sum of folds,PASS,"TN=1053,FP=10,FN=24,TP=45"
+sick_svc_plain_v1,holdout,holdout std blank,PASS,
+sick_svc_plain_v1,holdout,preds cover locked rows exactly,PASS,1132 rows vs locked 1132
+sick_svc_plain_v1,holdout,preds y_true == raw data labels at row_idx,PASS,
+sick_svc_plain_v1,holdout,proba_pos valid; y_pred==pos => proba>=0.5; neg-side excess within 0.10 band,PASS,pos-side violations=0; benign band rows=5 (max proba-0.5=0.0835); outside band=0
+sick_svc_plain_v1,holdout,mean proba_pos(true pos) > mean proba_pos(true neg),PASS,0.6759 vs 0.0244
+sick_svc_plain_v1,holdout,pooled cm/cost == evaluate.py(preds),PASS,"cm=[[1053, 10], [24, 45]]"
+sick_svc_plain_v1,holdout,holdout label counts == manifest,PASS,"{'negative': 1063, 'sick': 69}"
+creditg_zero_ref_v1,cv10,summary columns == D2 template,PASS,
+creditg_zero_ref_v1,cv10,folds columns == D2 template,PASS,
+creditg_zero_ref_v1,cv10,pos/neg label == D1 mapping,PASS,"pos=bad, neg=good"
+creditg_zero_ref_v1,cv10,seed == 42,PASS,
+creditg_zero_ref_v1,cv10,data_sha256 == split_manifest,PASS,
+creditg_zero_ref_v1,cv10,n_folds rows on disk,PASS,10
+creditg_zero_ref_v1,cv10,protocol field,PASS,
+creditg_zero_ref_v1,cv10,fold cm sums == n_eval,PASS,
+creditg_zero_ref_v1,cv10,fold cost == (5FN+FP)/N,PASS,
+creditg_zero_ref_v1,cv10,summary mean/std/n_valid == recomputed from folds,PASS,
+creditg_zero_ref_v1,cv10,pooled cm == sum of folds,PASS,"TN=700,FP=0,FN=300,TP=0"
+creditg_zero_ref_v1,cv10,preds cover locked rows exactly,PASS,1000 rows
+creditg_zero_ref_v1,cv10,preds y_true == raw data labels at row_idx,PASS,
+creditg_zero_ref_v1,cv10,proba_pos valid; y_pred==pos => proba>=0.5; neg-side excess within 0.10 band,PASS,pos-side violations=0; benign band rows=0 (max proba-0.5=0.0000); outside band=0
+creditg_zero_ref_v1,cv10,pooled cm/cost == evaluate.py(preds),PASS,"cm=[[700, 0], [300, 0]]"
+creditg_zero_ref_v1,holdout,summary columns == D2 template,PASS,
+creditg_zero_ref_v1,holdout,folds columns == D2 template,PASS,
+creditg_zero_ref_v1,holdout,pos/neg label == D1 mapping,PASS,"pos=bad, neg=good"
+creditg_zero_ref_v1,holdout,seed == 42,PASS,
+creditg_zero_ref_v1,holdout,data_sha256 == split_manifest,PASS,
+creditg_zero_ref_v1,holdout,n_folds rows on disk,PASS,1
+creditg_zero_ref_v1,holdout,protocol field,PASS,
+creditg_zero_ref_v1,holdout,fold cm sums == n_eval,PASS,
+creditg_zero_ref_v1,holdout,fold cost == (5FN+FP)/N,PASS,
+creditg_zero_ref_v1,holdout,summary mean/std/n_valid == recomputed from folds,PASS,
+creditg_zero_ref_v1,holdout,pooled cm == sum of folds,PASS,"TN=210,FP=0,FN=90,TP=0"
+creditg_zero_ref_v1,holdout,holdout std blank,PASS,
+creditg_zero_ref_v1,holdout,preds cover locked rows exactly,PASS,300 rows vs locked 300
+creditg_zero_ref_v1,holdout,preds y_true == raw data labels at row_idx,PASS,
+creditg_zero_ref_v1,holdout,proba_pos valid; y_pred==pos => proba>=0.5; neg-side excess within 0.10 band,PASS,pos-side violations=0; benign band rows=0 (max proba-0.5=0.0000); outside band=0
+creditg_zero_ref_v1,holdout,pooled cm/cost == evaluate.py(preds),PASS,"cm=[[210, 0], [90, 0]]"
+creditg_zero_ref_v1,holdout,holdout label counts == manifest,PASS,"{'good': 210, 'bad': 90}"
+sick_zero_ref_v1,cv10,summary columns == D2 template,PASS,
+sick_zero_ref_v1,cv10,folds columns == D2 template,PASS,
+sick_zero_ref_v1,cv10,pos/neg label == D1 mapping,PASS,"pos=sick, neg=negative"
+sick_zero_ref_v1,cv10,seed == 42,PASS,
+sick_zero_ref_v1,cv10,data_sha256 == split_manifest,PASS,
+sick_zero_ref_v1,cv10,n_folds rows on disk,PASS,10
+sick_zero_ref_v1,cv10,protocol field,PASS,
+sick_zero_ref_v1,cv10,fold cm sums == n_eval,PASS,
+sick_zero_ref_v1,cv10,summary mean/std/n_valid == recomputed from folds,PASS,
+sick_zero_ref_v1,cv10,pooled cm == sum of folds,PASS,"TN=3541,FP=0,FN=231,TP=0"
+sick_zero_ref_v1,cv10,preds cover locked rows exactly,PASS,3772 rows
+sick_zero_ref_v1,cv10,preds y_true == raw data labels at row_idx,PASS,
+sick_zero_ref_v1,cv10,proba_pos valid; y_pred==pos => proba>=0.5; neg-side excess within 0.10 band,PASS,pos-side violations=0; benign band rows=0 (max proba-0.5=0.0000); outside band=0
+sick_zero_ref_v1,cv10,pooled cm/cost == evaluate.py(preds),PASS,"cm=[[3541, 0], [231, 0]]"
+sick_zero_ref_v1,holdout,summary columns == D2 template,PASS,
+sick_zero_ref_v1,holdout,folds columns == D2 template,PASS,
+sick_zero_ref_v1,holdout,pos/neg label == D1 mapping,PASS,"pos=sick, neg=negative"
+sick_zero_ref_v1,holdout,seed == 42,PASS,
+sick_zero_ref_v1,holdout,data_sha256 == split_manifest,PASS,
+sick_zero_ref_v1,holdout,n_folds rows on disk,PASS,1
+sick_zero_ref_v1,holdout,protocol field,PASS,
+sick_zero_ref_v1,holdout,fold cm sums == n_eval,PASS,
+sick_zero_ref_v1,holdout,summary mean/std/n_valid == recomputed from folds,PASS,
+sick_zero_ref_v1,holdout,pooled cm == sum of folds,PASS,"TN=1063,FP=0,FN=69,TP=0"
+sick_zero_ref_v1,holdout,holdout std blank,PASS,
+sick_zero_ref_v1,holdout,preds cover locked rows exactly,PASS,1132 rows vs locked 1132
+sick_zero_ref_v1,holdout,preds y_true == raw data labels at row_idx,PASS,
+sick_zero_ref_v1,holdout,proba_pos valid; y_pred==pos => proba>=0.5; neg-side excess within 0.10 band,PASS,pos-side violations=0; benign band rows=0 (max proba-0.5=0.0000); outside band=0
+sick_zero_ref_v1,holdout,pooled cm/cost == evaluate.py(preds),PASS,"cm=[[1063, 0], [69, 0]]"
+sick_zero_ref_v1,holdout,holdout label counts == manifest,PASS,"{'negative': 1063, 'sick': 69}"
