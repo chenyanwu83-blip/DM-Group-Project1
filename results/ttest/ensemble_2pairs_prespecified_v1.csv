@@ -1,0 +1,5 @@
+dataset,comparison,metric,label,mean_a,mean_b,mean_diff,k,t,df,p_raw,sig,note,n_test,n_train,var_corr_factor,method
+credit-g,creditg_bag_plain_vs_dt_plain,f1,bagging方差缩减 vs 单树基线,0.5097055387303197,0.32182050471273144,0.18788503401758821,10,2.0496417720869635,9,0.07065469063598404,,,100.0,900.0,0.211111,NB-corrected fold-level paired t (same as C5)
+credit-g,creditg_ada_plain_vs_dt_smote,f1,boosting重加权 vs SMOTE重采样,0.4994661233060745,0.4713886373476964,0.028077485958377946,10,0.9049211784925356,9,0.38908871666628103,,,100.0,900.0,0.211111,NB-corrected fold-level paired t (same as C5)
+sick,sick_bag_plain_vs_dt_plain,f1,bagging方差缩减 vs 单树基线,0.8186428520827667,0.8362243572826102,-0.017581505199843528,10,-2.0790311715579395,9,0.06737088903750253,,,377.2,3394.8,0.211111,NB-corrected fold-level paired t (same as C5)
+sick,sick_ada_plain_vs_dt_smote,f1,boosting重加权 vs SMOTE重采样,0.9179660850113274,0.7470155534642119,0.17095053154711545,10,5.1070212910105575,9,0.0006390664394652929,***,,377.2,3394.8,0.211111,NB-corrected fold-level paired t (same as C5)
