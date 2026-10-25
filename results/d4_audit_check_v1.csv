@@ -1,0 +1,1025 @@
+config_id,protocol,check,result,detail
+creditg_dt_plain_v1,cv10,summary columns == D2 template,PASS,
+creditg_dt_plain_v1,cv10,folds columns == D2 template,PASS,
+creditg_dt_plain_v1,cv10,pos/neg label == D1 mapping,PASS,"pos=bad, neg=good"
+creditg_dt_plain_v1,cv10,seed == 42,PASS,
+creditg_dt_plain_v1,cv10,data_sha256 == split_manifest,PASS,
+creditg_dt_plain_v1,cv10,n_folds rows on disk,PASS,10
+creditg_dt_plain_v1,cv10,protocol field,PASS,
+creditg_dt_plain_v1,cv10,fold cm sums == n_eval,PASS,
+creditg_dt_plain_v1,cv10,fold cost == (5FN+FP)/N,PASS,
+creditg_dt_plain_v1,cv10,summary mean/std(ddof=0)/n_valid == re-derived from folds,PASS,
+creditg_dt_plain_v1,cv10,pooled cm == sum of folds,PASS,"TN=633,FP=67,FN=219,TP=81"
+creditg_dt_plain_v1,cv10,preds row count == locked coverage,PASS,1000 vs 1000
+creditg_dt_plain_v1,holdout,summary columns == D2 template,PASS,
+creditg_dt_plain_v1,holdout,folds columns == D2 template,PASS,
+creditg_dt_plain_v1,holdout,pos/neg label == D1 mapping,PASS,"pos=bad, neg=good"
+creditg_dt_plain_v1,holdout,seed == 42,PASS,
+creditg_dt_plain_v1,holdout,data_sha256 == split_manifest,PASS,
+creditg_dt_plain_v1,holdout,n_folds rows on disk,PASS,1
+creditg_dt_plain_v1,holdout,protocol field,PASS,
+creditg_dt_plain_v1,holdout,fold cm sums == n_eval,PASS,
+creditg_dt_plain_v1,holdout,fold cost == (5FN+FP)/N,PASS,
+creditg_dt_plain_v1,holdout,summary mean/std(ddof=0)/n_valid == re-derived from folds,PASS,
+creditg_dt_plain_v1,holdout,pooled cm == sum of folds,PASS,"TN=185,FP=25,FN=60,TP=30"
+creditg_dt_plain_v1,holdout,holdout std blank,PASS,
+creditg_dt_plain_v1,holdout,preds row count == locked coverage,PASS,300 vs 300
+creditg_dt_smote_v1,cv10,summary columns == D2 template,PASS,
+creditg_dt_smote_v1,cv10,folds columns == D2 template,PASS,
+creditg_dt_smote_v1,cv10,pos/neg label == D1 mapping,PASS,"pos=bad, neg=good"
+creditg_dt_smote_v1,cv10,seed == 42,PASS,
+creditg_dt_smote_v1,cv10,data_sha256 == split_manifest,PASS,
+creditg_dt_smote_v1,cv10,n_folds rows on disk,PASS,10
+creditg_dt_smote_v1,cv10,protocol field,PASS,
+creditg_dt_smote_v1,cv10,fold cm sums == n_eval,PASS,
+creditg_dt_smote_v1,cv10,fold cost == (5FN+FP)/N,PASS,
+creditg_dt_smote_v1,cv10,summary mean/std(ddof=0)/n_valid == re-derived from folds,PASS,
+creditg_dt_smote_v1,cv10,pooled cm == sum of folds,PASS,"TN=520,FP=180,FN=150,TP=150"
+creditg_dt_smote_v1,cv10,preds row count == locked coverage,PASS,1000 vs 1000
+creditg_dt_smote_v1,holdout,summary columns == D2 template,PASS,
+creditg_dt_smote_v1,holdout,folds columns == D2 template,PASS,
+creditg_dt_smote_v1,holdout,pos/neg label == D1 mapping,PASS,"pos=bad, neg=good"
+creditg_dt_smote_v1,holdout,seed == 42,PASS,
+creditg_dt_smote_v1,holdout,data_sha256 == split_manifest,PASS,
+creditg_dt_smote_v1,holdout,n_folds rows on disk,PASS,1
+creditg_dt_smote_v1,holdout,protocol field,PASS,
+creditg_dt_smote_v1,holdout,fold cm sums == n_eval,PASS,
+creditg_dt_smote_v1,holdout,fold cost == (5FN+FP)/N,PASS,
+creditg_dt_smote_v1,holdout,summary mean/std(ddof=0)/n_valid == re-derived from folds,PASS,
+creditg_dt_smote_v1,holdout,pooled cm == sum of folds,PASS,"TN=146,FP=64,FN=34,TP=56"
+creditg_dt_smote_v1,holdout,holdout std blank,PASS,
+creditg_dt_smote_v1,holdout,preds row count == locked coverage,PASS,300 vs 300
+creditg_dt_cost_v1,cv10,summary columns == D2 template,PASS,
+creditg_dt_cost_v1,cv10,folds columns == D2 template,PASS,
+creditg_dt_cost_v1,cv10,pos/neg label == D1 mapping,PASS,"pos=bad, neg=good"
+creditg_dt_cost_v1,cv10,seed == 42,PASS,
+creditg_dt_cost_v1,cv10,data_sha256 == split_manifest,PASS,
+creditg_dt_cost_v1,cv10,n_folds rows on disk,PASS,10
+creditg_dt_cost_v1,cv10,protocol field,PASS,
+creditg_dt_cost_v1,cv10,fold cm sums == n_eval,PASS,
+creditg_dt_cost_v1,cv10,fold cost == (5FN+FP)/N,PASS,
+creditg_dt_cost_v1,cv10,summary mean/std(ddof=0)/n_valid == re-derived from folds,PASS,
+creditg_dt_cost_v1,cv10,pooled cm == sum of folds,PASS,"TN=266,FP=434,FN=41,TP=259"
+creditg_dt_cost_v1,cv10,preds row count == locked coverage,PASS,1000 vs 1000
+creditg_dt_cost_v1,holdout,summary columns == D2 template,PASS,
+creditg_dt_cost_v1,holdout,folds columns == D2 template,PASS,
+creditg_dt_cost_v1,holdout,pos/neg label == D1 mapping,PASS,"pos=bad, neg=good"
+creditg_dt_cost_v1,holdout,seed == 42,PASS,
+creditg_dt_cost_v1,holdout,data_sha256 == split_manifest,PASS,
+creditg_dt_cost_v1,holdout,n_folds rows on disk,PASS,1
+creditg_dt_cost_v1,holdout,protocol field,PASS,
+creditg_dt_cost_v1,holdout,fold cm sums == n_eval,PASS,
+creditg_dt_cost_v1,holdout,fold cost == (5FN+FP)/N,PASS,
+creditg_dt_cost_v1,holdout,summary mean/std(ddof=0)/n_valid == re-derived from folds,PASS,
+creditg_dt_cost_v1,holdout,pooled cm == sum of folds,PASS,"TN=112,FP=98,FN=21,TP=69"
+creditg_dt_cost_v1,holdout,holdout std blank,PASS,
+creditg_dt_cost_v1,holdout,preds row count == locked coverage,PASS,300 vs 300
+creditg_dt_threshold_v1,cv10,summary columns == D2 template,PASS,
+creditg_dt_threshold_v1,cv10,folds columns == D2 template,PASS,
+creditg_dt_threshold_v1,cv10,pos/neg label == D1 mapping,PASS,"pos=bad, neg=good"
+creditg_dt_threshold_v1,cv10,seed == 42,PASS,
+creditg_dt_threshold_v1,cv10,data_sha256 == split_manifest,PASS,
+creditg_dt_threshold_v1,cv10,n_folds rows on disk,PASS,10
+creditg_dt_threshold_v1,cv10,protocol field,PASS,
+creditg_dt_threshold_v1,cv10,fold cm sums == n_eval,PASS,
+creditg_dt_threshold_v1,cv10,fold cost == (5FN+FP)/N,PASS,
+creditg_dt_threshold_v1,cv10,summary mean/std(ddof=0)/n_valid == re-derived from folds,PASS,
+creditg_dt_threshold_v1,cv10,pooled cm == sum of folds,PASS,"TN=391,FP=309,FN=62,TP=238"
+creditg_dt_threshold_v1,cv10,preds row count == locked coverage,PASS,1000 vs 1000
+creditg_dt_threshold_v1,cv10,tau present in every fold note,PASS,parsed 10/10
+creditg_dt_threshold_v1,holdout,summary columns == D2 template,PASS,
+creditg_dt_threshold_v1,holdout,folds columns == D2 template,PASS,
+creditg_dt_threshold_v1,holdout,pos/neg label == D1 mapping,PASS,"pos=bad, neg=good"
+creditg_dt_threshold_v1,holdout,seed == 42,PASS,
+creditg_dt_threshold_v1,holdout,data_sha256 == split_manifest,PASS,
+creditg_dt_threshold_v1,holdout,n_folds rows on disk,PASS,1
+creditg_dt_threshold_v1,holdout,protocol field,PASS,
+creditg_dt_threshold_v1,holdout,fold cm sums == n_eval,PASS,
+creditg_dt_threshold_v1,holdout,fold cost == (5FN+FP)/N,PASS,
+creditg_dt_threshold_v1,holdout,summary mean/std(ddof=0)/n_valid == re-derived from folds,PASS,
+creditg_dt_threshold_v1,holdout,pooled cm == sum of folds,PASS,"TN=108,FP=102,FN=18,TP=72"
+creditg_dt_threshold_v1,holdout,holdout std blank,PASS,
+creditg_dt_threshold_v1,holdout,preds row count == locked coverage,PASS,300 vs 300
+creditg_dt_threshold_v1,holdout,tau present in every fold note,PASS,parsed 1/1
+creditg_rf_plain_v1,cv10,summary columns == D2 template,PASS,
+creditg_rf_plain_v1,cv10,folds columns == D2 template,PASS,
+creditg_rf_plain_v1,cv10,pos/neg label == D1 mapping,PASS,"pos=bad, neg=good"
+creditg_rf_plain_v1,cv10,seed == 42,PASS,
+creditg_rf_plain_v1,cv10,data_sha256 == split_manifest,PASS,
+creditg_rf_plain_v1,cv10,n_folds rows on disk,PASS,10
+creditg_rf_plain_v1,cv10,protocol field,PASS,
+creditg_rf_plain_v1,cv10,fold cm sums == n_eval,PASS,
+creditg_rf_plain_v1,cv10,fold cost == (5FN+FP)/N,PASS,
+creditg_rf_plain_v1,cv10,summary mean/std(ddof=0)/n_valid == re-derived from folds,PASS,
+creditg_rf_plain_v1,cv10,pooled cm == sum of folds,PASS,"TN=643,FP=57,FN=180,TP=120"
+creditg_rf_plain_v1,cv10,preds row count == locked coverage,PASS,1000 vs 1000
+creditg_rf_plain_v1,holdout,summary columns == D2 template,PASS,
+creditg_rf_plain_v1,holdout,folds columns == D2 template,PASS,
+creditg_rf_plain_v1,holdout,pos/neg label == D1 mapping,PASS,"pos=bad, neg=good"
+creditg_rf_plain_v1,holdout,seed == 42,PASS,
+creditg_rf_plain_v1,holdout,data_sha256 == split_manifest,PASS,
+creditg_rf_plain_v1,holdout,n_folds rows on disk,PASS,1
+creditg_rf_plain_v1,holdout,protocol field,PASS,
+creditg_rf_plain_v1,holdout,fold cm sums == n_eval,PASS,
+creditg_rf_plain_v1,holdout,fold cost == (5FN+FP)/N,PASS,
+creditg_rf_plain_v1,holdout,summary mean/std(ddof=0)/n_valid == re-derived from folds,PASS,
+creditg_rf_plain_v1,holdout,pooled cm == sum of folds,PASS,"TN=190,FP=20,FN=60,TP=30"
+creditg_rf_plain_v1,holdout,holdout std blank,PASS,
+creditg_rf_plain_v1,holdout,preds row count == locked coverage,PASS,300 vs 300
+creditg_rf_smote_v1,cv10,summary columns == D2 template,PASS,
+creditg_rf_smote_v1,cv10,folds columns == D2 template,PASS,
+creditg_rf_smote_v1,cv10,pos/neg label == D1 mapping,PASS,"pos=bad, neg=good"
+creditg_rf_smote_v1,cv10,seed == 42,PASS,
+creditg_rf_smote_v1,cv10,data_sha256 == split_manifest,PASS,
+creditg_rf_smote_v1,cv10,n_folds rows on disk,PASS,10
+creditg_rf_smote_v1,cv10,protocol field,PASS,
+creditg_rf_smote_v1,cv10,fold cm sums == n_eval,PASS,
+creditg_rf_smote_v1,cv10,fold cost == (5FN+FP)/N,PASS,
+creditg_rf_smote_v1,cv10,summary mean/std(ddof=0)/n_valid == re-derived from folds,PASS,
+creditg_rf_smote_v1,cv10,pooled cm == sum of folds,PASS,"TN=601,FP=99,FN=163,TP=137"
+creditg_rf_smote_v1,cv10,preds row count == locked coverage,PASS,1000 vs 1000
+creditg_rf_smote_v1,holdout,summary columns == D2 template,PASS,
+creditg_rf_smote_v1,holdout,folds columns == D2 template,PASS,
+creditg_rf_smote_v1,holdout,pos/neg label == D1 mapping,PASS,"pos=bad, neg=good"
+creditg_rf_smote_v1,holdout,seed == 42,PASS,
+creditg_rf_smote_v1,holdout,data_sha256 == split_manifest,PASS,
+creditg_rf_smote_v1,holdout,n_folds rows on disk,PASS,1
+creditg_rf_smote_v1,holdout,protocol field,PASS,
+creditg_rf_smote_v1,holdout,fold cm sums == n_eval,PASS,
+creditg_rf_smote_v1,holdout,fold cost == (5FN+FP)/N,PASS,
+creditg_rf_smote_v1,holdout,summary mean/std(ddof=0)/n_valid == re-derived from folds,PASS,
+creditg_rf_smote_v1,holdout,pooled cm == sum of folds,PASS,"TN=178,FP=32,FN=52,TP=38"
+creditg_rf_smote_v1,holdout,holdout std blank,PASS,
+creditg_rf_smote_v1,holdout,preds row count == locked coverage,PASS,300 vs 300
+creditg_rf_cost_v1,cv10,summary columns == D2 template,PASS,
+creditg_rf_cost_v1,cv10,folds columns == D2 template,PASS,
+creditg_rf_cost_v1,cv10,pos/neg label == D1 mapping,PASS,"pos=bad, neg=good"
+creditg_rf_cost_v1,cv10,seed == 42,PASS,
+creditg_rf_cost_v1,cv10,data_sha256 == split_manifest,PASS,
+creditg_rf_cost_v1,cv10,n_folds rows on disk,PASS,10
+creditg_rf_cost_v1,cv10,protocol field,PASS,
+creditg_rf_cost_v1,cv10,fold cm sums == n_eval,PASS,
+creditg_rf_cost_v1,cv10,fold cost == (5FN+FP)/N,PASS,
+creditg_rf_cost_v1,cv10,summary mean/std(ddof=0)/n_valid == re-derived from folds,PASS,
+creditg_rf_cost_v1,cv10,pooled cm == sum of folds,PASS,"TN=473,FP=227,FN=77,TP=223"
+creditg_rf_cost_v1,cv10,preds row count == locked coverage,PASS,1000 vs 1000
+creditg_rf_cost_v1,holdout,summary columns == D2 template,PASS,
+creditg_rf_cost_v1,holdout,folds columns == D2 template,PASS,
+creditg_rf_cost_v1,holdout,pos/neg label == D1 mapping,PASS,"pos=bad, neg=good"
+creditg_rf_cost_v1,holdout,seed == 42,PASS,
+creditg_rf_cost_v1,holdout,data_sha256 == split_manifest,PASS,
+creditg_rf_cost_v1,holdout,n_folds rows on disk,PASS,1
+creditg_rf_cost_v1,holdout,protocol field,PASS,
+creditg_rf_cost_v1,holdout,fold cm sums == n_eval,PASS,
+creditg_rf_cost_v1,holdout,fold cost == (5FN+FP)/N,PASS,
+creditg_rf_cost_v1,holdout,summary mean/std(ddof=0)/n_valid == re-derived from folds,PASS,
+creditg_rf_cost_v1,holdout,pooled cm == sum of folds,PASS,"TN=142,FP=68,FN=24,TP=66"
+creditg_rf_cost_v1,holdout,holdout std blank,PASS,
+creditg_rf_cost_v1,holdout,preds row count == locked coverage,PASS,300 vs 300
+creditg_rf_threshold_v1,cv10,summary columns == D2 template,PASS,
+creditg_rf_threshold_v1,cv10,folds columns == D2 template,PASS,
+creditg_rf_threshold_v1,cv10,pos/neg label == D1 mapping,PASS,"pos=bad, neg=good"
+creditg_rf_threshold_v1,cv10,seed == 42,PASS,
+creditg_rf_threshold_v1,cv10,data_sha256 == split_manifest,PASS,
+creditg_rf_threshold_v1,cv10,n_folds rows on disk,PASS,10
+creditg_rf_threshold_v1,cv10,protocol field,PASS,
+creditg_rf_threshold_v1,cv10,fold cm sums == n_eval,PASS,
+creditg_rf_threshold_v1,cv10,fold cost == (5FN+FP)/N,PASS,
+creditg_rf_threshold_v1,cv10,summary mean/std(ddof=0)/n_valid == re-derived from folds,PASS,
+creditg_rf_threshold_v1,cv10,pooled cm == sum of folds,PASS,"TN=461,FP=239,FN=73,TP=227"
+creditg_rf_threshold_v1,cv10,preds row count == locked coverage,PASS,1000 vs 1000
+creditg_rf_threshold_v1,cv10,tau present in every fold note,PASS,parsed 10/10
+creditg_rf_threshold_v1,holdout,summary columns == D2 template,PASS,
+creditg_rf_threshold_v1,holdout,folds columns == D2 template,PASS,
+creditg_rf_threshold_v1,holdout,pos/neg label == D1 mapping,PASS,"pos=bad, neg=good"
+creditg_rf_threshold_v1,holdout,seed == 42,PASS,
+creditg_rf_threshold_v1,holdout,data_sha256 == split_manifest,PASS,
+creditg_rf_threshold_v1,holdout,n_folds rows on disk,PASS,1
+creditg_rf_threshold_v1,holdout,protocol field,PASS,
+creditg_rf_threshold_v1,holdout,fold cm sums == n_eval,PASS,
+creditg_rf_threshold_v1,holdout,fold cost == (5FN+FP)/N,PASS,
+creditg_rf_threshold_v1,holdout,summary mean/std(ddof=0)/n_valid == re-derived from folds,PASS,
+creditg_rf_threshold_v1,holdout,pooled cm == sum of folds,PASS,"TN=112,FP=98,FN=13,TP=77"
+creditg_rf_threshold_v1,holdout,holdout std blank,PASS,
+creditg_rf_threshold_v1,holdout,preds row count == locked coverage,PASS,300 vs 300
+creditg_rf_threshold_v1,holdout,tau present in every fold note,PASS,parsed 1/1
+creditg_lr_plain_v1,cv10,summary columns == D2 template,PASS,
+creditg_lr_plain_v1,cv10,folds columns == D2 template,PASS,
+creditg_lr_plain_v1,cv10,pos/neg label == D1 mapping,PASS,"pos=bad, neg=good"
+creditg_lr_plain_v1,cv10,seed == 42,PASS,
+creditg_lr_plain_v1,cv10,data_sha256 == split_manifest,PASS,
+creditg_lr_plain_v1,cv10,n_folds rows on disk,PASS,10
+creditg_lr_plain_v1,cv10,protocol field,PASS,
+creditg_lr_plain_v1,cv10,fold cm sums == n_eval,PASS,
+creditg_lr_plain_v1,cv10,fold cost == (5FN+FP)/N,PASS,
+creditg_lr_plain_v1,cv10,summary mean/std(ddof=0)/n_valid == re-derived from folds,PASS,
+creditg_lr_plain_v1,cv10,pooled cm == sum of folds,PASS,"TN=611,FP=89,FN=159,TP=141"
+creditg_lr_plain_v1,cv10,preds row count == locked coverage,PASS,1000 vs 1000
+creditg_lr_plain_v1,holdout,summary columns == D2 template,PASS,
+creditg_lr_plain_v1,holdout,folds columns == D2 template,PASS,
+creditg_lr_plain_v1,holdout,pos/neg label == D1 mapping,PASS,"pos=bad, neg=good"
+creditg_lr_plain_v1,holdout,seed == 42,PASS,
+creditg_lr_plain_v1,holdout,data_sha256 == split_manifest,PASS,
+creditg_lr_plain_v1,holdout,n_folds rows on disk,PASS,1
+creditg_lr_plain_v1,holdout,protocol field,PASS,
+creditg_lr_plain_v1,holdout,fold cm sums == n_eval,PASS,
+creditg_lr_plain_v1,holdout,fold cost == (5FN+FP)/N,PASS,
+creditg_lr_plain_v1,holdout,summary mean/std(ddof=0)/n_valid == re-derived from folds,PASS,
+creditg_lr_plain_v1,holdout,pooled cm == sum of folds,PASS,"TN=179,FP=31,FN=47,TP=43"
+creditg_lr_plain_v1,holdout,holdout std blank,PASS,
+creditg_lr_plain_v1,holdout,preds row count == locked coverage,PASS,300 vs 300
+creditg_lr_smote_v1,cv10,summary columns == D2 template,PASS,
+creditg_lr_smote_v1,cv10,folds columns == D2 template,PASS,
+creditg_lr_smote_v1,cv10,pos/neg label == D1 mapping,PASS,"pos=bad, neg=good"
+creditg_lr_smote_v1,cv10,seed == 42,PASS,
+creditg_lr_smote_v1,cv10,data_sha256 == split_manifest,PASS,
+creditg_lr_smote_v1,cv10,n_folds rows on disk,PASS,10
+creditg_lr_smote_v1,cv10,protocol field,PASS,
+creditg_lr_smote_v1,cv10,fold cm sums == n_eval,PASS,
+creditg_lr_smote_v1,cv10,fold cost == (5FN+FP)/N,PASS,
+creditg_lr_smote_v1,cv10,summary mean/std(ddof=0)/n_valid == re-derived from folds,PASS,
+creditg_lr_smote_v1,cv10,pooled cm == sum of folds,PASS,"TN=511,FP=189,FN=95,TP=205"
+creditg_lr_smote_v1,cv10,preds row count == locked coverage,PASS,1000 vs 1000
+creditg_lr_smote_v1,holdout,summary columns == D2 template,PASS,
+creditg_lr_smote_v1,holdout,folds columns == D2 template,PASS,
+creditg_lr_smote_v1,holdout,pos/neg label == D1 mapping,PASS,"pos=bad, neg=good"
+creditg_lr_smote_v1,holdout,seed == 42,PASS,
+creditg_lr_smote_v1,holdout,data_sha256 == split_manifest,PASS,
+creditg_lr_smote_v1,holdout,n_folds rows on disk,PASS,1
+creditg_lr_smote_v1,holdout,protocol field,PASS,
+creditg_lr_smote_v1,holdout,fold cm sums == n_eval,PASS,
+creditg_lr_smote_v1,holdout,fold cost == (5FN+FP)/N,PASS,
+creditg_lr_smote_v1,holdout,summary mean/std(ddof=0)/n_valid == re-derived from folds,PASS,
+creditg_lr_smote_v1,holdout,pooled cm == sum of folds,PASS,"TN=153,FP=57,FN=29,TP=61"
+creditg_lr_smote_v1,holdout,holdout std blank,PASS,
+creditg_lr_smote_v1,holdout,preds row count == locked coverage,PASS,300 vs 300
+creditg_lr_cost_v1,cv10,summary columns == D2 template,PASS,
+creditg_lr_cost_v1,cv10,folds columns == D2 template,PASS,
+creditg_lr_cost_v1,cv10,pos/neg label == D1 mapping,PASS,"pos=bad, neg=good"
+creditg_lr_cost_v1,cv10,seed == 42,PASS,
+creditg_lr_cost_v1,cv10,data_sha256 == split_manifest,PASS,
+creditg_lr_cost_v1,cv10,n_folds rows on disk,PASS,10
+creditg_lr_cost_v1,cv10,protocol field,PASS,
+creditg_lr_cost_v1,cv10,fold cm sums == n_eval,PASS,
+creditg_lr_cost_v1,cv10,fold cost == (5FN+FP)/N,PASS,
+creditg_lr_cost_v1,cv10,summary mean/std(ddof=0)/n_valid == re-derived from folds,PASS,
+creditg_lr_cost_v1,cv10,pooled cm == sum of folds,PASS,"TN=391,FP=309,FN=41,TP=259"
+creditg_lr_cost_v1,cv10,preds row count == locked coverage,PASS,1000 vs 1000
+creditg_lr_cost_v1,holdout,summary columns == D2 template,PASS,
+creditg_lr_cost_v1,holdout,folds columns == D2 template,PASS,
+creditg_lr_cost_v1,holdout,pos/neg label == D1 mapping,PASS,"pos=bad, neg=good"
+creditg_lr_cost_v1,holdout,seed == 42,PASS,
+creditg_lr_cost_v1,holdout,data_sha256 == split_manifest,PASS,
+creditg_lr_cost_v1,holdout,n_folds rows on disk,PASS,1
+creditg_lr_cost_v1,holdout,protocol field,PASS,
+creditg_lr_cost_v1,holdout,fold cm sums == n_eval,PASS,
+creditg_lr_cost_v1,holdout,fold cost == (5FN+FP)/N,PASS,
+creditg_lr_cost_v1,holdout,summary mean/std(ddof=0)/n_valid == re-derived from folds,PASS,
+creditg_lr_cost_v1,holdout,pooled cm == sum of folds,PASS,"TN=119,FP=91,FN=16,TP=74"
+creditg_lr_cost_v1,holdout,holdout std blank,PASS,
+creditg_lr_cost_v1,holdout,preds row count == locked coverage,PASS,300 vs 300
+creditg_lr_threshold_v1,cv10,summary columns == D2 template,PASS,
+creditg_lr_threshold_v1,cv10,folds columns == D2 template,PASS,
+creditg_lr_threshold_v1,cv10,pos/neg label == D1 mapping,PASS,"pos=bad, neg=good"
+creditg_lr_threshold_v1,cv10,seed == 42,PASS,
+creditg_lr_threshold_v1,cv10,data_sha256 == split_manifest,PASS,
+creditg_lr_threshold_v1,cv10,n_folds rows on disk,PASS,10
+creditg_lr_threshold_v1,cv10,protocol field,PASS,
+creditg_lr_threshold_v1,cv10,fold cm sums == n_eval,PASS,
+creditg_lr_threshold_v1,cv10,fold cost == (5FN+FP)/N,PASS,
+creditg_lr_threshold_v1,cv10,summary mean/std(ddof=0)/n_valid == re-derived from folds,PASS,
+creditg_lr_threshold_v1,cv10,pooled cm == sum of folds,PASS,"TN=485,FP=215,FN=84,TP=216"
+creditg_lr_threshold_v1,cv10,preds row count == locked coverage,PASS,1000 vs 1000
+creditg_lr_threshold_v1,cv10,tau present in every fold note,PASS,parsed 10/10
+creditg_lr_threshold_v1,holdout,summary columns == D2 template,PASS,
+creditg_lr_threshold_v1,holdout,folds columns == D2 template,PASS,
+creditg_lr_threshold_v1,holdout,pos/neg label == D1 mapping,PASS,"pos=bad, neg=good"
+creditg_lr_threshold_v1,holdout,seed == 42,PASS,
+creditg_lr_threshold_v1,holdout,data_sha256 == split_manifest,PASS,
+creditg_lr_threshold_v1,holdout,n_folds rows on disk,PASS,1
+creditg_lr_threshold_v1,holdout,protocol field,PASS,
+creditg_lr_threshold_v1,holdout,fold cm sums == n_eval,PASS,
+creditg_lr_threshold_v1,holdout,fold cost == (5FN+FP)/N,PASS,
+creditg_lr_threshold_v1,holdout,summary mean/std(ddof=0)/n_valid == re-derived from folds,PASS,
+creditg_lr_threshold_v1,holdout,pooled cm == sum of folds,PASS,"TN=162,FP=48,FN=31,TP=59"
+creditg_lr_threshold_v1,holdout,holdout std blank,PASS,
+creditg_lr_threshold_v1,holdout,preds row count == locked coverage,PASS,300 vs 300
+creditg_lr_threshold_v1,holdout,tau present in every fold note,PASS,parsed 1/1
+creditg_svc_plain_v1,cv10,summary columns == D2 template,PASS,
+creditg_svc_plain_v1,cv10,folds columns == D2 template,PASS,
+creditg_svc_plain_v1,cv10,pos/neg label == D1 mapping,PASS,"pos=bad, neg=good"
+creditg_svc_plain_v1,cv10,seed == 42,PASS,
+creditg_svc_plain_v1,cv10,data_sha256 == split_manifest,PASS,
+creditg_svc_plain_v1,cv10,n_folds rows on disk,PASS,10
+creditg_svc_plain_v1,cv10,protocol field,PASS,
+creditg_svc_plain_v1,cv10,fold cm sums == n_eval,PASS,
+creditg_svc_plain_v1,cv10,fold cost == (5FN+FP)/N,PASS,
+creditg_svc_plain_v1,cv10,summary mean/std(ddof=0)/n_valid == re-derived from folds,PASS,
+creditg_svc_plain_v1,cv10,pooled cm == sum of folds,PASS,"TN=650,FP=50,FN=182,TP=118"
+creditg_svc_plain_v1,cv10,preds row count == locked coverage,PASS,1000 vs 1000
+creditg_svc_plain_v1,holdout,summary columns == D2 template,PASS,
+creditg_svc_plain_v1,holdout,folds columns == D2 template,PASS,
+creditg_svc_plain_v1,holdout,pos/neg label == D1 mapping,PASS,"pos=bad, neg=good"
+creditg_svc_plain_v1,holdout,seed == 42,PASS,
+creditg_svc_plain_v1,holdout,data_sha256 == split_manifest,PASS,
+creditg_svc_plain_v1,holdout,n_folds rows on disk,PASS,1
+creditg_svc_plain_v1,holdout,protocol field,PASS,
+creditg_svc_plain_v1,holdout,fold cm sums == n_eval,PASS,
+creditg_svc_plain_v1,holdout,fold cost == (5FN+FP)/N,PASS,
+creditg_svc_plain_v1,holdout,summary mean/std(ddof=0)/n_valid == re-derived from folds,PASS,
+creditg_svc_plain_v1,holdout,pooled cm == sum of folds,PASS,"TN=193,FP=17,FN=55,TP=35"
+creditg_svc_plain_v1,holdout,holdout std blank,PASS,
+creditg_svc_plain_v1,holdout,preds row count == locked coverage,PASS,300 vs 300
+creditg_svc_smote_v1,cv10,summary columns == D2 template,PASS,
+creditg_svc_smote_v1,cv10,folds columns == D2 template,PASS,
+creditg_svc_smote_v1,cv10,pos/neg label == D1 mapping,PASS,"pos=bad, neg=good"
+creditg_svc_smote_v1,cv10,seed == 42,PASS,
+creditg_svc_smote_v1,cv10,data_sha256 == split_manifest,PASS,
+creditg_svc_smote_v1,cv10,n_folds rows on disk,PASS,10
+creditg_svc_smote_v1,cv10,protocol field,PASS,
+creditg_svc_smote_v1,cv10,fold cm sums == n_eval,PASS,
+creditg_svc_smote_v1,cv10,fold cost == (5FN+FP)/N,PASS,
+creditg_svc_smote_v1,cv10,summary mean/std(ddof=0)/n_valid == re-derived from folds,PASS,
+creditg_svc_smote_v1,cv10,pooled cm == sum of folds,PASS,"TN=560,FP=140,FN=129,TP=171"
+creditg_svc_smote_v1,cv10,preds row count == locked coverage,PASS,1000 vs 1000
+creditg_svc_smote_v1,holdout,summary columns == D2 template,PASS,
+creditg_svc_smote_v1,holdout,folds columns == D2 template,PASS,
+creditg_svc_smote_v1,holdout,pos/neg label == D1 mapping,PASS,"pos=bad, neg=good"
+creditg_svc_smote_v1,holdout,seed == 42,PASS,
+creditg_svc_smote_v1,holdout,data_sha256 == split_manifest,PASS,
+creditg_svc_smote_v1,holdout,n_folds rows on disk,PASS,1
+creditg_svc_smote_v1,holdout,protocol field,PASS,
+creditg_svc_smote_v1,holdout,fold cm sums == n_eval,PASS,
+creditg_svc_smote_v1,holdout,fold cost == (5FN+FP)/N,PASS,
+creditg_svc_smote_v1,holdout,summary mean/std(ddof=0)/n_valid == re-derived from folds,PASS,
+creditg_svc_smote_v1,holdout,pooled cm == sum of folds,PASS,"TN=161,FP=49,FN=38,TP=52"
+creditg_svc_smote_v1,holdout,holdout std blank,PASS,
+creditg_svc_smote_v1,holdout,preds row count == locked coverage,PASS,300 vs 300
+creditg_svc_cost_v1,cv10,summary columns == D2 template,PASS,
+creditg_svc_cost_v1,cv10,folds columns == D2 template,PASS,
+creditg_svc_cost_v1,cv10,pos/neg label == D1 mapping,PASS,"pos=bad, neg=good"
+creditg_svc_cost_v1,cv10,seed == 42,PASS,
+creditg_svc_cost_v1,cv10,data_sha256 == split_manifest,PASS,
+creditg_svc_cost_v1,cv10,n_folds rows on disk,PASS,10
+creditg_svc_cost_v1,cv10,protocol field,PASS,
+creditg_svc_cost_v1,cv10,fold cm sums == n_eval,PASS,
+creditg_svc_cost_v1,cv10,fold cost == (5FN+FP)/N,PASS,
+creditg_svc_cost_v1,cv10,summary mean/std(ddof=0)/n_valid == re-derived from folds,PASS,
+creditg_svc_cost_v1,cv10,pooled cm == sum of folds,PASS,"TN=458,FP=242,FN=72,TP=228"
+creditg_svc_cost_v1,cv10,preds row count == locked coverage,PASS,1000 vs 1000
+creditg_svc_cost_v1,holdout,summary columns == D2 template,PASS,
+creditg_svc_cost_v1,holdout,folds columns == D2 template,PASS,
+creditg_svc_cost_v1,holdout,pos/neg label == D1 mapping,PASS,"pos=bad, neg=good"
+creditg_svc_cost_v1,holdout,seed == 42,PASS,
+creditg_svc_cost_v1,holdout,data_sha256 == split_manifest,PASS,
+creditg_svc_cost_v1,holdout,n_folds rows on disk,PASS,1
+creditg_svc_cost_v1,holdout,protocol field,PASS,
+creditg_svc_cost_v1,holdout,fold cm sums == n_eval,PASS,
+creditg_svc_cost_v1,holdout,fold cost == (5FN+FP)/N,PASS,
+creditg_svc_cost_v1,holdout,summary mean/std(ddof=0)/n_valid == re-derived from folds,PASS,
+creditg_svc_cost_v1,holdout,pooled cm == sum of folds,PASS,"TN=131,FP=79,FN=24,TP=66"
+creditg_svc_cost_v1,holdout,holdout std blank,PASS,
+creditg_svc_cost_v1,holdout,preds row count == locked coverage,PASS,300 vs 300
+creditg_svc_threshold_v1,cv10,summary columns == D2 template,PASS,
+creditg_svc_threshold_v1,cv10,folds columns == D2 template,PASS,
+creditg_svc_threshold_v1,cv10,pos/neg label == D1 mapping,PASS,"pos=bad, neg=good"
+creditg_svc_threshold_v1,cv10,seed == 42,PASS,
+creditg_svc_threshold_v1,cv10,data_sha256 == split_manifest,PASS,
+creditg_svc_threshold_v1,cv10,n_folds rows on disk,PASS,10
+creditg_svc_threshold_v1,cv10,protocol field,PASS,
+creditg_svc_threshold_v1,cv10,fold cm sums == n_eval,PASS,
+creditg_svc_threshold_v1,cv10,fold cost == (5FN+FP)/N,PASS,
+creditg_svc_threshold_v1,cv10,summary mean/std(ddof=0)/n_valid == re-derived from folds,PASS,
+creditg_svc_threshold_v1,cv10,pooled cm == sum of folds,PASS,"TN=528,FP=172,FN=103,TP=197"
+creditg_svc_threshold_v1,cv10,preds row count == locked coverage,PASS,1000 vs 1000
+creditg_svc_threshold_v1,cv10,tau present in every fold note,PASS,parsed 10/10
+creditg_svc_threshold_v1,holdout,summary columns == D2 template,PASS,
+creditg_svc_threshold_v1,holdout,folds columns == D2 template,PASS,
+creditg_svc_threshold_v1,holdout,pos/neg label == D1 mapping,PASS,"pos=bad, neg=good"
+creditg_svc_threshold_v1,holdout,seed == 42,PASS,
+creditg_svc_threshold_v1,holdout,data_sha256 == split_manifest,PASS,
+creditg_svc_threshold_v1,holdout,n_folds rows on disk,PASS,1
+creditg_svc_threshold_v1,holdout,protocol field,PASS,
+creditg_svc_threshold_v1,holdout,fold cm sums == n_eval,PASS,
+creditg_svc_threshold_v1,holdout,fold cost == (5FN+FP)/N,PASS,
+creditg_svc_threshold_v1,holdout,summary mean/std(ddof=0)/n_valid == re-derived from folds,PASS,
+creditg_svc_threshold_v1,holdout,pooled cm == sum of folds,PASS,"TN=148,FP=62,FN=30,TP=60"
+creditg_svc_threshold_v1,holdout,holdout std blank,PASS,
+creditg_svc_threshold_v1,holdout,preds row count == locked coverage,PASS,300 vs 300
+creditg_svc_threshold_v1,holdout,tau present in every fold note,PASS,parsed 1/1
+sick_dt_plain_v1,cv10,summary columns == D2 template,PASS,
+sick_dt_plain_v1,cv10,folds columns == D2 template,PASS,
+sick_dt_plain_v1,cv10,pos/neg label == D1 mapping,PASS,"pos=sick, neg=negative"
+sick_dt_plain_v1,cv10,seed == 42,PASS,
+sick_dt_plain_v1,cv10,data_sha256 == split_manifest,PASS,
+sick_dt_plain_v1,cv10,n_folds rows on disk,PASS,10
+sick_dt_plain_v1,cv10,protocol field,PASS,
+sick_dt_plain_v1,cv10,fold cm sums == n_eval,PASS,
+sick_dt_plain_v1,cv10,summary mean/std(ddof=0)/n_valid == re-derived from folds,PASS,
+sick_dt_plain_v1,cv10,pooled cm == sum of folds,PASS,"TN=3532,FP=9,FN=58,TP=173"
+sick_dt_plain_v1,cv10,preds row count == locked coverage,PASS,3772 vs 3772
+sick_dt_plain_v1,holdout,summary columns == D2 template,PASS,
+sick_dt_plain_v1,holdout,folds columns == D2 template,PASS,
+sick_dt_plain_v1,holdout,pos/neg label == D1 mapping,PASS,"pos=sick, neg=negative"
+sick_dt_plain_v1,holdout,seed == 42,PASS,
+sick_dt_plain_v1,holdout,data_sha256 == split_manifest,PASS,
+sick_dt_plain_v1,holdout,n_folds rows on disk,PASS,1
+sick_dt_plain_v1,holdout,protocol field,PASS,
+sick_dt_plain_v1,holdout,fold cm sums == n_eval,PASS,
+sick_dt_plain_v1,holdout,summary mean/std(ddof=0)/n_valid == re-derived from folds,PASS,
+sick_dt_plain_v1,holdout,pooled cm == sum of folds,PASS,"TN=1061,FP=2,FN=13,TP=56"
+sick_dt_plain_v1,holdout,holdout std blank,PASS,
+sick_dt_plain_v1,holdout,preds row count == locked coverage,PASS,1132 vs 1132
+sick_dt_smote_v1,cv10,summary columns == D2 template,PASS,
+sick_dt_smote_v1,cv10,folds columns == D2 template,PASS,
+sick_dt_smote_v1,cv10,pos/neg label == D1 mapping,PASS,"pos=sick, neg=negative"
+sick_dt_smote_v1,cv10,seed == 42,PASS,
+sick_dt_smote_v1,cv10,data_sha256 == split_manifest,PASS,
+sick_dt_smote_v1,cv10,n_folds rows on disk,PASS,10
+sick_dt_smote_v1,cv10,protocol field,PASS,
+sick_dt_smote_v1,cv10,fold cm sums == n_eval,PASS,
+sick_dt_smote_v1,cv10,summary mean/std(ddof=0)/n_valid == re-derived from folds,PASS,
+sick_dt_smote_v1,cv10,pooled cm == sum of folds,PASS,"TN=3388,FP=153,FN=4,TP=227"
+sick_dt_smote_v1,cv10,preds row count == locked coverage,PASS,3772 vs 3772
+sick_dt_smote_v1,holdout,summary columns == D2 template,PASS,
+sick_dt_smote_v1,holdout,folds columns == D2 template,PASS,
+sick_dt_smote_v1,holdout,pos/neg label == D1 mapping,PASS,"pos=sick, neg=negative"
+sick_dt_smote_v1,holdout,seed == 42,PASS,
+sick_dt_smote_v1,holdout,data_sha256 == split_manifest,PASS,
+sick_dt_smote_v1,holdout,n_folds rows on disk,PASS,1
+sick_dt_smote_v1,holdout,protocol field,PASS,
+sick_dt_smote_v1,holdout,fold cm sums == n_eval,PASS,
+sick_dt_smote_v1,holdout,summary mean/std(ddof=0)/n_valid == re-derived from folds,PASS,
+sick_dt_smote_v1,holdout,pooled cm == sum of folds,PASS,"TN=1031,FP=32,FN=0,TP=69"
+sick_dt_smote_v1,holdout,holdout std blank,PASS,
+sick_dt_smote_v1,holdout,preds row count == locked coverage,PASS,1132 vs 1132
+sick_dt_cost_v1,cv10,summary columns == D2 template,PASS,
+sick_dt_cost_v1,cv10,folds columns == D2 template,PASS,
+sick_dt_cost_v1,cv10,pos/neg label == D1 mapping,PASS,"pos=sick, neg=negative"
+sick_dt_cost_v1,cv10,seed == 42,PASS,
+sick_dt_cost_v1,cv10,data_sha256 == split_manifest,PASS,
+sick_dt_cost_v1,cv10,n_folds rows on disk,PASS,10
+sick_dt_cost_v1,cv10,protocol field,PASS,
+sick_dt_cost_v1,cv10,fold cm sums == n_eval,PASS,
+sick_dt_cost_v1,cv10,summary mean/std(ddof=0)/n_valid == re-derived from folds,PASS,
+sick_dt_cost_v1,cv10,pooled cm == sum of folds,PASS,"TN=3532,FP=9,FN=58,TP=173"
+sick_dt_cost_v1,cv10,preds row count == locked coverage,PASS,3772 vs 3772
+sick_dt_cost_v1,holdout,summary columns == D2 template,PASS,
+sick_dt_cost_v1,holdout,folds columns == D2 template,PASS,
+sick_dt_cost_v1,holdout,pos/neg label == D1 mapping,PASS,"pos=sick, neg=negative"
+sick_dt_cost_v1,holdout,seed == 42,PASS,
+sick_dt_cost_v1,holdout,data_sha256 == split_manifest,PASS,
+sick_dt_cost_v1,holdout,n_folds rows on disk,PASS,1
+sick_dt_cost_v1,holdout,protocol field,PASS,
+sick_dt_cost_v1,holdout,fold cm sums == n_eval,PASS,
+sick_dt_cost_v1,holdout,summary mean/std(ddof=0)/n_valid == re-derived from folds,PASS,
+sick_dt_cost_v1,holdout,pooled cm == sum of folds,PASS,"TN=1061,FP=2,FN=13,TP=56"
+sick_dt_cost_v1,holdout,holdout std blank,PASS,
+sick_dt_cost_v1,holdout,preds row count == locked coverage,PASS,1132 vs 1132
+sick_dt_threshold_v1,cv10,summary columns == D2 template,PASS,
+sick_dt_threshold_v1,cv10,folds columns == D2 template,PASS,
+sick_dt_threshold_v1,cv10,pos/neg label == D1 mapping,PASS,"pos=sick, neg=negative"
+sick_dt_threshold_v1,cv10,seed == 42,PASS,
+sick_dt_threshold_v1,cv10,data_sha256 == split_manifest,PASS,
+sick_dt_threshold_v1,cv10,n_folds rows on disk,PASS,10
+sick_dt_threshold_v1,cv10,protocol field,PASS,
+sick_dt_threshold_v1,cv10,fold cm sums == n_eval,PASS,
+sick_dt_threshold_v1,cv10,summary mean/std(ddof=0)/n_valid == re-derived from folds,PASS,
+sick_dt_threshold_v1,cv10,pooled cm == sum of folds,PASS,"TN=3509,FP=32,FN=48,TP=183"
+sick_dt_threshold_v1,cv10,preds row count == locked coverage,PASS,3772 vs 3772
+sick_dt_threshold_v1,cv10,tau present in every fold note,PASS,parsed 10/10
+sick_dt_threshold_v1,holdout,summary columns == D2 template,PASS,
+sick_dt_threshold_v1,holdout,folds columns == D2 template,PASS,
+sick_dt_threshold_v1,holdout,pos/neg label == D1 mapping,PASS,"pos=sick, neg=negative"
+sick_dt_threshold_v1,holdout,seed == 42,PASS,
+sick_dt_threshold_v1,holdout,data_sha256 == split_manifest,PASS,
+sick_dt_threshold_v1,holdout,n_folds rows on disk,PASS,1
+sick_dt_threshold_v1,holdout,protocol field,PASS,
+sick_dt_threshold_v1,holdout,fold cm sums == n_eval,PASS,
+sick_dt_threshold_v1,holdout,summary mean/std(ddof=0)/n_valid == re-derived from folds,PASS,
+sick_dt_threshold_v1,holdout,pooled cm == sum of folds,PASS,"TN=1052,FP=11,FN=9,TP=60"
+sick_dt_threshold_v1,holdout,holdout std blank,PASS,
+sick_dt_threshold_v1,holdout,preds row count == locked coverage,PASS,1132 vs 1132
+sick_dt_threshold_v1,holdout,tau present in every fold note,PASS,parsed 1/1
+sick_rf_plain_v1,cv10,summary columns == D2 template,PASS,
+sick_rf_plain_v1,cv10,folds columns == D2 template,PASS,
+sick_rf_plain_v1,cv10,pos/neg label == D1 mapping,PASS,"pos=sick, neg=negative"
+sick_rf_plain_v1,cv10,seed == 42,PASS,
+sick_rf_plain_v1,cv10,data_sha256 == split_manifest,PASS,
+sick_rf_plain_v1,cv10,n_folds rows on disk,PASS,10
+sick_rf_plain_v1,cv10,protocol field,PASS,
+sick_rf_plain_v1,cv10,fold cm sums == n_eval,PASS,
+sick_rf_plain_v1,cv10,summary mean/std(ddof=0)/n_valid == re-derived from folds,PASS,
+sick_rf_plain_v1,cv10,pooled cm == sum of folds,PASS,"TN=3530,FP=11,FN=44,TP=187"
+sick_rf_plain_v1,cv10,preds row count == locked coverage,PASS,3772 vs 3772
+sick_rf_plain_v1,holdout,summary columns == D2 template,PASS,
+sick_rf_plain_v1,holdout,folds columns == D2 template,PASS,
+sick_rf_plain_v1,holdout,pos/neg label == D1 mapping,PASS,"pos=sick, neg=negative"
+sick_rf_plain_v1,holdout,seed == 42,PASS,
+sick_rf_plain_v1,holdout,data_sha256 == split_manifest,PASS,
+sick_rf_plain_v1,holdout,n_folds rows on disk,PASS,1
+sick_rf_plain_v1,holdout,protocol field,PASS,
+sick_rf_plain_v1,holdout,fold cm sums == n_eval,PASS,
+sick_rf_plain_v1,holdout,summary mean/std(ddof=0)/n_valid == re-derived from folds,PASS,
+sick_rf_plain_v1,holdout,pooled cm == sum of folds,PASS,"TN=1057,FP=6,FN=10,TP=59"
+sick_rf_plain_v1,holdout,holdout std blank,PASS,
+sick_rf_plain_v1,holdout,preds row count == locked coverage,PASS,1132 vs 1132
+sick_rf_smote_v1,cv10,summary columns == D2 template,PASS,
+sick_rf_smote_v1,cv10,folds columns == D2 template,PASS,
+sick_rf_smote_v1,cv10,pos/neg label == D1 mapping,PASS,"pos=sick, neg=negative"
+sick_rf_smote_v1,cv10,seed == 42,PASS,
+sick_rf_smote_v1,cv10,data_sha256 == split_manifest,PASS,
+sick_rf_smote_v1,cv10,n_folds rows on disk,PASS,10
+sick_rf_smote_v1,cv10,protocol field,PASS,
+sick_rf_smote_v1,cv10,fold cm sums == n_eval,PASS,
+sick_rf_smote_v1,cv10,summary mean/std(ddof=0)/n_valid == re-derived from folds,PASS,
+sick_rf_smote_v1,cv10,pooled cm == sum of folds,PASS,"TN=3520,FP=21,FN=26,TP=205"
+sick_rf_smote_v1,cv10,preds row count == locked coverage,PASS,3772 vs 3772
+sick_rf_smote_v1,holdout,summary columns == D2 template,PASS,
+sick_rf_smote_v1,holdout,folds columns == D2 template,PASS,
+sick_rf_smote_v1,holdout,pos/neg label == D1 mapping,PASS,"pos=sick, neg=negative"
+sick_rf_smote_v1,holdout,seed == 42,PASS,
+sick_rf_smote_v1,holdout,data_sha256 == split_manifest,PASS,
+sick_rf_smote_v1,holdout,n_folds rows on disk,PASS,1
+sick_rf_smote_v1,holdout,protocol field,PASS,
+sick_rf_smote_v1,holdout,fold cm sums == n_eval,PASS,
+sick_rf_smote_v1,holdout,summary mean/std(ddof=0)/n_valid == re-derived from folds,PASS,
+sick_rf_smote_v1,holdout,pooled cm == sum of folds,PASS,"TN=1053,FP=10,FN=3,TP=66"
+sick_rf_smote_v1,holdout,holdout std blank,PASS,
+sick_rf_smote_v1,holdout,preds row count == locked coverage,PASS,1132 vs 1132
+sick_rf_cost_v1,cv10,summary columns == D2 template,PASS,
+sick_rf_cost_v1,cv10,folds columns == D2 template,PASS,
+sick_rf_cost_v1,cv10,pos/neg label == D1 mapping,PASS,"pos=sick, neg=negative"
+sick_rf_cost_v1,cv10,seed == 42,PASS,
+sick_rf_cost_v1,cv10,data_sha256 == split_manifest,PASS,
+sick_rf_cost_v1,cv10,n_folds rows on disk,PASS,10
+sick_rf_cost_v1,cv10,protocol field,PASS,
+sick_rf_cost_v1,cv10,fold cm sums == n_eval,PASS,
+sick_rf_cost_v1,cv10,summary mean/std(ddof=0)/n_valid == re-derived from folds,PASS,
+sick_rf_cost_v1,cv10,pooled cm == sum of folds,PASS,"TN=3530,FP=11,FN=43,TP=188"
+sick_rf_cost_v1,cv10,preds row count == locked coverage,PASS,3772 vs 3772
+sick_rf_cost_v1,holdout,summary columns == D2 template,PASS,
+sick_rf_cost_v1,holdout,folds columns == D2 template,PASS,
+sick_rf_cost_v1,holdout,pos/neg label == D1 mapping,PASS,"pos=sick, neg=negative"
+sick_rf_cost_v1,holdout,seed == 42,PASS,
+sick_rf_cost_v1,holdout,data_sha256 == split_manifest,PASS,
+sick_rf_cost_v1,holdout,n_folds rows on disk,PASS,1
+sick_rf_cost_v1,holdout,protocol field,PASS,
+sick_rf_cost_v1,holdout,fold cm sums == n_eval,PASS,
+sick_rf_cost_v1,holdout,summary mean/std(ddof=0)/n_valid == re-derived from folds,PASS,
+sick_rf_cost_v1,holdout,pooled cm == sum of folds,PASS,"TN=1057,FP=6,FN=8,TP=61"
+sick_rf_cost_v1,holdout,holdout std blank,PASS,
+sick_rf_cost_v1,holdout,preds row count == locked coverage,PASS,1132 vs 1132
+sick_rf_threshold_v1,cv10,summary columns == D2 template,PASS,
+sick_rf_threshold_v1,cv10,folds columns == D2 template,PASS,
+sick_rf_threshold_v1,cv10,pos/neg label == D1 mapping,PASS,"pos=sick, neg=negative"
+sick_rf_threshold_v1,cv10,seed == 42,PASS,
+sick_rf_threshold_v1,cv10,data_sha256 == split_manifest,PASS,
+sick_rf_threshold_v1,cv10,n_folds rows on disk,PASS,10
+sick_rf_threshold_v1,cv10,protocol field,PASS,
+sick_rf_threshold_v1,cv10,fold cm sums == n_eval,PASS,
+sick_rf_threshold_v1,cv10,summary mean/std(ddof=0)/n_valid == re-derived from folds,PASS,
+sick_rf_threshold_v1,cv10,pooled cm == sum of folds,PASS,"TN=3512,FP=29,FN=28,TP=203"
+sick_rf_threshold_v1,cv10,preds row count == locked coverage,PASS,3772 vs 3772
+sick_rf_threshold_v1,cv10,tau present in every fold note,PASS,parsed 10/10
+sick_rf_threshold_v1,holdout,summary columns == D2 template,PASS,
+sick_rf_threshold_v1,holdout,folds columns == D2 template,PASS,
+sick_rf_threshold_v1,holdout,pos/neg label == D1 mapping,PASS,"pos=sick, neg=negative"
+sick_rf_threshold_v1,holdout,seed == 42,PASS,
+sick_rf_threshold_v1,holdout,data_sha256 == split_manifest,PASS,
+sick_rf_threshold_v1,holdout,n_folds rows on disk,PASS,1
+sick_rf_threshold_v1,holdout,protocol field,PASS,
+sick_rf_threshold_v1,holdout,fold cm sums == n_eval,PASS,
+sick_rf_threshold_v1,holdout,summary mean/std(ddof=0)/n_valid == re-derived from folds,PASS,
+sick_rf_threshold_v1,holdout,pooled cm == sum of folds,PASS,"TN=1060,FP=3,FN=10,TP=59"
+sick_rf_threshold_v1,holdout,holdout std blank,PASS,
+sick_rf_threshold_v1,holdout,preds row count == locked coverage,PASS,1132 vs 1132
+sick_rf_threshold_v1,holdout,tau present in every fold note,PASS,parsed 1/1
+sick_lr_plain_v1,cv10,summary columns == D2 template,PASS,
+sick_lr_plain_v1,cv10,folds columns == D2 template,PASS,
+sick_lr_plain_v1,cv10,pos/neg label == D1 mapping,PASS,"pos=sick, neg=negative"
+sick_lr_plain_v1,cv10,seed == 42,PASS,
+sick_lr_plain_v1,cv10,data_sha256 == split_manifest,PASS,
+sick_lr_plain_v1,cv10,n_folds rows on disk,PASS,10
+sick_lr_plain_v1,cv10,protocol field,PASS,
+sick_lr_plain_v1,cv10,fold cm sums == n_eval,PASS,
+sick_lr_plain_v1,cv10,summary mean/std(ddof=0)/n_valid == re-derived from folds,PASS,
+sick_lr_plain_v1,cv10,pooled cm == sum of folds,PASS,"TN=3506,FP=35,FN=91,TP=140"
+sick_lr_plain_v1,cv10,preds row count == locked coverage,PASS,3772 vs 3772
+sick_lr_plain_v1,holdout,summary columns == D2 template,PASS,
+sick_lr_plain_v1,holdout,folds columns == D2 template,PASS,
+sick_lr_plain_v1,holdout,pos/neg label == D1 mapping,PASS,"pos=sick, neg=negative"
+sick_lr_plain_v1,holdout,seed == 42,PASS,
+sick_lr_plain_v1,holdout,data_sha256 == split_manifest,PASS,
+sick_lr_plain_v1,holdout,n_folds rows on disk,PASS,1
+sick_lr_plain_v1,holdout,protocol field,PASS,
+sick_lr_plain_v1,holdout,fold cm sums == n_eval,PASS,
+sick_lr_plain_v1,holdout,summary mean/std(ddof=0)/n_valid == re-derived from folds,PASS,
+sick_lr_plain_v1,holdout,pooled cm == sum of folds,PASS,"TN=1050,FP=13,FN=26,TP=43"
+sick_lr_plain_v1,holdout,holdout std blank,PASS,
+sick_lr_plain_v1,holdout,preds row count == locked coverage,PASS,1132 vs 1132
+sick_lr_smote_v1,cv10,summary columns == D2 template,PASS,
+sick_lr_smote_v1,cv10,folds columns == D2 template,PASS,
+sick_lr_smote_v1,cv10,pos/neg label == D1 mapping,PASS,"pos=sick, neg=negative"
+sick_lr_smote_v1,cv10,seed == 42,PASS,
+sick_lr_smote_v1,cv10,data_sha256 == split_manifest,PASS,
+sick_lr_smote_v1,cv10,n_folds rows on disk,PASS,10
+sick_lr_smote_v1,cv10,protocol field,PASS,
+sick_lr_smote_v1,cv10,fold cm sums == n_eval,PASS,
+sick_lr_smote_v1,cv10,summary mean/std(ddof=0)/n_valid == re-derived from folds,PASS,
+sick_lr_smote_v1,cv10,pooled cm == sum of folds,PASS,"TN=3200,FP=341,FN=30,TP=201"
+sick_lr_smote_v1,cv10,preds row count == locked coverage,PASS,3772 vs 3772
+sick_lr_smote_v1,holdout,summary columns == D2 template,PASS,
+sick_lr_smote_v1,holdout,folds columns == D2 template,PASS,
+sick_lr_smote_v1,holdout,pos/neg label == D1 mapping,PASS,"pos=sick, neg=negative"
+sick_lr_smote_v1,holdout,seed == 42,PASS,
+sick_lr_smote_v1,holdout,data_sha256 == split_manifest,PASS,
+sick_lr_smote_v1,holdout,n_folds rows on disk,PASS,1
+sick_lr_smote_v1,holdout,protocol field,PASS,
+sick_lr_smote_v1,holdout,fold cm sums == n_eval,PASS,
+sick_lr_smote_v1,holdout,summary mean/std(ddof=0)/n_valid == re-derived from folds,PASS,
+sick_lr_smote_v1,holdout,pooled cm == sum of folds,PASS,"TN=951,FP=112,FN=6,TP=63"
+sick_lr_smote_v1,holdout,holdout std blank,PASS,
+sick_lr_smote_v1,holdout,preds row count == locked coverage,PASS,1132 vs 1132
+sick_lr_cost_v1,cv10,summary columns == D2 template,PASS,
+sick_lr_cost_v1,cv10,folds columns == D2 template,PASS,
+sick_lr_cost_v1,cv10,pos/neg label == D1 mapping,PASS,"pos=sick, neg=negative"
+sick_lr_cost_v1,cv10,seed == 42,PASS,
+sick_lr_cost_v1,cv10,data_sha256 == split_manifest,PASS,
+sick_lr_cost_v1,cv10,n_folds rows on disk,PASS,10
+sick_lr_cost_v1,cv10,protocol field,PASS,
+sick_lr_cost_v1,cv10,fold cm sums == n_eval,PASS,
+sick_lr_cost_v1,cv10,summary mean/std(ddof=0)/n_valid == re-derived from folds,PASS,
+sick_lr_cost_v1,cv10,pooled cm == sum of folds,PASS,"TN=3506,FP=35,FN=91,TP=140"
+sick_lr_cost_v1,cv10,preds row count == locked coverage,PASS,3772 vs 3772
+sick_lr_cost_v1,holdout,summary columns == D2 template,PASS,
+sick_lr_cost_v1,holdout,folds columns == D2 template,PASS,
+sick_lr_cost_v1,holdout,pos/neg label == D1 mapping,PASS,"pos=sick, neg=negative"
+sick_lr_cost_v1,holdout,seed == 42,PASS,
+sick_lr_cost_v1,holdout,data_sha256 == split_manifest,PASS,
+sick_lr_cost_v1,holdout,n_folds rows on disk,PASS,1
+sick_lr_cost_v1,holdout,protocol field,PASS,
+sick_lr_cost_v1,holdout,fold cm sums == n_eval,PASS,
+sick_lr_cost_v1,holdout,summary mean/std(ddof=0)/n_valid == re-derived from folds,PASS,
+sick_lr_cost_v1,holdout,pooled cm == sum of folds,PASS,"TN=1050,FP=13,FN=26,TP=43"
+sick_lr_cost_v1,holdout,holdout std blank,PASS,
+sick_lr_cost_v1,holdout,preds row count == locked coverage,PASS,1132 vs 1132
+sick_lr_threshold_v1,cv10,summary columns == D2 template,PASS,
+sick_lr_threshold_v1,cv10,folds columns == D2 template,PASS,
+sick_lr_threshold_v1,cv10,pos/neg label == D1 mapping,PASS,"pos=sick, neg=negative"
+sick_lr_threshold_v1,cv10,seed == 42,PASS,
+sick_lr_threshold_v1,cv10,data_sha256 == split_manifest,PASS,
+sick_lr_threshold_v1,cv10,n_folds rows on disk,PASS,10
+sick_lr_threshold_v1,cv10,protocol field,PASS,
+sick_lr_threshold_v1,cv10,fold cm sums == n_eval,PASS,
+sick_lr_threshold_v1,cv10,summary mean/std(ddof=0)/n_valid == re-derived from folds,PASS,
+sick_lr_threshold_v1,cv10,pooled cm == sum of folds,PASS,"TN=3472,FP=69,FN=53,TP=178"
+sick_lr_threshold_v1,cv10,preds row count == locked coverage,PASS,3772 vs 3772
+sick_lr_threshold_v1,cv10,tau present in every fold note,PASS,parsed 10/10
+sick_lr_threshold_v1,holdout,summary columns == D2 template,PASS,
+sick_lr_threshold_v1,holdout,folds columns == D2 template,PASS,
+sick_lr_threshold_v1,holdout,pos/neg label == D1 mapping,PASS,"pos=sick, neg=negative"
+sick_lr_threshold_v1,holdout,seed == 42,PASS,
+sick_lr_threshold_v1,holdout,data_sha256 == split_manifest,PASS,
+sick_lr_threshold_v1,holdout,n_folds rows on disk,PASS,1
+sick_lr_threshold_v1,holdout,protocol field,PASS,
+sick_lr_threshold_v1,holdout,fold cm sums == n_eval,PASS,
+sick_lr_threshold_v1,holdout,summary mean/std(ddof=0)/n_valid == re-derived from folds,PASS,
+sick_lr_threshold_v1,holdout,pooled cm == sum of folds,PASS,"TN=1045,FP=18,FN=19,TP=50"
+sick_lr_threshold_v1,holdout,holdout std blank,PASS,
+sick_lr_threshold_v1,holdout,preds row count == locked coverage,PASS,1132 vs 1132
+sick_lr_threshold_v1,holdout,tau present in every fold note,PASS,parsed 1/1
+sick_svc_plain_v1,cv10,summary columns == D2 template,PASS,
+sick_svc_plain_v1,cv10,folds columns == D2 template,PASS,
+sick_svc_plain_v1,cv10,pos/neg label == D1 mapping,PASS,"pos=sick, neg=negative"
+sick_svc_plain_v1,cv10,seed == 42,PASS,
+sick_svc_plain_v1,cv10,data_sha256 == split_manifest,PASS,
+sick_svc_plain_v1,cv10,n_folds rows on disk,PASS,10
+sick_svc_plain_v1,cv10,protocol field,PASS,
+sick_svc_plain_v1,cv10,fold cm sums == n_eval,PASS,
+sick_svc_plain_v1,cv10,summary mean/std(ddof=0)/n_valid == re-derived from folds,PASS,
+sick_svc_plain_v1,cv10,pooled cm == sum of folds,PASS,"TN=3516,FP=25,FN=73,TP=158"
+sick_svc_plain_v1,cv10,preds row count == locked coverage,PASS,3772 vs 3772
+sick_svc_plain_v1,holdout,summary columns == D2 template,PASS,
+sick_svc_plain_v1,holdout,folds columns == D2 template,PASS,
+sick_svc_plain_v1,holdout,pos/neg label == D1 mapping,PASS,"pos=sick, neg=negative"
+sick_svc_plain_v1,holdout,seed == 42,PASS,
+sick_svc_plain_v1,holdout,data_sha256 == split_manifest,PASS,
+sick_svc_plain_v1,holdout,n_folds rows on disk,PASS,1
+sick_svc_plain_v1,holdout,protocol field,PASS,
+sick_svc_plain_v1,holdout,fold cm sums == n_eval,PASS,
+sick_svc_plain_v1,holdout,summary mean/std(ddof=0)/n_valid == re-derived from folds,PASS,
+sick_svc_plain_v1,holdout,pooled cm == sum of folds,PASS,"TN=1053,FP=10,FN=24,TP=45"
+sick_svc_plain_v1,holdout,holdout std blank,PASS,
+sick_svc_plain_v1,holdout,preds row count == locked coverage,PASS,1132 vs 1132
+sick_svc_smote_v1,cv10,summary columns == D2 template,PASS,
+sick_svc_smote_v1,cv10,folds columns == D2 template,PASS,
+sick_svc_smote_v1,cv10,pos/neg label == D1 mapping,PASS,"pos=sick, neg=negative"
+sick_svc_smote_v1,cv10,seed == 42,PASS,
+sick_svc_smote_v1,cv10,data_sha256 == split_manifest,PASS,
+sick_svc_smote_v1,cv10,n_folds rows on disk,PASS,10
+sick_svc_smote_v1,cv10,protocol field,PASS,
+sick_svc_smote_v1,cv10,fold cm sums == n_eval,PASS,
+sick_svc_smote_v1,cv10,summary mean/std(ddof=0)/n_valid == re-derived from folds,PASS,
+sick_svc_smote_v1,cv10,pooled cm == sum of folds,PASS,"TN=3394,FP=147,FN=9,TP=222"
+sick_svc_smote_v1,cv10,preds row count == locked coverage,PASS,3772 vs 3772
+sick_svc_smote_v1,holdout,summary columns == D2 template,PASS,
+sick_svc_smote_v1,holdout,folds columns == D2 template,PASS,
+sick_svc_smote_v1,holdout,pos/neg label == D1 mapping,PASS,"pos=sick, neg=negative"
+sick_svc_smote_v1,holdout,seed == 42,PASS,
+sick_svc_smote_v1,holdout,data_sha256 == split_manifest,PASS,
+sick_svc_smote_v1,holdout,n_folds rows on disk,PASS,1
+sick_svc_smote_v1,holdout,protocol field,PASS,
+sick_svc_smote_v1,holdout,fold cm sums == n_eval,PASS,
+sick_svc_smote_v1,holdout,summary mean/std(ddof=0)/n_valid == re-derived from folds,PASS,
+sick_svc_smote_v1,holdout,pooled cm == sum of folds,PASS,"TN=1013,FP=50,FN=2,TP=67"
+sick_svc_smote_v1,holdout,holdout std blank,PASS,
+sick_svc_smote_v1,holdout,preds row count == locked coverage,PASS,1132 vs 1132
+sick_svc_cost_v1,cv10,summary columns == D2 template,PASS,
+sick_svc_cost_v1,cv10,folds columns == D2 template,PASS,
+sick_svc_cost_v1,cv10,pos/neg label == D1 mapping,PASS,"pos=sick, neg=negative"
+sick_svc_cost_v1,cv10,seed == 42,PASS,
+sick_svc_cost_v1,cv10,data_sha256 == split_manifest,PASS,
+sick_svc_cost_v1,cv10,n_folds rows on disk,PASS,10
+sick_svc_cost_v1,cv10,protocol field,PASS,
+sick_svc_cost_v1,cv10,fold cm sums == n_eval,PASS,
+sick_svc_cost_v1,cv10,summary mean/std(ddof=0)/n_valid == re-derived from folds,PASS,
+sick_svc_cost_v1,cv10,pooled cm == sum of folds,PASS,"TN=3516,FP=25,FN=73,TP=158"
+sick_svc_cost_v1,cv10,preds row count == locked coverage,PASS,3772 vs 3772
+sick_svc_cost_v1,holdout,summary columns == D2 template,PASS,
+sick_svc_cost_v1,holdout,folds columns == D2 template,PASS,
+sick_svc_cost_v1,holdout,pos/neg label == D1 mapping,PASS,"pos=sick, neg=negative"
+sick_svc_cost_v1,holdout,seed == 42,PASS,
+sick_svc_cost_v1,holdout,data_sha256 == split_manifest,PASS,
+sick_svc_cost_v1,holdout,n_folds rows on disk,PASS,1
+sick_svc_cost_v1,holdout,protocol field,PASS,
+sick_svc_cost_v1,holdout,fold cm sums == n_eval,PASS,
+sick_svc_cost_v1,holdout,summary mean/std(ddof=0)/n_valid == re-derived from folds,PASS,
+sick_svc_cost_v1,holdout,pooled cm == sum of folds,PASS,"TN=1053,FP=10,FN=24,TP=45"
+sick_svc_cost_v1,holdout,holdout std blank,PASS,
+sick_svc_cost_v1,holdout,preds row count == locked coverage,PASS,1132 vs 1132
+sick_svc_threshold_v1,cv10,summary columns == D2 template,PASS,
+sick_svc_threshold_v1,cv10,folds columns == D2 template,PASS,
+sick_svc_threshold_v1,cv10,pos/neg label == D1 mapping,PASS,"pos=sick, neg=negative"
+sick_svc_threshold_v1,cv10,seed == 42,PASS,
+sick_svc_threshold_v1,cv10,data_sha256 == split_manifest,PASS,
+sick_svc_threshold_v1,cv10,n_folds rows on disk,PASS,10
+sick_svc_threshold_v1,cv10,protocol field,PASS,
+sick_svc_threshold_v1,cv10,fold cm sums == n_eval,PASS,
+sick_svc_threshold_v1,cv10,summary mean/std(ddof=0)/n_valid == re-derived from folds,PASS,
+sick_svc_threshold_v1,cv10,pooled cm == sum of folds,PASS,"TN=3502,FP=39,FN=48,TP=183"
+sick_svc_threshold_v1,cv10,preds row count == locked coverage,PASS,3772 vs 3772
+sick_svc_threshold_v1,cv10,tau present in every fold note,PASS,parsed 10/10
+sick_svc_threshold_v1,holdout,summary columns == D2 template,PASS,
+sick_svc_threshold_v1,holdout,folds columns == D2 template,PASS,
+sick_svc_threshold_v1,holdout,pos/neg label == D1 mapping,PASS,"pos=sick, neg=negative"
+sick_svc_threshold_v1,holdout,seed == 42,PASS,
+sick_svc_threshold_v1,holdout,data_sha256 == split_manifest,PASS,
+sick_svc_threshold_v1,holdout,n_folds rows on disk,PASS,1
+sick_svc_threshold_v1,holdout,protocol field,PASS,
+sick_svc_threshold_v1,holdout,fold cm sums == n_eval,PASS,
+sick_svc_threshold_v1,holdout,summary mean/std(ddof=0)/n_valid == re-derived from folds,PASS,
+sick_svc_threshold_v1,holdout,pooled cm == sum of folds,PASS,"TN=1048,FP=15,FN=21,TP=48"
+sick_svc_threshold_v1,holdout,holdout std blank,PASS,
+sick_svc_threshold_v1,holdout,preds row count == locked coverage,PASS,1132 vs 1132
+sick_svc_threshold_v1,holdout,tau present in every fold note,PASS,parsed 1/1
+creditg_zero_ref_v1,cv10,summary columns == D2 template,PASS,
+creditg_zero_ref_v1,cv10,folds columns == D2 template,PASS,
+creditg_zero_ref_v1,cv10,pos/neg label == D1 mapping,PASS,"pos=bad, neg=good"
+creditg_zero_ref_v1,cv10,seed == 42,PASS,
+creditg_zero_ref_v1,cv10,data_sha256 == split_manifest,PASS,
+creditg_zero_ref_v1,cv10,n_folds rows on disk,PASS,10
+creditg_zero_ref_v1,cv10,protocol field,PASS,
+creditg_zero_ref_v1,cv10,fold cm sums == n_eval,PASS,
+creditg_zero_ref_v1,cv10,fold cost == (5FN+FP)/N,PASS,
+creditg_zero_ref_v1,cv10,summary mean/std(ddof=0)/n_valid == re-derived from folds,PASS,
+creditg_zero_ref_v1,cv10,pooled cm == sum of folds,PASS,"TN=700,FP=0,FN=300,TP=0"
+creditg_zero_ref_v1,cv10,preds row count == locked coverage,PASS,1000 vs 1000
+creditg_zero_ref_v1,holdout,summary columns == D2 template,PASS,
+creditg_zero_ref_v1,holdout,folds columns == D2 template,PASS,
+creditg_zero_ref_v1,holdout,pos/neg label == D1 mapping,PASS,"pos=bad, neg=good"
+creditg_zero_ref_v1,holdout,seed == 42,PASS,
+creditg_zero_ref_v1,holdout,data_sha256 == split_manifest,PASS,
+creditg_zero_ref_v1,holdout,n_folds rows on disk,PASS,1
+creditg_zero_ref_v1,holdout,protocol field,PASS,
+creditg_zero_ref_v1,holdout,fold cm sums == n_eval,PASS,
+creditg_zero_ref_v1,holdout,fold cost == (5FN+FP)/N,PASS,
+creditg_zero_ref_v1,holdout,summary mean/std(ddof=0)/n_valid == re-derived from folds,PASS,
+creditg_zero_ref_v1,holdout,pooled cm == sum of folds,PASS,"TN=210,FP=0,FN=90,TP=0"
+creditg_zero_ref_v1,holdout,holdout std blank,PASS,
+creditg_zero_ref_v1,holdout,preds row count == locked coverage,PASS,300 vs 300
+sick_zero_ref_v1,cv10,summary columns == D2 template,PASS,
+sick_zero_ref_v1,cv10,folds columns == D2 template,PASS,
+sick_zero_ref_v1,cv10,pos/neg label == D1 mapping,PASS,"pos=sick, neg=negative"
+sick_zero_ref_v1,cv10,seed == 42,PASS,
+sick_zero_ref_v1,cv10,data_sha256 == split_manifest,PASS,
+sick_zero_ref_v1,cv10,n_folds rows on disk,PASS,10
+sick_zero_ref_v1,cv10,protocol field,PASS,
+sick_zero_ref_v1,cv10,fold cm sums == n_eval,PASS,
+sick_zero_ref_v1,cv10,summary mean/std(ddof=0)/n_valid == re-derived from folds,PASS,
+sick_zero_ref_v1,cv10,pooled cm == sum of folds,PASS,"TN=3541,FP=0,FN=231,TP=0"
+sick_zero_ref_v1,cv10,preds row count == locked coverage,PASS,3772 vs 3772
+sick_zero_ref_v1,holdout,summary columns == D2 template,PASS,
+sick_zero_ref_v1,holdout,folds columns == D2 template,PASS,
+sick_zero_ref_v1,holdout,pos/neg label == D1 mapping,PASS,"pos=sick, neg=negative"
+sick_zero_ref_v1,holdout,seed == 42,PASS,
+sick_zero_ref_v1,holdout,data_sha256 == split_manifest,PASS,
+sick_zero_ref_v1,holdout,n_folds rows on disk,PASS,1
+sick_zero_ref_v1,holdout,protocol field,PASS,
+sick_zero_ref_v1,holdout,fold cm sums == n_eval,PASS,
+sick_zero_ref_v1,holdout,summary mean/std(ddof=0)/n_valid == re-derived from folds,PASS,
+sick_zero_ref_v1,holdout,pooled cm == sum of folds,PASS,"TN=1063,FP=0,FN=69,TP=0"
+sick_zero_ref_v1,holdout,holdout std blank,PASS,
+sick_zero_ref_v1,holdout,preds row count == locked coverage,PASS,1132 vs 1132
+creditg_bag_plain_v1,cv10,summary columns == D2 template,PASS,
+creditg_bag_plain_v1,cv10,folds columns == D2 template,PASS,
+creditg_bag_plain_v1,cv10,pos/neg label == D1 mapping,PASS,"pos=bad, neg=good"
+creditg_bag_plain_v1,cv10,seed == 42,PASS,
+creditg_bag_plain_v1,cv10,data_sha256 == split_manifest,PASS,
+creditg_bag_plain_v1,cv10,n_folds rows on disk,PASS,10
+creditg_bag_plain_v1,cv10,protocol field,PASS,
+creditg_bag_plain_v1,cv10,fold cm sums == n_eval,PASS,
+creditg_bag_plain_v1,cv10,fold cost == (5FN+FP)/N,PASS,
+creditg_bag_plain_v1,cv10,summary mean/std(ddof=0)/n_valid == re-derived from folds,PASS,
+creditg_bag_plain_v1,cv10,pooled cm == sum of folds,PASS,"TN=627,FP=73,FN=171,TP=129"
+creditg_bag_plain_v1,cv10,preds row count == locked coverage,PASS,1000 vs 1000
+creditg_bag_plain_v1,holdout,summary columns == D2 template,PASS,
+creditg_bag_plain_v1,holdout,folds columns == D2 template,PASS,
+creditg_bag_plain_v1,holdout,pos/neg label == D1 mapping,PASS,"pos=bad, neg=good"
+creditg_bag_plain_v1,holdout,seed == 42,PASS,
+creditg_bag_plain_v1,holdout,data_sha256 == split_manifest,PASS,
+creditg_bag_plain_v1,holdout,n_folds rows on disk,PASS,1
+creditg_bag_plain_v1,holdout,protocol field,PASS,
+creditg_bag_plain_v1,holdout,fold cm sums == n_eval,PASS,
+creditg_bag_plain_v1,holdout,fold cost == (5FN+FP)/N,PASS,
+creditg_bag_plain_v1,holdout,summary mean/std(ddof=0)/n_valid == re-derived from folds,PASS,
+creditg_bag_plain_v1,holdout,pooled cm == sum of folds,PASS,"TN=189,FP=21,FN=58,TP=32"
+creditg_bag_plain_v1,holdout,holdout std blank,PASS,
+creditg_bag_plain_v1,holdout,preds row count == locked coverage,PASS,300 vs 300
+creditg_bag_smote_v1,cv10,summary columns == D2 template,PASS,
+creditg_bag_smote_v1,cv10,folds columns == D2 template,PASS,
+creditg_bag_smote_v1,cv10,pos/neg label == D1 mapping,PASS,"pos=bad, neg=good"
+creditg_bag_smote_v1,cv10,seed == 42,PASS,
+creditg_bag_smote_v1,cv10,data_sha256 == split_manifest,PASS,
+creditg_bag_smote_v1,cv10,n_folds rows on disk,PASS,10
+creditg_bag_smote_v1,cv10,protocol field,PASS,
+creditg_bag_smote_v1,cv10,fold cm sums == n_eval,PASS,
+creditg_bag_smote_v1,cv10,fold cost == (5FN+FP)/N,PASS,
+creditg_bag_smote_v1,cv10,summary mean/std(ddof=0)/n_valid == re-derived from folds,PASS,
+creditg_bag_smote_v1,cv10,pooled cm == sum of folds,PASS,"TN=555,FP=145,FN=132,TP=168"
+creditg_bag_smote_v1,cv10,preds row count == locked coverage,PASS,1000 vs 1000
+creditg_bag_smote_v1,holdout,summary columns == D2 template,PASS,
+creditg_bag_smote_v1,holdout,folds columns == D2 template,PASS,
+creditg_bag_smote_v1,holdout,pos/neg label == D1 mapping,PASS,"pos=bad, neg=good"
+creditg_bag_smote_v1,holdout,seed == 42,PASS,
+creditg_bag_smote_v1,holdout,data_sha256 == split_manifest,PASS,
+creditg_bag_smote_v1,holdout,n_folds rows on disk,PASS,1
+creditg_bag_smote_v1,holdout,protocol field,PASS,
+creditg_bag_smote_v1,holdout,fold cm sums == n_eval,PASS,
+creditg_bag_smote_v1,holdout,fold cost == (5FN+FP)/N,PASS,
+creditg_bag_smote_v1,holdout,summary mean/std(ddof=0)/n_valid == re-derived from folds,PASS,
+creditg_bag_smote_v1,holdout,pooled cm == sum of folds,PASS,"TN=174,FP=36,FN=43,TP=47"
+creditg_bag_smote_v1,holdout,holdout std blank,PASS,
+creditg_bag_smote_v1,holdout,preds row count == locked coverage,PASS,300 vs 300
+creditg_ada_plain_v1,cv10,summary columns == D2 template,PASS,
+creditg_ada_plain_v1,cv10,folds columns == D2 template,PASS,
+creditg_ada_plain_v1,cv10,pos/neg label == D1 mapping,PASS,"pos=bad, neg=good"
+creditg_ada_plain_v1,cv10,seed == 42,PASS,
+creditg_ada_plain_v1,cv10,data_sha256 == split_manifest,PASS,
+creditg_ada_plain_v1,cv10,n_folds rows on disk,PASS,10
+creditg_ada_plain_v1,cv10,protocol field,PASS,
+creditg_ada_plain_v1,cv10,fold cm sums == n_eval,PASS,
+creditg_ada_plain_v1,cv10,fold cost == (5FN+FP)/N,PASS,
+creditg_ada_plain_v1,cv10,summary mean/std(ddof=0)/n_valid == re-derived from folds,PASS,
+creditg_ada_plain_v1,cv10,pooled cm == sum of folds,PASS,"TN=575,FP=125,FN=158,TP=142"
+creditg_ada_plain_v1,cv10,preds row count == locked coverage,PASS,1000 vs 1000
+creditg_ada_plain_v1,holdout,summary columns == D2 template,PASS,
+creditg_ada_plain_v1,holdout,folds columns == D2 template,PASS,
+creditg_ada_plain_v1,holdout,pos/neg label == D1 mapping,PASS,"pos=bad, neg=good"
+creditg_ada_plain_v1,holdout,seed == 42,PASS,
+creditg_ada_plain_v1,holdout,data_sha256 == split_manifest,PASS,
+creditg_ada_plain_v1,holdout,n_folds rows on disk,PASS,1
+creditg_ada_plain_v1,holdout,protocol field,PASS,
+creditg_ada_plain_v1,holdout,fold cm sums == n_eval,PASS,
+creditg_ada_plain_v1,holdout,fold cost == (5FN+FP)/N,PASS,
+creditg_ada_plain_v1,holdout,summary mean/std(ddof=0)/n_valid == re-derived from folds,PASS,
+creditg_ada_plain_v1,holdout,pooled cm == sum of folds,PASS,"TN=178,FP=32,FN=56,TP=34"
+creditg_ada_plain_v1,holdout,holdout std blank,PASS,
+creditg_ada_plain_v1,holdout,preds row count == locked coverage,PASS,300 vs 300
+creditg_ada_smote_v1,cv10,summary columns == D2 template,PASS,
+creditg_ada_smote_v1,cv10,folds columns == D2 template,PASS,
+creditg_ada_smote_v1,cv10,pos/neg label == D1 mapping,PASS,"pos=bad, neg=good"
+creditg_ada_smote_v1,cv10,seed == 42,PASS,
+creditg_ada_smote_v1,cv10,data_sha256 == split_manifest,PASS,
+creditg_ada_smote_v1,cv10,n_folds rows on disk,PASS,10
+creditg_ada_smote_v1,cv10,protocol field,PASS,
+creditg_ada_smote_v1,cv10,fold cm sums == n_eval,PASS,
+creditg_ada_smote_v1,cv10,fold cost == (5FN+FP)/N,PASS,
+creditg_ada_smote_v1,cv10,summary mean/std(ddof=0)/n_valid == re-derived from folds,PASS,
+creditg_ada_smote_v1,cv10,pooled cm == sum of folds,PASS,"TN=572,FP=128,FN=155,TP=145"
+creditg_ada_smote_v1,cv10,preds row count == locked coverage,PASS,1000 vs 1000
+creditg_ada_smote_v1,holdout,summary columns == D2 template,PASS,
+creditg_ada_smote_v1,holdout,folds columns == D2 template,PASS,
+creditg_ada_smote_v1,holdout,pos/neg label == D1 mapping,PASS,"pos=bad, neg=good"
+creditg_ada_smote_v1,holdout,seed == 42,PASS,
+creditg_ada_smote_v1,holdout,data_sha256 == split_manifest,PASS,
+creditg_ada_smote_v1,holdout,n_folds rows on disk,PASS,1
+creditg_ada_smote_v1,holdout,protocol field,PASS,
+creditg_ada_smote_v1,holdout,fold cm sums == n_eval,PASS,
+creditg_ada_smote_v1,holdout,fold cost == (5FN+FP)/N,PASS,
+creditg_ada_smote_v1,holdout,summary mean/std(ddof=0)/n_valid == re-derived from folds,PASS,
+creditg_ada_smote_v1,holdout,pooled cm == sum of folds,PASS,"TN=180,FP=30,FN=50,TP=40"
+creditg_ada_smote_v1,holdout,holdout std blank,PASS,
+creditg_ada_smote_v1,holdout,preds row count == locked coverage,PASS,300 vs 300
+sick_bag_plain_v1,cv10,summary columns == D2 template,PASS,
+sick_bag_plain_v1,cv10,folds columns == D2 template,PASS,
+sick_bag_plain_v1,cv10,pos/neg label == D1 mapping,PASS,"pos=sick, neg=negative"
+sick_bag_plain_v1,cv10,seed == 42,PASS,
+sick_bag_plain_v1,cv10,data_sha256 == split_manifest,PASS,
+sick_bag_plain_v1,cv10,n_folds rows on disk,PASS,10
+sick_bag_plain_v1,cv10,protocol field,PASS,
+sick_bag_plain_v1,cv10,fold cm sums == n_eval,PASS,
+sick_bag_plain_v1,cv10,summary mean/std(ddof=0)/n_valid == re-derived from folds,PASS,
+sick_bag_plain_v1,cv10,pooled cm == sum of folds,PASS,"TN=3514,FP=27,FN=52,TP=179"
+sick_bag_plain_v1,cv10,preds row count == locked coverage,PASS,3772 vs 3772
+sick_bag_plain_v1,holdout,summary columns == D2 template,PASS,
+sick_bag_plain_v1,holdout,folds columns == D2 template,PASS,
+sick_bag_plain_v1,holdout,pos/neg label == D1 mapping,PASS,"pos=sick, neg=negative"
+sick_bag_plain_v1,holdout,seed == 42,PASS,
+sick_bag_plain_v1,holdout,data_sha256 == split_manifest,PASS,
+sick_bag_plain_v1,holdout,n_folds rows on disk,PASS,1
+sick_bag_plain_v1,holdout,protocol field,PASS,
+sick_bag_plain_v1,holdout,fold cm sums == n_eval,PASS,
+sick_bag_plain_v1,holdout,summary mean/std(ddof=0)/n_valid == re-derived from folds,PASS,
+sick_bag_plain_v1,holdout,pooled cm == sum of folds,PASS,"TN=1050,FP=13,FN=10,TP=59"
+sick_bag_plain_v1,holdout,holdout std blank,PASS,
+sick_bag_plain_v1,holdout,preds row count == locked coverage,PASS,1132 vs 1132
+sick_bag_smote_v1,cv10,summary columns == D2 template,PASS,
+sick_bag_smote_v1,cv10,folds columns == D2 template,PASS,
+sick_bag_smote_v1,cv10,pos/neg label == D1 mapping,PASS,"pos=sick, neg=negative"
+sick_bag_smote_v1,cv10,seed == 42,PASS,
+sick_bag_smote_v1,cv10,data_sha256 == split_manifest,PASS,
+sick_bag_smote_v1,cv10,n_folds rows on disk,PASS,10
+sick_bag_smote_v1,cv10,protocol field,PASS,
+sick_bag_smote_v1,cv10,fold cm sums == n_eval,PASS,
+sick_bag_smote_v1,cv10,summary mean/std(ddof=0)/n_valid == re-derived from folds,PASS,
+sick_bag_smote_v1,cv10,pooled cm == sum of folds,PASS,"TN=3418,FP=123,FN=3,TP=228"
+sick_bag_smote_v1,cv10,preds row count == locked coverage,PASS,3772 vs 3772
+sick_bag_smote_v1,holdout,summary columns == D2 template,PASS,
+sick_bag_smote_v1,holdout,folds columns == D2 template,PASS,
+sick_bag_smote_v1,holdout,pos/neg label == D1 mapping,PASS,"pos=sick, neg=negative"
+sick_bag_smote_v1,holdout,seed == 42,PASS,
+sick_bag_smote_v1,holdout,data_sha256 == split_manifest,PASS,
+sick_bag_smote_v1,holdout,n_folds rows on disk,PASS,1
+sick_bag_smote_v1,holdout,protocol field,PASS,
+sick_bag_smote_v1,holdout,fold cm sums == n_eval,PASS,
+sick_bag_smote_v1,holdout,summary mean/std(ddof=0)/n_valid == re-derived from folds,PASS,
+sick_bag_smote_v1,holdout,pooled cm == sum of folds,PASS,"TN=1031,FP=32,FN=0,TP=69"
+sick_bag_smote_v1,holdout,holdout std blank,PASS,
+sick_bag_smote_v1,holdout,preds row count == locked coverage,PASS,1132 vs 1132
+sick_ada_plain_v1,cv10,summary columns == D2 template,PASS,
+sick_ada_plain_v1,cv10,folds columns == D2 template,PASS,
+sick_ada_plain_v1,cv10,pos/neg label == D1 mapping,PASS,"pos=sick, neg=negative"
+sick_ada_plain_v1,cv10,seed == 42,PASS,
+sick_ada_plain_v1,cv10,data_sha256 == split_manifest,PASS,
+sick_ada_plain_v1,cv10,n_folds rows on disk,PASS,10
+sick_ada_plain_v1,cv10,protocol field,PASS,
+sick_ada_plain_v1,cv10,fold cm sums == n_eval,PASS,
+sick_ada_plain_v1,cv10,summary mean/std(ddof=0)/n_valid == re-derived from folds,PASS,
+sick_ada_plain_v1,cv10,pooled cm == sum of folds,PASS,"TN=3527,FP=14,FN=23,TP=208"
+sick_ada_plain_v1,cv10,preds row count == locked coverage,PASS,3772 vs 3772
+sick_ada_plain_v1,holdout,summary columns == D2 template,PASS,
+sick_ada_plain_v1,holdout,folds columns == D2 template,PASS,
+sick_ada_plain_v1,holdout,pos/neg label == D1 mapping,PASS,"pos=sick, neg=negative"
+sick_ada_plain_v1,holdout,seed == 42,PASS,
+sick_ada_plain_v1,holdout,data_sha256 == split_manifest,PASS,
+sick_ada_plain_v1,holdout,n_folds rows on disk,PASS,1
+sick_ada_plain_v1,holdout,protocol field,PASS,
+sick_ada_plain_v1,holdout,fold cm sums == n_eval,PASS,
+sick_ada_plain_v1,holdout,summary mean/std(ddof=0)/n_valid == re-derived from folds,PASS,
+sick_ada_plain_v1,holdout,pooled cm == sum of folds,PASS,"TN=1055,FP=8,FN=4,TP=65"
+sick_ada_plain_v1,holdout,holdout std blank,PASS,
+sick_ada_plain_v1,holdout,preds row count == locked coverage,PASS,1132 vs 1132
+sick_ada_smote_v1,cv10,summary columns == D2 template,PASS,
+sick_ada_smote_v1,cv10,folds columns == D2 template,PASS,
+sick_ada_smote_v1,cv10,pos/neg label == D1 mapping,PASS,"pos=sick, neg=negative"
+sick_ada_smote_v1,cv10,seed == 42,PASS,
+sick_ada_smote_v1,cv10,data_sha256 == split_manifest,PASS,
+sick_ada_smote_v1,cv10,n_folds rows on disk,PASS,10
+sick_ada_smote_v1,cv10,protocol field,PASS,
+sick_ada_smote_v1,cv10,fold cm sums == n_eval,PASS,
+sick_ada_smote_v1,cv10,summary mean/std(ddof=0)/n_valid == re-derived from folds,PASS,
+sick_ada_smote_v1,cv10,pooled cm == sum of folds,PASS,"TN=3528,FP=13,FN=16,TP=215"
+sick_ada_smote_v1,cv10,preds row count == locked coverage,PASS,3772 vs 3772
+sick_ada_smote_v1,holdout,summary columns == D2 template,PASS,
+sick_ada_smote_v1,holdout,folds columns == D2 template,PASS,
+sick_ada_smote_v1,holdout,pos/neg label == D1 mapping,PASS,"pos=sick, neg=negative"
+sick_ada_smote_v1,holdout,seed == 42,PASS,
+sick_ada_smote_v1,holdout,data_sha256 == split_manifest,PASS,
+sick_ada_smote_v1,holdout,n_folds rows on disk,PASS,1
+sick_ada_smote_v1,holdout,protocol field,PASS,
+sick_ada_smote_v1,holdout,fold cm sums == n_eval,PASS,
+sick_ada_smote_v1,holdout,summary mean/std(ddof=0)/n_valid == re-derived from folds,PASS,
+sick_ada_smote_v1,holdout,pooled cm == sum of folds,PASS,"TN=1052,FP=11,FN=1,TP=68"
+sick_ada_smote_v1,holdout,holdout std blank,PASS,
+sick_ada_smote_v1,holdout,preds row count == locked coverage,PASS,1132 vs 1132
