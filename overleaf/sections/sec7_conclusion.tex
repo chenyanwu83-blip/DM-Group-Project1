@@ -1,2 +1,35 @@
 \section{Conclusion and Future Work}
 % D drafts this file; E helps align conclusions with measured results and limitations.
+%
+% === 3-sentence verified results summary for E (abstract / sec1 use; 2026-10-25, D) ===
+% 1. On credit-g (30% positives) the winner is cost-sensitive logistic regression
+%    (cv10 F1 0.597, recall 0.863 vs 0.470 plain), while on sick (6.1% positives) it is
+%    SMOTE-resampled random forest (F1 0.897, recall 0.888) --- the winner flips across
+%    datasets and none of size, attribute composition, missingness, or imbalance alone
+%    predicts it.
+% 2. All three imbalance strategies reliably buy recall (9 of 12 pre-specified paired
+%    comparisons significant, Nadeau--Bengio corrected), but F1 gains flip sign on sick
+%    for SMOTE x (DT/LR): the precision price, not the recall gain, is dataset-dependent.
+% 3. An exploratory ensemble extension (outside the main statistical analysis, only two
+%    pre-specified comparisons) shows AdaBoost+SMOTE reaching the project's highest sick
+%    F1 (0.937), with boosting re-weighting significantly outperforming SMOTE resampling
+%    on sick (+0.171, p < 0.001).
+% === end summary ===
+
+\subsection{Findings}
+
+This project compared four classifiers (DT, RF, LR, SVC) under three imbalance-handling strategies (SMOTE, cost-sensitive learning, threshold adjustment) on two locked UCI benchmarks: the moderately imbalanced, fully observed credit-g (30\% positives) and the extremely imbalanced, noisy sick (6.1\% positives, 29.9\% of rows with missing values). Under a frozen 10-fold cross-validation protocol with overlap-corrected paired tests, three findings are robust:
+
+\begin{enumerate}
+  \item \textbf{The winner flips across datasets.} credit-g rewards \emph{linear + cost-sensitive} learning (\texttt{lr\_cost}, F1 $0.597$); sick rewards \emph{ensemble + resampling} (\texttt{rf\_smote}, F1 $0.897$). Four dataset properties --- size, attribute composition, missingness, and imbalance --- jointly explain the flip; the single-variable reading ``more imbalance needs more resampling'' predicts the opposite of what we observe (Section~\ref{sec:results-flip}).
+  \item \textbf{Strategies buy recall; datasets set the precision price.} Recall improves in all twelve pre-specified strategy-vs-plain comparisons (nine significant), but F1 flips sign on sick precisely where SMOTE meets linear or small-tree models ($-0.166$ for LR, $p=0.002$). Imbalance interventions are not free and not portable.
+  \item \textbf{Accuracy hides everything this project measures.} ZeroR reaches 70\%/94\% accuracy on credit-g/sick with zero recall; plain tree models sit within a few points of it while detecting a quarter of the minority class. Evaluating minority-class pipelines by accuracy alone would have ranked every serious model below the trivial one.
+\end{enumerate}
+
+\subsection{Limitations}
+
+Three limitations bound these conclusions. First, the \textbf{ensemble study is exploratory}: it was added after the main matrix was frozen, is kept in a separate results namespace, and only two comparisons were pre-specified; its cells are excluded from the main statistical family and from Holm correction, and the sick champion-vs-ensemble gap ($0.937$ vs $0.897$) is descriptive, untested. Second, \textbf{SMOTE operates on one-hot-encoded categorical attributes}, where linear interpolation creates fractional categories that are not realisable data points; this is a plausible mechanism for the observed SMOTE$\times$LR collapse but was not manipulated experimentally. Third, the design uses \textbf{one locked split seed (42)} with deliberately conservative overlap-corrected tests; effects reported as non-significant (e.g.\ credit-g strategy gains, $p=0.03$--$0.07$ raw) should be read as ``not established at our conservative threshold'', not as evidence of absence.
+
+\subsection{Future Work}
+
+The clearest next step is \textbf{SMOTE-NC} (or another mixed-type synthesiser), which interpolates only in the numeric subspace and samples categorical values by mode --- directly targeting the interpolation-noise mechanism identified above; the prediction it tests is that LR/DT SMOTE losses on sick shrink while RF is unaffected. Beyond that: threshold selection by expected-cost minimisation on the credit-g cost matrix (rather than F1 on development folds); calibrated probabilities to make threshold and cost interventions comparable across models; and a nested-CV replication over multiple split seeds to attach uncertainty to the winner-flip itself.

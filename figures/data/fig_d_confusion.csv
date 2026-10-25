@@ -1,0 +1,17 @@
+config_id,view,pred,actual,value
+creditg_lr_cost_v1,counts,neg,neg,391.0
+creditg_lr_cost_v1,counts,neg,pos,309.0
+creditg_lr_cost_v1,counts,pos,neg,41.0
+creditg_lr_cost_v1,counts,pos,pos,259.0
+creditg_lr_cost_v1,row_pct,neg,neg,0.5585714285714286
+creditg_lr_cost_v1,row_pct,neg,pos,0.44142857142857145
+creditg_lr_cost_v1,row_pct,pos,neg,0.13666666666666666
+creditg_lr_cost_v1,row_pct,pos,pos,0.8633333333333333
+sick_rf_smote_v1,counts,neg,neg,3520.0
+sick_rf_smote_v1,counts,neg,pos,21.0
+sick_rf_smote_v1,counts,pos,neg,26.0
+sick_rf_smote_v1,counts,pos,pos,205.0
+sick_rf_smote_v1,row_pct,neg,neg,0.994069471900593
+sick_rf_smote_v1,row_pct,neg,pos,0.005930528099406947
+sick_rf_smote_v1,row_pct,pos,neg,0.11255411255411256
+sick_rf_smote_v1,row_pct,pos,pos,0.8874458874458875

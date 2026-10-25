@@ -1,0 +1,4 @@
+figure,source_files,params
+fig_d_sick_roc_pr,"results/preds/sick_rf_{plain,smote,cost}_v1_run1_cv10_preds.csv",pooled cv10 predictions; model=RandomForest; positive=sick
+fig_d_strategy_gain,"results/cross_dataset_comparison_v1.csv (D6, from C5 key_comparisons)",mean of 4 models; cv10; Δ = strategy − plain
+fig_d_confusion,results/all_metrics_v1.csv (D4; pooled TN/FP/FN/TP),cv10 pooled; champions creditg_lr_cost_v1 / sick_rf_smote_v1

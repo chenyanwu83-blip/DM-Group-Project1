@@ -1,0 +1,13 @@
+dataset,strategy,metric,delta_mean
+credit-g,cost,f1,0.11445000000000001
+sick,cost,f1,0.000625
+credit-g,cost,recall,0.42415
+sick,cost,recall,0.001
+credit-g,smote,f1,0.070425
+sick,smote,f1,-0.06224999999999999
+credit-g,smote,recall,0.169175
+sick,smote,recall,0.213125
+credit-g,threshold,f1,0.12184999999999999
+sick,threshold,f1,0.0238
+credit-g,threshold,recall,0.348325
+sick,threshold,recall,0.09632500000000001
