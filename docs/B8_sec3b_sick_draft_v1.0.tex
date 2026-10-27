@@ -1,0 +1,91 @@
+% B8 草稿存档（2026-10-27）: 沿用 D7 的"先核验后写回"纪律, 未直接写 overleaf/sections/sec3b_sick.tex。
+% 待用户核验后写回。恢复方法:
+%   tail -n +4 "docs/B8_sec3b_sick_draft_v1.0.tex" > overleaf/sections/sec3b_sick.tex
+% 数字来源: results/stats/sick_missing_audit.csv(B3) / results/b4_missing_comparison.csv(B4) /
+%          results/sick_*_summary.csv(主矩阵, D4 已核验) / c_config.py(冻结口径)。
+% 交叉引用依赖: \ref{sec:results} 依赖 D 的 sec6 label(见 docs/D7_sec6_results_draft_v1.0.tex)。
+
+\subsection{Sick Dataset}
+\label{sec:sick-data}
+% B owns this subsection: UCI provenance, label meaning, missingness, and preprocessing.
+
+The \textit{sick} dataset belongs to the UCI Thyroid Disease repository
+(ID 102, DOI 10.24432/C5D010), with original data donated by the Garavan
+Institute (1986) and redistributed under CC BY 4.0; we use the Weka-packed
+variant prepared by Quinlan, which the course brief explicitly accepts.
+The UCI landing page reports ``7,200 instances / 5 features'' --- that
+figure summarises the \emph{whole} thyroid repository and does not apply to
+this file. The actual dataset contains \textbf{3,772 instances $\times$ 30
+attributes} (23 nominal, 7 numeric, including the class). The class is
+severely imbalanced: 3,541 \textit{negative} versus 231
+\textit{sick-euthyroid} ($\approx$94:6); we treat \textit{sick} as the
+positive class throughout. Two semantic notes we keep strict in wording:
+\textit{sick-euthyroid} denotes euthyroid illness --- it is
+\emph{not} hypothyroidism --- and \textit{negative} means no thyroid
+abnormality detected in this screening, not ``perfectly healthy''. 61
+duplicate rows exist in the official distribution; we keep them to remain
+consistent with the official instance count and disclose them as a
+data-quality issue.
+
+\subsubsection{Missing-value audit}
+In total 6,064 cells (5.4\%) are missing, coded as ``?''. The audit
+revealed a clean \emph{measurement mechanism}: every laboratory test
+appears as a pair --- a \texttt{*\_measured} flag and the value itself ---
+and whenever the flag reads \texttt{f} (test not performed), the paired
+value is missing \emph{by design}. Across all six lab pairs the
+consistency check found \textbf{zero anomalies} (no value without a test,
+no missing value after a test): the data is incomplete but internally
+consistent. The extreme case is \textbf{TBG, 100\% missing in all 3,772
+rows} (its flag is \texttt{f} everywhere, i.e.\ the test was never
+administered). After removing TBG and its constant flag, 1,129 rows
+(29.9\%) still carry at least one missing value
+(Figs.~\ref{fig:sick-dist}--\ref{fig:sick-missing}).
+
+\subsubsection{Handling decisions}
+The handling follows the mechanism. (i)~TBG and its constant flag are
+\emph{removed}, not imputed --- a column with zero observations cannot be
+imputed without fabricating data; column removal involves no statistics
+and is leakage-free. (ii)~All remaining columns are imputed
+\emph{inside} the imblearn pipeline (numeric by mean, nominal by mode),
+so imputation statistics are fitted on training folds only, alongside
+encoding, scaling and SMOTE; the whole project evaluates on group-locked
+splits. A controlled experiment on the decision tree compared three
+treatments: (a)~fold-internal imputation; (b)~dropping any row with a
+missing value; (c)~treating ``missing'' as an explicit category
+(scikit-learn trees reject \texttt{NaN} natively, unlike Weka's J48 ---
+a documented deviation). Deleting rows loses 29.9\% of the patients,
+including 19 of the 231 positives, for \emph{no} statistical F1 gain
+($0.843\pm0.069$ vs.\ $0.830\pm0.049$, within one standard deviation)
+and the lowest AUC (0.964 vs.\ 0.974); (c) performs similarly to (a)
+but slightly worse. Imputation is therefore adopted: it keeps all
+3,772 instances, is the most stable, and is leakage-safe by construction.
+
+Finally, among the four base classifiers the random forest is the only
+one whose precision is preserved under SMOTE (0.94$\to$0.91, vs.\
+0.95$\to$0.60 for a single tree); Section~\ref{sec:results} sharpens this
+account with the ensemble study, where AdaBoost shares the property and
+plain bagging does not.
+
+\begin{figure}[htbp]
+\centering
+\begin{minipage}{0.48\linewidth}
+  \centering
+  \includegraphics[width=\linewidth]{figures/fig_b_class.pdf}
+  \caption{Class distribution of sick (3,541:231, $\approx$94:6; cv10,
+  positive = sick-euthyroid).}\label{fig:sick-dist}
+\end{minipage}\hfill
+\begin{minipage}{0.48\linewidth}
+  \centering
+  \includegraphics[width=\linewidth]{figures/fig_b_missing.pdf}
+  \caption{Per-column missing rate of sick; TBG (red) is 100\% missing
+  and removed rather than imputed.}\label{fig:sick-missing}
+\end{minipage}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.62\linewidth]{figures/fig_b_box.pdf}
+\caption{TSH (log scale) and FTI by class (raw data): heavy class overlap
+(median TSH 1.4 vs.\ 1.5; FTI 107 vs.\ 108) shows no single lab value
+separates the classes, motivating multivariate models.}\label{fig:sick-box}
+\end{figure}
