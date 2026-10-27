@@ -1,0 +1,280 @@
+\documentclass[a4paper,12pt]{article}
+
+% Packages
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{geometry}
+\usepackage{fancyhdr}
+\usepackage{setspace}
+\usepackage{titlesec}  % For title formatting
+\usepackage{booktabs}
+\usepackage[hidelinks]{hyperref}
+\usepackage{float}
+
+\geometry{margin=1in}
+\setstretch{1.5}
+
+% Header and Footer
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{Energy Consumption Analysis Group Project}
+\fancyhead[R]{\thepage}
+
+% 标题格式
+\titleformat{\section}{\normalfont\Large\bfseries}{\thesection}{1em}{}
+
+% 封面页
+\usepackage{hyperref}
+\title{
+    \vspace{2cm} % 保持图片间距不变
+    \centering
+    \includegraphics[width=1\textwidth]{LU.jpg} \\ % 让图片居中，并调整大小
+    \vspace{1cm} % 保持图片间距不变
+    \textbf{\Huge My project} \\
+    \vspace{1cm} % 保持图片间距不变
+    \large CDS535 - Data Mining \\
+    \vspace{0.5cm} % 保持图片间距不变
+    \large 2025/ /
+}
+\author{
+    \begin{minipage}{\textwidth}
+        \centering
+        Your name
+    \end{minipage} \\[5pt]
+    \begin{minipage}{\textwidth}
+        \centering
+        Your name
+    \end{minipage} \\[10pt]  % 添加适当的间距
+    \begin{minipage}{\textwidth}
+        \centering
+        \textbf{Your Git link: https://github.com/}
+        \newline
+        % \textbf{Your Youtube link: https://youtu.be/}
+    \end{minipage}
+}
+\date{}
+
+
+
+
+\begin{document}
+
+% Title Page
+\maketitle
+\thispagestyle{empty}
+\newpage
+\thispagestyle{empty}
+\begin{abstract}
+\noindent This project...
+\newline
+
+\noindent \textbf{Keywords}: keyword1, keyword2, keyword3
+\end{abstract}
+\newpage
+\thispagestyle{empty}
+\tableofcontents
+\thispagestyle{empty}
+\newpage
+
+
+
+
+
+% Table of Contents
+% Start page numbering from the Table of Contents
+\setcounter{page}{1}  % Start counting from 1
+
+\section{Group Project Requirement}
+
+\section{Introduction} 
+This is my first reference, \cite{perez2008review}
+
+\subsection{Background and Motivation for Research}
+
+
+
+\subsection{Research Implication}
+
+
+\subsection{Key Points of Innovation}
+
+
+\section{Data Distribution and Preprocessing}
+
+
+\subsection{Data Visualisation and Analysis}
+
+
+\subsection{Data Preprocessing}
+
+
+
+\section{Basic Concepts of Algorithms}
+\label{sec:algorithms}
+
+Our main matrix combines four classifiers with four imbalance-handling
+strategies. The four classifiers were chosen to span complementary
+families of decision-boundary assumptions, and each admits a direct
+Weka counterpart used in the comparative discussion of
+Section~\ref{sec:training}.
+
+\subsection{Classifiers}
+\textbf{Decision Tree (DT).} A CART tree grown with the entropy
+impurity criterion and post-pruned by cost-complexity pruning
+($\alpha=0.01$); this mirrors Weka's J48 (C4.5), which selects splits
+by information gain. Trees yield axis-parallel, rule-like boundaries
+and are directly interpretable, but a single tree grown to purity
+memorises a 1{,}000-row training set, so light pruning retains
+interpretability while limiting overfitting.
+
+\textbf{Random Forest (RF).} An ensemble of 100 de-correlated trees,
+each grown on a bootstrap sample of the training fold. Averaging
+reduces variance without inflating bias; the resulting boundary is an
+ensemble-smoothed version of the tree boundary, and RF tolerates the
+class imbalance of both datasets markedly better than any single model
+in our plain baselines.
+
+\textbf{Logistic Regression (LR).} A linear decision boundary passed
+through a sigmoid; the model is trained by regularised log-loss. LR
+produces the best-calibrated probabilities of the four, which matters
+for threshold moving (Section~\ref{ssec:strategies}), but the linear
+boundary is the most sensitive to how nominal attributes are encoded.
+
+\textbf{Support Vector Classifier (SVC).} A maximum-margin classifier
+with an RBF kernel ($C=1.0$), corresponding to Weka's SMO. SVC has no
+native probabilities; \texttt{probability=True} wraps an internal
+Platt calibration (a 5-fold internal CV fitting a sigmoid to the
+decision values), which is what makes AUC and threshold moving
+possible at the cost of extra training time.
+
+\subsection{Imbalance-Handling Strategies}
+\label{ssec:strategies}
+\textbf{plain} keeps the empirical class distribution and the default
+0.5 operating point; it is the reference arm for every comparison.
+\textbf{SMOTE} over-samples the minority class by interpolating
+between minority neighbours and their nearest neighbours; synthesis is
+confined to training folds by placing the sampler inside an
+\texttt{imblearn} pipeline. \textbf{Cost-sensitive learning} reweights
+the training loss: on credit-g we apply the official 5:1 cost matrix
+($5\times$FN vs $1\times$FP) via \texttt{class\_weight}; on sick,
+which has no official costs, an equal-weight control is used.
+\textbf{Threshold moving} keeps training identical to plain and moves
+only the operating point: a threshold $\tau$ is selected on inner
+5-fold out-of-fold probabilities of the training fold (grid
+$0.05{-}0.95$, step 0.05, maximising F1, ties resolved to the smaller
+$\tau$), then locked, and the model is refitted on the full training
+fold before evaluation. It is the only strategy that never touches
+training, hence a clean measure of how much the default 0.5 threshold
+leaves on the table.
+
+\subsection{Ensemble Methods: Bagging and Boosting}
+\label{ssec:ensemble-concepts}
+Beyond the four base classifiers, we conduct an exploratory ensemble
+study. \textbf{Bagging} trains multiple instances of a base learner on
+bootstrap samples and aggregates their majority votes, reducing
+variance; a random forest is bagging combined with random feature
+subspaces. \textbf{Boosting} (AdaBoost) instead builds learners
+sequentially, each re-weighting the instances the previous ones
+misclassified --- an implicit form of cost-sensitive learning on hard
+(often minority) examples. Both ensembles use the same pruned decision
+tree as the base learner as in Section~\ref{sec:algorithms}, with
+$n_{\text{estimators}}=100$ matching the random-forest budget for
+comparability.
+
+% ===================== Part B → sections/sec5_training.tex =====================
+
+\section{Model Training}
+\label{sec:training}
+
+\subsection{Preprocessing and Pipelines}
+Both datasets mix nominal and numeric attributes, and the two model
+families require different encodings, so a dual-channel
+\texttt{ColumnTransformer} feeds each family what it needs. Trees
+(DT, RF) receive nominal attributes through an \texttt{OrdinalEncoder}
+--- the integer order is arbitrary but trees only threshold on it, so
+no spurious magnitude is introduced --- with numeric attributes passed
+through unscaled, as trees are invariant to monotone transforms. The
+linear family (LR, SVC) receives \texttt{OneHotEncoder} output (with
+\texttt{handle\_unknown='ignore'}) plus \texttt{StandardScaler} on
+numeric attributes; feeding ordinal codes into a linear model would
+assert false statements such as ``status 2 is twice status 1''.
+
+Every fit-type step --- imputation, encoding, scaling, and SMOTE where
+applicable --- lives inside an \texttt{imbalanced-learn} pipeline, so
+its parameters are fitted on the training fold only and merely applied
+(\texttt{transform}) to the validation fold. On sick, the two fully
+missing TBG columns are dropped outside the pipeline (a static,
+fold-independent column operation; 100\% missingness is a whole-dataset
+fact), while the remaining missing values are imputed with the
+training-fold mode inside the pipeline. On credit-g no cleaning is
+applied (zero missing values and zero duplicate rows were verified).
+
+\subsection{Locked Configuration}
+All hyperparameters were frozen once, before any evaluation, with
+\texttt{random\_state=42} on every stochastic component (DT tie-breaks,
+RF bootstrap and feature draws, SMOTE neighbour draws, SVC's internal
+Platt calibration): DT(\texttt{criterion='entropy'},
+$\alpha_{\text{ccp}}=0.01$); RF($n_{\text{estimators}}=100$);
+LR($\textit{max\_iter}=1000$, convergence headroom on the 60--80
+one-hot dimensions); SVC(RBF, $C=1.0$, \texttt{probability=True}).
+Library versions are pinned (scikit-learn 1.9.1, imbalanced-learn
+0.14.2, pandas 3.0.6, scipy 1.17.1), so the same versions plus the
+locked splits and seed reproduce every reported number bit-for-bit.
+% TODO(E): cite scikit-learn (Pedregosa et al., 2011) and
+% imbalanced-learn (Lemaitre et al., 2017) once bib keys are fixed.
+
+\subsection{Evaluation Protocol}
+Two independent protocols are used. (i) Stratified 10-fold
+cross-validation (\texttt{StratifiedKFold(10, shuffle=True,
+random\_state=42)}) over the full data, reported as mean$\pm$std over
+folds (std with $ddof=0$). (ii) A one-off 70:30 stratified holdout
+(700/300 on credit-g; 2640/1132 on sick) evaluated exactly once per
+locked configuration. Both splits were generated once, stored as row
+index files with a SHA-256 manifest, and are consumed as-is by every
+run; no experiment regenerates them. The minority class is the
+positive class throughout (bad on credit-g, sick on sick); all metrics
+come from a single shared evaluation module (accuracy, positive-class
+precision/recall/F1, ROC-AUC, Cohen's $\kappa$, balanced accuracy,
+macro-F1, and the credit-g cost $(5\,\mathit{FN}+\mathit{FP})/N$).
+
+\subsection{Dataset-Specific Differences}
+Table~\ref{tab:pipeline-diff} summarises how the same locked recipe
+specialises to the two datasets.
+\begin{table}[htbp]\centering\small
+\caption{Two datasets, one locked recipe: differences only.}
+\label{tab:pipeline-diff}
+\begin{tabular}{lll}
+\toprule
+Aspect & credit-g & sick \\
+\midrule
+Rows $\times$ features & $1{,}000\times 20$ & $3{,}772\times 27$ \\
+Class ratio (+ : $-$) & 300 : 700 (70:30) & 231 : 3541 ($\approx$94:6) \\
+Missing values & none & $\approx$16\%, TBG columns dropped \\
+Imputation & --- & mode, in-pipeline \\
+Cost-sensitive arm & official 5:1 \texttt{class\_weight} & equal-weight control \\
+Holdout split & 700 / 300 & 2640 / 1132 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\paragraph{Ensemble study setup}
+The ensemble configurations (Bagging/AdaBoost $\times$ plain/SMOTE,
+both protocols, both datasets) reuse the locked cross-validation splits
+and the unified \texttt{evaluate.py} pipeline of the main matrix, but
+are stored in a separate result namespace (\texttt{results/ensemble/})
+and are \emph{not} merged into the 32-configuration matrix, so that the
+frozen statistical comparison remains untouched. Runtimes are recorded
+per fold by the same runner.
+
+\section{Results and Evaluation}
+
+
+\section{Conclusion and Future Work}
+
+\subsection{Future Work}
+
+% Bibliography (if required)
+\bibliographystyle{plain}
+\bibliography{references}  % Add a .bib file if you have references
+
+\end{document}
