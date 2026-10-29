@@ -1,4 +1,6 @@
 % D7 草稿存档（2026-10-25）: 应用户要求从 overleaf/sections/sec6_results.tex 撤回, overleaf 已恢复为原模板。
+% D8 勘误（2026-10-29）: 6 处 ±1 千分位舍入已就地修正(sick_dt_smote std .051→.050 / E1 表 4 处 / lr_cost precision .457→.456 两处),
+%   明细见 docs/D8_数字关对账清单_v1.0.md §5 E1; 其余数字经 D8 全量对账通过。
 % 待用户核验图表与文字后, 在 D8 阶段最后写回 overleaf。恢复方法:
 %   cp "docs/D7_sec6_results_draft_v1.0.tex" overleaf/sections/sec6_results.tex (去掉本 3 行注释头)
 % 源提交: 053de96(D7初稿)+af8d4e3(Holm勘误)+0032717(PULL提醒, 随撤回作废)
@@ -46,7 +48,7 @@ Table~\ref{tab:creditg-f1} shows the cv10 F1 landscape. Three observations:
 
 \textbf{(i) Plain models fall into the accuracy trap.} The three plain tree/kernel models (DT, RF, SVC) sit at or below ZeroR-level recall (0.27--0.40), trading minority detection for majority-class accuracy (0.71--0.77); their plain F1 (0.32--0.50) is the worst column. This is the RQ2 pattern: high accuracy is achievable while detecting almost no bad credit.
 
-\textbf{(ii) Every intervention helps here.} All three strategies lift F1 for every model on credit-g (mean $\Delta$F1 $+0.070$ to $+0.122$); the champion is \emph{cost-sensitive logistic regression} (\texttt{lr\_cost}, F1 $0.597\pm0.034$, recall $0.863$ vs.\ $0.470$ plain, precision $0.457$), which moves the decision boundary without synthesising data or adding capacity. Its pooled confusion cost $(5\,\mathrm{FN}+\mathrm{FP})/N$ drops to $0.514$ from $0.884$ (plain LR).
+\textbf{(ii) Every intervention helps here.} All three strategies lift F1 for every model on credit-g (mean $\Delta$F1 $+0.070$ to $+0.122$); the champion is \emph{cost-sensitive logistic regression} (\texttt{lr\_cost}, F1 $0.597\pm0.034$, recall $0.863$ vs.\ $0.470$ plain, precision $0.456$), which moves the decision boundary without synthesising data or adding capacity. Its pooled confusion cost $(5\,\mathrm{FN}+\mathrm{FP})/N$ drops to $0.514$ from $0.884$ (plain LR).
 
 \textbf{(iii) The holdout agrees.} On the 70:30 holdout, \texttt{lr\_cost} reaches F1 $0.580$ / recall $0.822$, within one standard deviation of the cv10 estimate --- no setting was tuned on the holdout.
 
@@ -61,7 +63,7 @@ Table~\ref{tab:creditg-f1} shows the cv10 F1 landscape. Three observations:
 \toprule
 Model & Plain & SMOTE & Cost-sensitive & Threshold \\
 \midrule
-Decision Tree & $0.836\pm0.050$ & $0.747\pm0.051$ & $0.836\pm0.050$ & $0.820\pm0.048$ \\
+Decision Tree & $0.836\pm0.050$ & $0.747\pm0.050$ & $0.836\pm0.050$ & $0.820\pm0.048$ \\
 Random Forest & $0.870\pm0.047$ & $\mathbf{0.897\pm0.051}$ & $0.873\pm0.048$ & $0.877\pm0.052$ \\
 Logistic Reg. & $0.687\pm0.091$ & $0.521\pm0.028$ & $0.687\pm0.091$ & $0.745\pm0.038$ \\
 SVC & $0.763\pm0.064$ & $0.742\pm0.039$ & $0.763\pm0.064$ & $0.809\pm0.039$ \\
@@ -108,7 +110,7 @@ Twelve pre-specified strategy-vs-plain comparisons per metric were tested with f
 \label{fig:confusion}
 \end{figure}
 
-The two datasets crown different winners (Figure~\ref{fig:confusion}): credit-g rewards \emph{linear + cost-sensitive} (\texttt{lr\_cost}, F1 $0.597$, recall $0.863$, precision $0.457$ --- it catches 259 of 300 bad cases but flags 309 of 700 good ones), while sick rewards \emph{ensemble + resampling} (\texttt{rf\_smote}, F1 $0.897$, recall $0.888$, precision $0.910$ --- near-clean on both error types). A naive single-variable reading --- ``more imbalance needs more resampling'' --- predicts SMOTE should help \emph{more} on sick (15.3:1) than credit-g (2.3:1); the data say the opposite. Four dataset properties jointly explain the flip:
+The two datasets crown different winners (Figure~\ref{fig:confusion}): credit-g rewards \emph{linear + cost-sensitive} (\texttt{lr\_cost}, F1 $0.597$, recall $0.863$, precision $0.456$ --- it catches 259 of 300 bad cases but flags 309 of 700 good ones), while sick rewards \emph{ensemble + resampling} (\texttt{rf\_smote}, F1 $0.897$, recall $0.888$, precision $0.910$ --- near-clean on both error types). A naive single-variable reading --- ``more imbalance needs more resampling'' --- predicts SMOTE should help \emph{more} on sick (15.3:1) than credit-g (2.3:1); the data say the opposite. Four dataset properties jointly explain the flip:
 
 \textbf{Size (1{,}000 vs 3{,}772 rows).} On credit-g, high-capacity learners (RF, AdaBoost, $n_{\mathrm{estimators}}=100$) train on only 900 rows per fold and their variance dominates; a strong-prior linear model plus an intervention that only re-weights the loss (cost) is the stable choice. On sick, capacity pays: bagging reduces variance and boosting reduces bias on 3{,}395-row training folds.
 
@@ -134,14 +136,14 @@ As an exploratory extension outside the pre-registered main matrix, bagging (Bag
 Dataset & Config & F1 & Recall & AUC & Runtime (s) \\
 \midrule
 credit-g & bag+plain & $0.510\pm0.072$ & 0.430 & 0.782 & 2.2 \\
-credit-g & bag+SMOTE & $0.548\pm0.074$ & 0.560 & 0.771 & 1.2 \\
-credit-g & ada+plain & $0.500\pm0.070$ & 0.473 & 0.735 & 1.2 \\
+credit-g & bag+SMOTE & $0.548\pm0.074$ & 0.560 & 0.770 & 1.2 \\
+credit-g & ada+plain & $0.499\pm0.070$ & 0.473 & 0.735 & 1.2 \\
 credit-g & ada+SMOTE & $0.501\pm0.087$ & 0.483 & 0.723 & 2.4 \\
 \midrule
 sick & bag+plain & $0.819\pm0.050$ & 0.775 & 0.990 & 3.6 \\
 sick & bag+SMOTE & $0.785\pm0.037$ & 0.987 & 0.994 & 4.6 \\
-sick & ada+plain & $0.918\pm0.046$ & 0.901 & 0.999 & 9.5 \\
-sick & ada+SMOTE & $\mathbf{0.937\pm0.044}$ & 0.931 & 0.999 & 28.9 \\
+sick & ada+plain & $0.918\pm0.045$ & 0.901 & 0.999 & 9.5 \\
+sick & ada+SMOTE & $\mathbf{0.937\pm0.043}$ & 0.931 & 0.999 & 28.9 \\
 \bottomrule
 \end{tabular}
 \end{table}
