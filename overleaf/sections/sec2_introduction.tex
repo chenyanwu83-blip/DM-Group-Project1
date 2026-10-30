@@ -1,3 +1,68 @@
 \section{Introduction}
 \label{sec:introduction}
-% A owns this file: background, motivation, research questions, and dataset choice.
+
+\subsection{Background and Motivation}
+Automated credit scoring supports lending decisions in which the two error types are
+economically asymmetric: approving an applicant who turns out to default (a missed
+\texttt{bad} case) destroys principal, whereas rejecting a creditworthy applicant (a
+false \texttt{bad} alarm) merely forgoes interest income. The Statlog German Credit
+data makes this asymmetry explicit through an official 5:1 misclassification-cost
+matrix, in which missing a \texttt{bad} applicant costs five times as much as
+rejecting a \texttt{good} one~\cite{uci_credit_g_1994}. Class imbalance amplifies the
+problem: \texttt{bad} applicants form only 30\% of \texttt{credit-g} and about 6\% of
+the \texttt{sick} thyroid subset~\cite{uci_thyroid_1986}, so accuracy is dominated by
+the majority class --- a trivial rule that always predicts \texttt{good} already
+achieves 0.70 accuracy on \texttt{credit-g} while never identifying a single default.
+Practitioners can draw on three families of remedies --- synthetic minority
+over-sampling~\cite{chawla2002smote}, cost-sensitive training, and decision-threshold
+adjustment --- yet their relative merits change with the model family and the degree
+of imbalance, and are rarely compared under one leakage-safe protocol with an
+application-grounded cost measure.
+
+\subsection{Research Significance}
+This project delivers such a comparison on two UCI datasets~\cite{dua2019uci} that
+differ deliberately in scale, imbalance ratio, missingness and domain. For risk
+management, it shows which imbalance intervention actually minimises the official
+misclassification cost rather than a surrogate metric. For methodology, it
+demonstrates a reproducible experimental discipline: preprocessing specifications
+frozen before the main matrix, locked data splits, SHA-256 provenance chained from
+raw data to every result file, and all imputation, encoding, scaling and resampling
+fitted strictly inside the cross-validation folds, so that any observed gain is
+attributable to the strategies rather than to information leakage. For
+interpretability, association rules mined from the same data are triangulated
+against tree-based model explanations. The full pipeline is implemented with
+scikit-learn~\cite{pedregosa2011sklearn}, imbalanced-learn~\cite{lemaitre2017imblearn}
+and mlxtend~\cite{raschka2018mlxtend}, with Weka~\cite{frank2016weka} as the course
+reference tool.
+
+\subsection{Research Questions and Contributions}
+The study is organised around four research questions:
+\begin{itemize}
+  \item \textbf{RQ1.} How does the degree of class imbalance moderate the gains of
+  imbalance-handling strategies? The two datasets provide a 70:30 and a 94:6
+  endpoint for this question.
+  \item \textbf{RQ2.} Under what conditions does accuracy mislead model selection on
+  imbalanced data, and which metrics (positive-class F1, ROC-AUC, official
+  misclassification cost) track decision utility instead?
+  \item \textbf{RQ3.} Under the official 5:1 cost matrix, does the best
+  model--strategy pairing change relative to the rankings obtained by accuracy or F1?
+  \item \textbf{RQ4.} How does the encoding of nominal attributes (one-hot vs.\
+  ordinal) interact with the model family (linear/kernel vs.\ tree-based) on
+  mixed-attribute data?
+\end{itemize}
+
+\noindent The main contributions are: (i) a paired two-dataset design contrasting
+five dimensions at once --- scale (1{,}000 vs.\ 3{,}772 records), imbalance (70:30
+vs.\ 94:6), missingness (0 vs.\ about 16\%), attribute composition and domain ---
+which directly probes RQ1; (ii) a full experiment matrix of four classifiers
+(decision tree, random forest, logistic regression, RBF-SVM) $\times$ four
+strategies (plain, SMOTE, cost-sensitive, threshold adjustment) built on
+leakage-safe pipelines with locked splits; (iii) the official cost matrix treated
+as a first-class evaluation axis alongside F1 and ROC-AUC (RQ2, RQ3); (iv) a
+controlled encoding ablation with a supplementary attribution control that
+separates encoding from scaling effects (RQ4); and (v) an interpretability
+triangulation of Apriori rules, decision-tree paths and random-forest feature
+importances (Section~\ref{sec:apriori}). Statistical comparisons use fold-level
+tests with the Nadeau--Bengio
+correction~\cite{nadeau2003inference,demsar2006comparison}. Experimental results
+are reported in Section~\ref{sec:results}.
