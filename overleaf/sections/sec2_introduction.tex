@@ -38,17 +38,23 @@ reference tool.
 \subsection{Research Questions and Contributions}
 The study is organised around four research questions:
 \begin{itemize}
-  \item \textbf{RQ1.} How does the degree of class imbalance moderate the gains of
-  imbalance-handling strategies? The two datasets provide a 70:30 and a 94:6
-  endpoint for this question.
-  \item \textbf{RQ2.} Under what conditions does accuracy mislead model selection on
-  imbalanced data, and which metrics (positive-class F1, ROC-AUC, official
-  misclassification cost) track decision utility instead?
-  \item \textbf{RQ3.} Under the official 5:1 cost matrix, does the best
-  model--strategy pairing change relative to the rankings obtained by accuracy or F1?
-  \item \textbf{RQ4.} How does the encoding of nominal attributes (one-hot vs.\
-  ordinal) interact with the model family (linear/kernel vs.\ tree-based) on
-  mixed-attribute data?
+  \item \textbf{RQ1.} Under class imbalance and asymmetric misclassification
+  costs, how should the four candidate strategies (plain, SMOTE,
+  cost-sensitive, threshold moving) and four model families be selected?
+  The two datasets provide contrasting endpoints (clean/2.3:1 vs.\
+  noisy/15.3:1), and the official 5:1 cost matrix is folded into this
+  question as a first-class constraint.
+  \item \textbf{RQ2.} Under what conditions does accuracy mislead model
+  selection on imbalanced data, and which metrics (positive-class
+  recall/F1, ROC-AUC, official misclassification cost) should drive
+  evaluation and decision-making instead?
+  \item \textbf{RQ3.} How do mixed attributes jointly determine feature
+  treatment and model selection --- which features matter, and how should
+  nominal attributes be encoded (one-hot vs.\ ordinal) for each model
+  family (linear/kernel vs.\ tree-based)?
+  \item \textbf{RQ4.} Do the learnt models make reliable decisions on new,
+  unseen examples, as measured once on the locked hold-out sets of 300
+  credit applicants and 1{,}132 patients?
 \end{itemize}
 
 \noindent The main contributions are: (i) a paired two-dataset design contrasting
@@ -60,7 +66,7 @@ strategies (plain, SMOTE, cost-sensitive, threshold adjustment) built on
 leakage-safe pipelines with locked splits; (iii) the official cost matrix treated
 as a first-class evaluation axis alongside F1 and ROC-AUC (RQ2, RQ3); (iv) a
 controlled encoding ablation with a supplementary attribution control that
-separates encoding from scaling effects (RQ4); and (v) an interpretability
+separates encoding from scaling effects (RQ3); and (v) an interpretability
 triangulation of Apriori rules, decision-tree paths and random-forest feature
 importances (Section~\ref{sec:apriori}). Statistical comparisons use fold-level
 tests with the Nadeau--Bengio
