@@ -50,3 +50,5 @@ holdout 方向与 cv10 一致（recall↑ cost↓），如 lr_cost holdout：acc
 - D：D4 全量汇总（credit-g 16 配置已齐；sick 侧 smote/cost 仍缺，等 B 的 B7）。
 - C：C5 的 32 配置 t 检验需等 sick 侧补齐后运行。
 - A6 复核（D 审口径）进行中。
+
+> **RQ 编号更新（2026-10-29）**：本文中旧版 RQ 编号已按全组决议更新为新版——旧RQ3（代价矩阵）并入新RQ1、旧RQ4（混合属性）改称新RQ3、新RQ4（新样本决策）为新增；RQ1/RQ2 含义不变。正文一字未改，映射与逐文件清单见 `docs/RQ_定义与映射_v1.0.md`。
