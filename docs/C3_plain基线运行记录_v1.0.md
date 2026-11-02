@@ -1,13 +1,10 @@
-# C3 plain 基线矩阵 · 运行记录 v1.0
+# C3 plain 基线 · 运行记录
 
-- **负责人**: C（建模与平台）
-- **日期**: 2026-10-14
-- **状态**: 已完成自检，交 D 校验（→ D3 基线指标表 v1）
-- **运行环境**: `/opt/anaconda3/envs/cds535/bin/python`（pandas 3.0.6 / scikit-learn 1.9.1 / imbalanced-learn 0.14.2，与 requirements.txt 锁定版本逐一相符）
-- **入口**: `python -m src.run_experiment --baseline`（仓库根目录；单配置冒烟 `--dataset creditg --model lr --protocol cv10`）
-- **协议**: 全部消费库内锁定切分（`cv_folds_*.csv` / `*_idx_*.csv`），指标一律 `src/evaluate.py` 的 `compute_metrics / aggregate_folds`；每折全新实例折内拟合，holdout 锁定配置 fit 一次评一次；`data_sha256` 取自 `split_manifest.json` 现值
+10 月 14 日跑的。这一步是把 4 个模型 × 2 个数据集的 plain 基线（不加任何不平衡处理）全部跑一遍，cv10 和 holdout 两条协议都跑，外加 ZeroR 参照。自己检查过了，交给 D 校验（对应 D3 的基线指标表）。
 
-## 1. 交付物清单
+环境：`/opt/anaconda3/envs/cds535/bin/python`（版本和 requirements.txt 锁定的一一对应）。跑法：仓库根目录 `python -m src.run_experiment --baseline`。切分全部用的库里锁定的文件，指标全走 D 的 evaluate.py，每折都是全新实例折内拟合，holdout 拟合一次评一次。
+
+## 1. 这次交了什么
 
 - 8 个 plain 配置（4 模型 × 2 数据集）× 2 协议（cv10 / holdout）：
   `results/{config_id}_run1_folds.csv` + `_run1_summary.csv`（cv10，D2 原文命名）
@@ -16,7 +13,7 @@
 - 预测留档：`results/preds/{config_id}_run1_{cv10,holdout}_preds.csv`（row_idx / y_true / y_pred / proba_pos），共 20 份，供 D3 方向核查
 - config_id 全部按 D2 命名：`creditg_dt_plain_v1` … `sick_svc_plain_v1`；模板两文件保持空表头
 
-## 2. 结果总表（accuracy 为 accuracy_mean；cv10 附 std）
+## 2. 结果总表（acc 就是 accuracy_mean；cv10 后面带的是 std）
 
 ### credit-g（正类 bad；cost 越低越好，ZeroR=1.5）
 
@@ -48,12 +45,12 @@
 | zero_ref | cv10 | 0.9388±0.0008 | 0 | 0 | 0.5000 | 0 | 0.5000 |
 | zero_ref | holdout | 0.9390 | 0 | 0 | 0.5000 | 0 | 0.5000 |
 
-初步观察（供 D3 / 报告 ch5，非结论）：
+第一眼看到的东西（给 D3 和报告第五章参考，还不算结论）：
 - credit-g 全部模型 cost 均低于 ZeroR 的 1.5；**LR 的 cost 最优（0.884）**——线性模型 + OneHot 对少数类 recall 最高（0.47）所致；这正是 RQ2 策略实验的参照原点；
 - sick 上树模型（RF/DT）全面领先（f1 0.87/0.84），LR 最弱（recall 0.61）；
 - 两条协议方向一致，无符号翻转。
 
-## 3. 锚点核对（全过才认为评估链路可信）
+## 3. 锚点核对（这些必须全对上，不然评估链路本身就可疑）
 
 | 锚点 | 预期 | 实测 | 结果 |
 |---|---|---|---|
@@ -66,7 +63,7 @@
 | DT vs RUN_GUIDE 锚点（PreExperiment 默认 gini 树 0.6660±0.0233） | 同量级（规格树参数不同，数字允许略异） | 0.7140±0.0258 | ✅ |
 | DT vs RUN_GUIDE 锚点（sick 0.9867±0.0049） | 同量级 | 0.9822±0.0050 | ✅ |
 
-## 4. 落盘自查（7 项，脚本化核验，PASS）
+## 4. 落盘检查（7 项，写了个脚本挨个查的，全过）
 
 1. 20 组文件成对齐全（10 配置 × 2 协议的 folds + summary），命名与 D2 一致；
 2. folds 列 = fold_template 28 列、summary 列 = template 46 列，零偏差（reindex 保证）；
@@ -78,18 +75,18 @@
 
 preds 留档 20 份行数全对（cv10=1000/3772，holdout=300/1132）。
 
-## 5. 概率方向自检（D3 前置材料）
+## 5. 概率方向检查（D3 的前置材料）
 
 - credit-g × LR：`classes_ = ['bad' 'good']`；前 6 行中 bad 行概率 0.623 / 0.749，good 行 0.029–0.293 —— 正类方向正确；
 - sick × DT：负类行概率 ≈ 0.0；正类（sick）行概率 0.989（6 行中 5 行，1 行 0.122 为模型误判而非方向错误）—— 方向正确。
 
-## 6. 已知事项
+## 6. 几个已知的小问题
 
 1. `SVC(probability=True)` 在 sklearn 1.9 触发 FutureWarning（1.11 移除）——已在 C2 回执 5.3 登记，锁定版本不受影响，运行日志中有原样记录；
 2. holdout 输出文件名加 `_holdout` 中缀是对 D2 命名的最小扩展（config_id 不含协议），请 D 确认或给出正式命名；
-3. 全部结果由同一解释器一次性产出（--baseline），SVC×sick 为最慢环节；如需复跑，任何机器同版本环境应得到逐位一致结果（seed=42 + 锁定切分 + 固定超参）。
+3. 结果是一次性跑出来的（--baseline），SVC×sick 最慢；别的机器同版本环境下重跑应该能逐位复现（seed=42 + 锁定切分 + 超参冻结，三件事都成立才行）。
 
-## 7. D1 确认清单 —— C 部分（随 C2 一并声明）
+## 7. D1 确认清单里 C 负责的几条（随 C2 一起交）
 
 - [x] cv10 std ddof=0（aggregate_folds 实现）
 - [x] 索引/文件命名遵循 D2（holdout 中缀见 6.2 待确认）

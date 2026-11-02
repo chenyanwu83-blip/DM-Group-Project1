@@ -1,14 +1,12 @@
-# C4 threshold 策略 · 运行记录 v1.0
+# C4 threshold 策略 · 运行记录
 
-- **负责人**: C（建模与平台）
-- **日期**: 2026-10-15
-- **状态**: 本机完成 + 自检 PASS，**尚未 commit/push**（待组内过目后再定提交切分）
-- **运行环境**: `/opt/anaconda3/envs/cds535/bin/python`（pandas 3.0.6 / scikit-learn 1.9.1 / imbalanced-learn 0.14.2，锁定版本）
-- **入口**: `python -m src.run_experiment --matrix --strategy threshold`（仓库根；单配置冒烟 `--dataset creditg --model lr --strategy threshold --protocol cv10` 先行通过）
+10 月 15 日。threshold 策略这一轮：模型照 plain 训练，只是预测的阈值不用 0.5，而是在训练折内部用 5 折折外概率挑一个 F1 最大的（0.05 到 0.95 网格，并列取小的），锁定后重拟合。本机跑完自检全过，先放这里给组里过目，之后再决定怎么提交。
 
-## 1. 交付物清单
+环境同 C3（cds535，锁定版本）。全量：`python -m src.run_experiment --matrix --strategy threshold`；先跑过单点冒烟（creditg×LR）才放的全量。
 
-| 文件 | 变更 | 内容 |
+## 1. 这次交了什么
+
+| 文件 | 动了什么 | 内容 |
 |---|---|---|
 | `src/c4_threshold.py` | 新增 | `ThresholdClassifier` 包装器：内层 StratifiedKFold(5, shuffle, rs=42) 产 OOF 正类概率 → τ 网格 0.05–0.95 步 0.05（19 档）按 max-F1 选 τ → 锁定 → 全训练折重拟合；`predict()` 按 τ 判（D2：predict 体现锁定决策规则）、`predict_proba()` 透传 |
 | `src/c_pipelines.py` | 修改 | 原 `build_pipe` 主体抽为 `_assemble`（plain/smote/cost）；`build_pipe` 的 threshold 分支返回包装器，基座为 **plain 子流水线**（每折全新工厂注入） |
@@ -44,7 +42,7 @@
 | svc_threshold | cv10 | 0.9769 | 0.7926 | 0.8087 | 0.9788 | 0.30–0.40 |
 | svc_threshold | holdout | 0.9682 | 0.6957 | 0.7273 | 0.9849 | 0.45 |
 
-## 3. 与 plain 对照（cv10，关键列）
+## 3. 和 plain 对着看（cv10，关键列）
 
 | 数据集 | 模型 | f1: plain→threshold | cost: plain→threshold | 说明 |
 |---|---|---|---|---|
@@ -57,9 +55,9 @@
 | sick | LR | 0.6867 → 0.7453 | — | +0.059 |
 | sick | SVC | 0.7625 → 0.8087 | — | +0.046 |
 
-初步观察（供 D3 / 报告，非结论）：threshold 在 credit-g 上以 accuracy 换 recall/f1/cost（acc 降 4–8 个点，cost 降 28–47%），与 5:1 代价矩阵的业务目标一致；sick 上 4 模型 3 升 1 微降。两协议方向一致（credit-g cost 排序、sick f1 排序均不翻转）。
+第一眼的感觉（给 D3 和报告参考，不算结论）：threshold 在 credit-g 上以 accuracy 换 recall/f1/cost（acc 降 4–8 个点，cost 降 28–47%），与 5:1 代价矩阵的业务目标一致；sick 上 4 模型 3 升 1 微降。两协议方向一致（credit-g cost 排序、sick f1 排序均不翻转）。
 
-## 4. 锚点核对
+## 4. 锚点核对（重点看第一条）
 
 | 锚点 | 预期 | 实测 | 结果 |
 |---|---|---|---|
@@ -69,7 +67,7 @@
 | ZeroR 链路 | 沿用 C3 已核对锚点（评估链路未改动） | evaluate.py 未改动、self_test 先行 | ✅ |
 | 冒烟先行 | 单点（creditg×LR）秒级验证后再放全量 | 通过后才放 --matrix | ✅ |
 
-## 5. 落盘自查（11 项，脚本化，PASS）
+## 5. 落盘检查（11 项，写脚本挨个查的，全过）
 
 1. 16 组 folds+summary 成对齐全，命名与 C3/D2 同款（holdout 带 `_holdout` 中缀）；
 2. folds 列 = fold_template **29 列**、summary 列 = template **49 列**，零偏差（reindex 保证）；
@@ -83,7 +81,7 @@
 10. 模板与切分索引未被扰动（模板仍空表头）；
 11. threshold 相关新文件共 48 份（32 结果 + 16 preds），无覆盖既有文件。
 
-## 6. 设计决定（C 单方面裁量的部分，请 D/A/B 过目）
+## 6. 我自己拍板的几个决定（D/A/B 帮忙看一眼）
 
 1. **τ 记录在 `notes` 列**：fold_template 无 τ 专用列，为保列零偏差把 `tau=…;oof_f1=…` 写入唯一自由文本列 notes。若 D 认为 τ 应有专列，请给列名，C 改模板后重跑（成本：一次全量）；
 2. **threshold 基座 = plain**：规格策略为四选一（plain/smote/cost/threshold），不做 threshold×smote 组合——组合属新配置，须规格单先扩；
@@ -91,14 +89,14 @@
 4. **内层 F1 用 `sklearn.metrics.f1_score`**（与 evaluate.py 同一库函数，显式映射正类=1 后调用，不自写公式）；报告指标仍一律走 `compute_metrics`；
 5. **勘误**：C3 记录与 run_experiment 旧注释写「fold_template 28 列 / template 46 列」，实测 **29 / 49** 列（列零偏差本身始终成立），本次一并修正。
 
-## 7. 防泄漏自查（C4 特有风险点）
+## 7. 防泄漏自查（C4 特有的风险点）
 
 - τ 的选择信息全部来自外层训练折内部（内层 5 折 OOF），**未接触外层验证折**（D1 红线）；
 - 内层每折 `make_base()` 造全新子流水线：插补/编码/缩放随内层折重拟合，杜绝「pre 先在全训练折拟好再做内层 CV」；
 - 每个外层折独立选 τ（10 折 10 个 τ）——τ 是折内决策，不是全局超参；holdout 在 train_idx 上独立选 τ 后锁定；
 - `auc == plain` 逐位相等是「最终模型与 plain 同构、只改判标签」的机器证明。
 
-## 8. D1 确认清单 —— C 部分（C4 增量）
+## 8. D1 确认清单里 C 的部分（C4 新增的）
 
 - [x] 阈值在训练折内层选择并锁定，未用外层验证标签（D1 cv10 第 5 条）
 - [x] 每折全新实例（含内层每折全新子流水线）
@@ -106,9 +104,9 @@
 - [x] 输出列零偏差（29/49）；混装禁止（一个 records 一个配置一个协议）
 - [ ] τ 记录位置（notes 列）待 D 确认（见 6.1）
 
-## 9. 回注（2026-10-27）：待确认项已由 D 正式解决
+## 9. 回注（2026-10-27）：之前待确认的几项，D 已给正式结论
 
-§6.1/§8 登记的"τ 记录位置（notes vs 专列）待 D 确认"已解决，**无需 C 改任何格式**：
+§6.1/§8 里记的"τ 记录位置待 D 确认"解决了，结论是 **C 不用改任何格式**：
 
 | 待确认项 | D 的正式结论 | 出处 |
 |---|---|---|
@@ -116,4 +114,4 @@
 | `_holdout` 中缀命名 | 沿用不改名（D3:97 "确认沿用 `_holdout` 中缀…不需 C 改名"） | docs/D3 基线指标表；D4 §7 "_holdout 命名消费 ✓" |
 | A6 std 的 ddof 引用口径 | 报告引用统一用主矩阵 ddof=0 数值，或显式标注 A6 为 ddof=1（已登记供 D8 复核） | docs/D_A6指标口径复核_v1.0.md |
 
-§8 复选框"[ ] τ 记录位置待 D 确认"可视为已关闭（冻结期文档原文不改，以本回注为准）。
+§8 那个没勾的复选框可以当作关了（冻结期的文档正文不动，以这条回注为准）。
