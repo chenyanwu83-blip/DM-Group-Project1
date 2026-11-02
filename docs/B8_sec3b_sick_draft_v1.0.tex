@@ -1,6 +1,11 @@
-% B8 草稿存档（2026-10-27）: 沿用 D7 的"先核验后写回"纪律, 未直接写 overleaf/sections/sec3b_sick.tex。
-% 待用户核验后写回。恢复方法:
-%   tail -n +4 "docs/B8_sec3b_sick_draft_v1.0.tex" > overleaf/sections/sec3b_sick.tex
+% B8 草稿存档 v1.1（2026-11-02 修订, 依据《报告对比评审与修改意见》D3/D5/M4）:
+%   [D5] Handling decisions 段压缩: B4 完整数字(0.843±0.069 vs 0.830±0.049 / AUC 0.964 vs 0.974 /
+%        (c) 0.828)移出数据章, 指向 Section 6; 完整数字已另存 docs/B8_sec6_footnote_for_D_v1.0.tex 供 D 落位。
+%   [M4] 类别比记号统一: (≈94:6) → i.e. 6.1% positives (94:6); 图1图注同步。
+%   [D3] 出处段轻量压缩(对称 §3.1 意见): Quinlan 版一句带过; "7,200/5" 压成一句。
+%   未动: TBG 机制审计、配对核验、B4 结论句(护城河, 评审第七章保护)。
+% 恢复方法:
+%   tail -n +12 "docs/B8_sec3b_sick_draft_v1.0.tex" > overleaf/sections/sec3b_sick.tex
 % 数字来源: results/stats/sick_missing_audit.csv(B3) / results/b4_missing_comparison.csv(B4) /
 %          results/sick_*_summary.csv(主矩阵, D4 已核验) / c_config.py(冻结口径)。
 % 交叉引用依赖: \ref{sec:results} 依赖 D 的 sec6 label(见 docs/D7_sec6_results_draft_v1.0.tex)。
@@ -12,14 +17,14 @@
 The \textit{sick} dataset belongs to the UCI Thyroid Disease repository
 (ID 102, DOI 10.24432/C5D010), with original data donated by the Garavan
 Institute (1986) and redistributed under CC BY 4.0; we use the Weka-packed
-variant prepared by Quinlan, which the course brief explicitly accepts.
-The UCI landing page reports ``7,200 instances / 5 features'' --- that
-figure summarises the \emph{whole} thyroid repository and does not apply to
-this file. The actual dataset contains \textbf{3,772 instances $\times$ 30
-attributes} (23 nominal, 7 numeric, including the class). The class is
-severely imbalanced: 3,541 \textit{negative} versus 231
-\textit{sick-euthyroid} ($\approx$94:6); we treat \textit{sick} as the
-positive class throughout. Two semantic notes we keep strict in wording:
+variant (accepted by the course brief). The ``7,200 instances / 5
+features'' on the UCI landing page describes the whole thyroid
+repository, not this subset. The actual dataset contains
+\textbf{3,772 instances $\times$ 30 attributes} (23 nominal, 7 numeric,
+including the class). The class is severely imbalanced: 3,541
+\textit{negative} versus 231 \textit{sick-euthyroid}, i.e.\ 6.1\%
+positives (94:6); we treat \textit{sick} as the positive class
+throughout. Two semantic notes we keep strict in wording:
 \textit{sick-euthyroid} denotes euthyroid illness --- it is
 \emph{not} hypothyroidism --- and \textit{negative} means no thyroid
 abnormality detected in this screening, not ``perfectly healthy''. 61
@@ -49,16 +54,14 @@ and is leakage-free. (ii)~All remaining columns are imputed
 \emph{inside} the imblearn pipeline (numeric by mean, nominal by mode),
 so imputation statistics are fitted on training folds only, alongside
 encoding, scaling and SMOTE; the whole project evaluates on group-locked
-splits. A controlled experiment on the decision tree compared three
-treatments: (a)~fold-internal imputation; (b)~dropping any row with a
-missing value; (c)~treating ``missing'' as an explicit category
-(scikit-learn trees reject \texttt{NaN} natively, unlike Weka's J48 ---
-a documented deviation). Deleting rows loses 29.9\% of the patients,
-including 19 of the 231 positives, for \emph{no} statistical F1 gain
-($0.843\pm0.069$ vs.\ $0.830\pm0.049$, within one standard deviation)
-and the lowest AUC (0.964 vs.\ 0.974); (c) performs similarly to (a)
-but slightly worse. Imputation is therefore adopted: it keeps all
-3,772 instances, is the most stable, and is leakage-safe by construction.
+splits. We also compared three ways of handling the remaining gaps,
+using the decision tree as the test bed: imputing inside the folds,
+dropping incomplete rows, and treating ``missing'' as its own category
+(scikit-learn trees cannot accept \texttt{NaN} values, unlike Weka's
+J48). Dropping rows turned out to discard 29.9\% of the patients for no
+measurable benefit, so we impute. The full comparison, with per-fold
+numbers and the AUC contrast, is reported together with the results in
+Section~\ref{sec:results}.
 
 Finally, among the four base classifiers the random forest is the only
 one whose precision is preserved under SMOTE (0.94$\to$0.91, vs.\
@@ -71,7 +74,7 @@ plain bagging does not.
 \begin{minipage}{0.48\linewidth}
   \centering
   \includegraphics[width=\linewidth]{figures/fig_b_class.pdf}
-  \caption{Class distribution of sick (3,541:231, $\approx$94:6; cv10,
+  \caption{Class distribution of sick (3,541:231, 6.1\% positives; cv10,
   positive = sick-euthyroid).}\label{fig:sick-dist}
 \end{minipage}\hfill
 \begin{minipage}{0.48\linewidth}
