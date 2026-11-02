@@ -1,18 +1,11 @@
-# -*- coding: utf-8 -*-
-"""C6: 运行日志总表 —— 全部实验运行的单一索引（V3 C6 + V4 增补含集成 16 配置）。
+"""
+把 results/ 里所有 *_summary.csv 扫一遍, 汇总成一张运行日志总表
+results/run_log_v1.csv。一行就是一次实际跑过的实验(config × 协议),
+所有信息直接从 summary 文件里读, 一个指标都不重算。
 
-用法(仓库根目录):
-    python -m src.c6_run_log          # 扫描 results/ 全部 *_summary.csv 生成总表
+覆盖主矩阵 32 配置 + ZeroR 2 个 + 集成 8 个, 每个都有 cv10/holdout 两条。
 
-口径:
-    - 一行 = 一个 config × 一个协议 的实际运行(数据来自各 summary 文件本身,
-      不重算任何指标): config_id / dataset / model / strategy / protocol /
-      run_id / seed / data_sha256 / 关键参数 / runtime_sec / 三类文件路径;
-    - 覆盖: 主矩阵 32 配置(plain/smote/cost/threshold × dt/rf/lr/svc × 2 数据集)
-      + ZeroR 参照 2 配置 + 集成 8 配置(bag/ada × plain/smote × 2 数据集),
-      各 × cv10/holdout 两协议;
-    - 关键参数从 c_config / V4 §1.3 冻结规格代出, 与代码单一事实来源一致。
-输出: results/run_log_v1.csv
+    python -m src.c6_run_log
 """
 import sys
 from pathlib import Path
@@ -24,7 +17,7 @@ sys.path.insert(0, str(ROOT))
 
 from src.c_config import MODELS, DATASETS, RUN_ID, SEED
 
-# 主矩阵 4 模型冻结超参(c_config 单一来源) → 一句话参数串
+# 参数串从 c_config 里拼出来, 免得手写第二遍写岔了
 MAIN_PARAMS = {
     k: ",".join(f"{kk}={vv}" for kk, vv in v["kw"].items()) for k, v in MODELS.items()
 }
@@ -63,23 +56,23 @@ def row_for(protocol, summary_path, params):
 
 def run():
     rows = []
-    # ① 主矩阵 32 配置 + ② ZeroR 参照(主矩阵命名空间)
+    # 主矩阵 32 配置和 ZeroR 参照都在 results/ 顶层
     for p in sorted((ROOT / "results").glob("*_v1_run1*_summary.csv")):
         stem = p.name
         protocol = "holdout" if "_holdout_" in stem else "cv10"
-        cid = stem.split("_run1")[0]                     # {ds}_{model}_{strategy}_v1 或 {ds}_zero_ref_v1
+        cid = stem.split("_run1")[0]   # 形如 {ds}_{model}_{strategy}_v1 或 {ds}_zero_ref_v1
         assert cid.endswith("_v1"), f"意外命名: {stem}"
-        core = cid[:-3]                                   # 去掉 _v1 后缀
+        core = cid[:-3]   # 去掉结尾的 _v1
         if core.endswith("_zero_ref"):
             ds, mk = core[: -len("_zero_ref")], "zero"
             params = ZERO_PARAMS
         else:
-            ds, rest = core.split("_", 1)                # ds = 第一段
+            ds, rest = core.split("_", 1)
             mk = rest.split("_", 1)[0]                   # dt/rf/lr/svc
-            assert mk in MAIN_DISPLAY, f"主矩阵命名空间混入未知模型: {stem}"
+            assert mk in MAIN_DISPLAY, f"results/ 顶层混进了不认识的模型: {stem}"
             params = f"{MAIN_DISPLAY[mk]}({MAIN_PARAMS[mk.upper()]})"
         rows.append(row_for(protocol, p, params))
-    # ③ 集成 8 配置(独立命名空间, V4 §1.3)
+    # 集成的 8 个配置单独放在 results/ensemble/
     for p in sorted((ROOT / "results" / "ensemble").glob("*_v1_run1*_summary.csv")):
         stem = p.name
         protocol = "holdout" if "_holdout_" in stem else "cv10"

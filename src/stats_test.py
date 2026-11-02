@@ -1,37 +1,29 @@
-# -*- coding: utf-8 -*-
-"""C5: 主矩阵折级配对 t 检验 —— Nadeau & Bengio (2003) 方差校正版
-（对应 Weka Experimenter 的 corrected resampled t-test）。
+"""
+折级配对 t 检验, 带 Nadeau & Bengio (2003) 的方差校正 —— 也就是 Weka
+Experimenter 里那个 corrected resampled t-test。
 
-用法(仓库根目录):
-    python -m src.stats_test                   # 全量: 核验锚点 + 2数据集×4指标×C(16,2)配对 + 关键对照
-    python -m src.stats_test --self-test-only  # 只跑核验锚点, 不写任何结果文件
+为什么不用普通配对 t: 十折交叉验证每折的训练集是重叠的, 折与折不独立,
+直接检验会把 p 值算小。NB 校正把方差乘上 (1/k + n_test/n_train),
+十折的时候大约是朴素方差的 2.11 倍, 宁可保守一点也不冒进。
 
-依据:
-  - docs/D1_评估协议_v1.0.md   锁定切分/逐折原始表"供后续配对统计"(§D2数据交接规范)
-  - docs/D2_给ABC的调用说明.md  folds 文件命名与列口径
-  - V3 方案 C5: "src/stats_test.py 用 scipy.stats.t.sf 实现 Nadeau & Bengio (2003)
-    校正折级配对 t 检验(对应原 corrected resampled t-test), 出跨模型对比 p 值表"
+在仓库根目录运行:
+    python -m src.stats_test                   # 全量: 自检 + 2数据集×4指标×全部配对 + 关键对照
+    python -m src.stats_test --self-test-only  # 只跑自检, 不写结果文件
 
-公式(同折配对, k=10 折):
+公式(k=10 折, 同折配对):
     d_f = x_f - y_f ;  dbar = mean(d) ;  s2 = var(d, ddof=1)
-    Var(dbar) = s2 * (1/k + n_test/n_train)      # NB 校正: 10折时 ≈ 2.11x 朴素方差
+    Var(dbar) = s2 * (1/k + n_test/n_train)
     t = dbar / sqrt(Var(dbar)) ;  df = k-1 ;  p = 2 * t.sf(|t|, df)
 
-边界(不造数):
-    s2=0 且 dbar=0  → 两配置逐折逐位相同(如 sick 等代价对照): p=1.0, note="identical"
-    s2=0 且 dbar!=0 → 常数差但无方差: t 发散, 仅标方向, p 置 NaN 并 note 说明
-多重比较: pairs 表同时给 Holm(1979) 族内校正 p(族 = 数据集×指标的全部配对);
-    显著性星号按原始 p(α=0.05) 标注, 报告端如何呈现由 D6 按 D1"注明多重比较"口径决定。
-跨数据集: 不同样本无法同折配对, 不做跨数据集 t 检验; key 表两侧并列仅供 D6 描述性对比。
+两个边界情况不造数:
+    逐折完全相同(sick 的等代价对照就是这样) → p=1, note 标 "identical"
+    常数差但方差为 0 → t 发散, 只标方向, p 记 NaN
+另外 pairs 表里一并算了 Holm(1979) 校正的 p(族 = 数据集×指标的全部配对),
+星号仍按原始 p 标。
+不同数据集的样本没法同折配对, 所以不做跨数据集检验, key 表放一起只是方便对比。
+只检 accuracy/recall/f1/auc 四个指标; ZeroR 不进配对。
 
-指标范围: accuracy / recall / f1 / auc(4 项, 对应 RQ1 策略增益与 RQ2 指标分歧;
-kappa/balanced_accuracy/macro_f1 不入检验, 需要时按同框架追加)。
-ZeroR 参照(results/{ds}_zero_ref_v1_*)不入配对矩阵(V3: "不计入 4 模型")。
-
-输出(独立命名空间 results/ttest/, 不触碰主矩阵/冻结资产):
-    results/ttest/{ds}_ttest_pairs_{metric}_v1.csv    长表: 该数据集该指标全部 C(16,2)=120 配对
-    results/ttest/{ds}_ttest_matrix_{metric}_v1.csv   16x16 下三角速览(原始 p + 星号)
-    results/ttest/key_comparisons_v1.csv              关键对照: 各模型 smote/cost/threshold vs plain
+结果写到 results/ttest/, 不碰主矩阵的任何文件。
 """
 import argparse
 import json
@@ -44,7 +36,7 @@ import pandas as pd
 from scipy import stats
 
 ROOT = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(ROOT))                      # 保证 src.* 可导入(与 run_experiment 一致)
+sys.path.insert(0, str(ROOT))   # 让 src.* 能被导入, 和 run_experiment 一样
 
 from src.c_config import DATASETS, MODELS, RUN_ID, SEED, STRATEGIES
 
@@ -52,12 +44,12 @@ METRICS = ["accuracy", "recall", "f1", "auc"]
 KEY_STRATS = ["smote", "cost", "threshold"]        # vs plain 的关键对照
 FAMILY_ALPHA = 0.05
 
-MODEL_KEYS = [k.lower() for k in MODELS]           # 文件名口径: dt/rf/lr/svc
+MODEL_KEYS = [k.lower() for k in MODELS]   # 文件名里用的是小写: dt/rf/lr/svc
 
 
-# ---------------------------------------------------------------- 核验锚点
+# ---------------------- 自检部分 ----------------------
 def load_folds(short):
-    """读 16 配置 folds 表; 顺带做 D2 口径断言(与 run_experiment 同款, 不放宽)。"""
+    """把 16 个配置的 folds 表都读进来, 顺带做一遍和 run_experiment 相同的检查。"""
     frames = {}
     for m in MODEL_KEYS:
         for s in STRATEGIES:
@@ -70,14 +62,14 @@ def load_folds(short):
 
 
 def self_test(folds_all):
-    """锚点核对(打印 + 返回 FAIL 列表); 结果同时写入运行记录的素材。"""
+    """跑一遍锚点自检, 打印结果, 返回不通过的条目。"""
     fails, notes = [], []
     manifest = json.loads((ROOT / "results" / "split_manifest.json").read_text(encoding="utf-8"))
     tmpl_cols = list(pd.read_csv(ROOT / "results" / "fold_template.csv", nrows=0).columns)
 
     for short, meta in DATASETS.items():
         frames = folds_all[short]
-        # ① 结构: 列=模板 / sha=manifest / 指标无 NaN
+        # ① 结构检查: 列和模板对齐, sha 对得上, 指标没有 NaN
         for cid, f in frames.items():
             if list(f.columns) != tmpl_cols:
                 fails.append(f"{cid}: folds 列 != fold_template")
@@ -85,7 +77,7 @@ def self_test(folds_all):
                 fails.append(f"{cid}: data_sha256 != split_manifest")
             if f[METRICS].isna().any().any():
                 fails.append(f"{cid}: 检验指标含 NaN")
-        # ② 锁定切分: 16 配置 n_eval 逐折一致
+        # ② 各配置每折的样本数要完全一样(切分锁死的证据)
         nevals = {tuple(f["n_eval"].tolist()) for f in frames.values()}
         if len(nevals) != 1:
             fails.append(f"{short}: 各配置 n_eval 不一致 → 折未锁定")
@@ -93,7 +85,7 @@ def self_test(folds_all):
         n_train = meta["n_rows"] - n_test
         notes.append(f"{short}: 16 配置折大小逐位一致(锁定切分 PASS), "
                      f"n_test(均)={n_test:.1f}, n_train(均)={n_train:.1f}")
-        # ③ folds 均值 == summary 均值(ddof=0 口径)
+        # ③ folds 算的均值/标准差要和 summary 里的完全一致
         for cid, f in frames.items():
             su = pd.read_csv(ROOT / "results" / f"{cid}_{RUN_ID}_summary.csv")
             for met in METRICS:
@@ -101,13 +93,13 @@ def self_test(folds_all):
                     fails.append(f"{cid}: {met} folds 均值 != summary")
                 if abs(f[met].std(ddof=0) - su[f"{met}_std"].iloc[0]) > 1e-12:
                     fails.append(f"{cid}: {met} folds std(ddof=0) != summary")
-        # ④ C4 锚点复现: threshold 与 plain 的 auc 逐折逐位相等(最终重拟合=同款流水线)
+        # ④ threshold 和 plain 的 auc 应该逐折完全相同(挪阈值不动排序)
         for m in MODEL_KEYS:
             a = frames[f"{short}_{m}_plain_v1"]["auc"].to_numpy()
             b = frames[f"{short}_{m}_threshold_v1"]["auc"].to_numpy()
             if not (a == b).all():
                 fails.append(f"ANCHOR C4 FAIL: {short}_{m} plain auc != threshold auc")
-        # ⑤ sick 等代价对照: B5 预期 ≈ plain; 逐位盘点(允许 RF 平票翻转, 如实记录)
+        # ⑤ sick 的等代价对照应该和 plain 一样, 逐位数一数(RF 允许平票差一例)
         if short == "sick":
             ident = []
             for m in MODEL_KEYS:
@@ -127,9 +119,9 @@ def self_test(folds_all):
     return fails
 
 
-# ---------------------------------------------------------------- 检验本体
+# ---------------------- 检验本体 ----------------------
 def nb_paired_t(x, y, n_test, n_train):
-    """Nadeau & Bengio (2003) 校正折级配对 t 检验。返回 (dbar, t, p, note)。"""
+    """NB 校正的折级配对 t 检验, 返回 (dbar, t, p, note)。"""
     d = np.asarray(x, dtype=float) - np.asarray(y, dtype=float)
     k = len(d)
     dbar = float(d.mean())
@@ -152,7 +144,7 @@ def sig_mark(p):
 
 
 def holm(pvals):
-    """Holm(1979) step-down 校正, 族内执行; NaN 原样保留不参与排序。"""
+    """Holm step-down 校正; p 是 NaN 的不参与排序, 原样留着。"""
     p = np.asarray(pvals, dtype=float)
     m = int(np.isfinite(p).sum())
     out = np.full_like(p, np.nan)
@@ -186,7 +178,7 @@ def run():
         for metric in METRICS:
             mat = {cid: frames[cid][metric].to_numpy(dtype=float) for cid in cids}
             rows = []
-            for a, b in combinations(cids, 2):     # 全配对 C(16,2)=120, 固定字典序防重复
+            for a, b in combinations(cids, 2):   # 全配对 16*15/2=120 个, 顺序固定免得重复
                 dbar, t, p, note = nb_paired_t(mat[a], mat[b], n_test, n_train)
                 rows.append(dict(
                     dataset=meta["dataset_d"], metric=metric,
@@ -202,7 +194,7 @@ def run():
             pairs = pd.DataFrame(rows)
             pairs.to_csv(out_dir / f"{short}_ttest_pairs_{metric}_v1.csv", index=False)
 
-            # 16x16 下三角速览(原始 p + 星号; 对角线 --)
+            # 16x16 的下三角速览表, 格子里是原始 p 加星号
             lab = [c.replace(f"{short}_", "").replace("_v1", "") for c in cids]
             M = pd.DataFrame("--", index=lab, columns=lab, dtype=object)
             for r in rows:
@@ -214,9 +206,7 @@ def run():
                 M.loc[la, lb] = cell
             M.to_csv(out_dir / f"{short}_ttest_matrix_{metric}_v1.csv", encoding="utf-8-sig")
 
-            if metric == "f1":                     # 关键对照只并一次(下面按 4 指标全量补)
-                pass
-            # 关键对照行(每指标都收): {model}_{strat} vs {model}_plain
+            # 关键对照行(每个指标都收一遍): {model}_{strat} vs {model}_plain
             for m in MODEL_KEYS:
                 for s in KEY_STRATS:
                     a, b = f"{short}_{m}_{s}_v1", f"{short}_{m}_plain_v1"
@@ -233,7 +223,7 @@ def run():
     key["comparison"] = key["dataset"].map({"credit-g": "creditg", "sick": "sick"}) + "_" + key["comparison"]
     key.to_csv(out_dir / "key_comparisons_v1.csv", index=False)
 
-    # 终端速览: f1 的策略 vs plain(全部) —— 供运行记录与 D 抽读
+    # 在终端打一份 f1 策略 vs plain 的速览, 方便直接看
     view = key[(key["metric"] == "f1")]
     for dsd in ("credit-g", "sick"):
         sub = view[view["dataset"] == dsd]

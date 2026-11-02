@@ -1,6 +1,5 @@
-# -*- coding: utf-8 -*-
 """
-C2 交付物: 两张统一流水线结构图 → figures/pipeline_creditg.png / pipeline_sick.png
+画两张流水线示意图, 存成 figures/pipeline_creditg.png 和 pipeline_sick.png
 """
 import matplotlib
 matplotlib.use("Agg")
@@ -9,7 +8,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from pathlib import Path
 
-# 输出锚定到脚本所在目录(figures/), 与运行时工作目录无关 —— PyCharm/终端/任意 cwd 均可
+# 输出固定放在脚本旁边的 figures/ 目录, 不管从哪个目录运行都不会跑偏
 BASE = Path(__file__).resolve().parent
 
 # macOS 中文字体(DejaVu Sans 无 CJK 字形)

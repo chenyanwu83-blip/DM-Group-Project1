@@ -1,25 +1,13 @@
-# -*- coding: utf-8 -*-
-"""C11: 集成研究 2 对预指定折级配对 t 检验（V4 方案 §1.4，exploratory 定位）。
+"""
+集成研究里事先说好的 2 对配对 t 检验(f1 指标, NB 校正):
+    ① bag_plain vs 主矩阵 dt_plain —— bagging 到底比单棵树好多少
+    ② ada_plain vs 主矩阵 dt_smote —— boosting 的重加权 vs SMOTE 重采样
 
-用法(仓库根目录):
-    python -m src.c11_ensemble_ttest        # 2 对 × 两侧 = 4 个检验(f1, NB 校正)
+只做这 2 对, 集成的其他对比一律只报均值±标准差(不然多重比较说不过去)。
+检验直接复用 stats_test.py 里的 nb_paired_t 和 sig_mark, 不另抄一份公式。
 
-预指定的配对(每数据集, 同折配对 10 折, 其余集成结果一律只报均值±标准差):
-    ① {ds}_bag_plain  vs 主矩阵 {ds}_dt_plain   —— 方差缩减(bagging)单独贡献多少
-    ② {ds}_ada_plain  vs 主矩阵 {ds}_dt_smote   —— 重加权(boosting) vs 重采样(SMOTE)
-
-纪律(V4 §1.2 决策②):
-    - 只做这 2 对, 不做集成的其他任何配对, 防多重比较质疑;
-    - 报告标准措辞: "reported as an exploratory extension; only two
-      pre-specified comparisons were tested";
-    - 检验方法与 C5 完全同款(NB 校正 + 边界不造数), 复用 src/stats_test.py 的
-      nb_paired_t / sig_mark —— 公式单一事实来源, 不另写一份。
-
-输出(入 results/ttest/, 与 C5 同命名空间):
-    results/ttest/ensemble_2pairs_prespecified_v1.csv
-      列(17): dataset, comparison, metric, label, mean_a, mean_b, mean_diff,
-              k, t, df, p_raw, sig, note, n_test, n_train, var_corr_factor,
-              method
+    python -m src.c11_ensemble_ttest
+结果: results/ttest/ensemble_2pairs_prespecified_v1.csv
 """
 import sys
 from pathlib import Path
@@ -31,13 +19,13 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
 from src.c_config import DATASETS
-from src.stats_test import nb_paired_t, sig_mark, METRICS  # 复用, 不复制公式
+from src.stats_test import nb_paired_t, sig_mark, METRICS   # 直接用 C5 的函数, 不复制
 
-PAIRS = [  # (集成侧 config, 主矩阵侧 config, 语义标签)
+PAIRS = [   # (集成侧, 主矩阵侧, 这对比较想回答什么)
     ("bag_plain", "dt_plain", "bagging方差缩减 vs 单树基线"),
     ("ada_plain", "dt_smote", "boosting重加权 vs SMOTE重采样"),
 ]
-PRIMARY_METRIC = "f1"   # 预指定主指标; 其余指标按 V4 §1.2 只作描述性均值±标准差
+PRIMARY_METRIC = "f1"   # 主指标定的是 f1, 其他指标只描述不检验
 
 
 def load_cv10_folds(path):
@@ -52,13 +40,13 @@ def run():
     for short, meta in DATASETS.items():
         n_test = float(np.mean(pd.read_csv(
             ROOT / "results" / f"cv_folds_{meta['dataset_d']}.csv").groupby("fold_id").size()))
-        # 锁定折表每折行数(权威), 与 folds 文件 n_eval 对齐断言在配对前完成
+        # 折表算每折行数当基准, 下面配对前先对一遍
         neval_authority = pd.read_csv(
             ROOT / f"results/{short}_dt_plain_v1_run1_folds.csv")["n_eval"].tolist()
         for ens_key, main_key, label in PAIRS:
             ens = load_cv10_folds(ROOT / "results" / "ensemble" / f"{short}_{ens_key}_v1_run1_folds.csv")
             main = load_cv10_folds(ROOT / f"results/{short}_{main_key}_v1_run1_folds.csv")
-            # 同折配对前置断言: 两表折大小逐位一致(=同一锁定切分), seed/sha 同源
+            # 配对前提: 两边折大小完全一致(同一套锁定切分), seed/sha 也一样
             assert ens["n_eval"].tolist() == main["n_eval"].tolist() == neval_authority, \
                 f"{short} {ens_key} vs {main_key}: 折大小不一致, 无同折配对资格"
             assert (ens["seed"] == 42).all() and (main["seed"] == 42).all()
@@ -90,7 +78,7 @@ def run():
     print('  标准措辞: "reported as an exploratory extension; only two '
           'pre-specified comparisons were tested"')
     print(f"[saved] {out_path.relative_to(ROOT)}")
-    # 其余指标仅描述性(均值±std 已在 ensemble summary 与 C5 关系之外, 不做检验)
+    # 其余指标只打出来看一眼, 不做检验
     for short, meta in DATASETS.items():
         for m in ("bag", "ada"):
             for s in ("plain", "smote"):
