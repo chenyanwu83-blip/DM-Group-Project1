@@ -1,11 +1,12 @@
-% B8 草稿存档 v1.1（2026-11-02 修订, 依据《报告对比评审与修改意见》D3/D5/M4）:
-%   [D5] Handling decisions 段压缩: B4 完整数字(0.843±0.069 vs 0.830±0.049 / AUC 0.964 vs 0.974 /
-%        (c) 0.828)移出数据章, 指向 Section 6; 完整数字已另存 docs/B8_sec6_footnote_for_D_v1.0.tex 供 D 落位。
+% B8 草稿存档 v1.1（2026-11-02 修订, 依据《报告对比评审与修改意见》D3/D5/M4 + 中文版批注 #10–#13）:
+%   [D5] Handling decisions 段压缩: B4 完整数字移出数据章, 指向 Section 6; 落位文本在
+%        docs/B8_sec6_footnote_for_D_v1.0.tex（含批注 #12/#13 要求的三方案对照式）。
 %   [M4] 类别比记号统一: (≈94:6) → i.e. 6.1% positives (94:6); 图1图注同步。
-%   [D3] 出处段轻量压缩(对称 §3.1 意见): Quinlan 版一句带过; "7,200/5" 压成一句。
-%   未动: TBG 机制审计、配对核验、B4 结论句(护城河, 评审第七章保护)。
+%   [D3/#10] 出处段轻量压缩: 保留"7,200 条不适用"澄清(批注#10 明确要求保留), 压缩 Quinlan 版说明。
+%   [#11] 审计段再收紧: 删两处括号补充(zero anomalies 的展开 / TBG flag 的机制复述), 机制主线不动。
+%   未动(护城河): 配对机制、zero anomalies、TBG 100%、B4 结论句、RF 精度保持伏笔。
 % 恢复方法:
-%   tail -n +12 "docs/B8_sec3b_sick_draft_v1.0.tex" > overleaf/sections/sec3b_sick.tex
+%   tail -n +14 "docs/B8_sec3b_sick_draft_v1.0.tex" > overleaf/sections/sec3b_sick.tex
 % 数字来源: results/stats/sick_missing_audit.csv(B3) / results/b4_missing_comparison.csv(B4) /
 %          results/sick_*_summary.csv(主矩阵, D4 已核验) / c_config.py(冻结口径)。
 % 交叉引用依赖: \ref{sec:results} 依赖 D 的 sec6 label(见 docs/D7_sec6_results_draft_v1.0.tex)。
@@ -38,11 +39,10 @@ revealed a clean \emph{measurement mechanism}: every laboratory test
 appears as a pair --- a \texttt{*\_measured} flag and the value itself ---
 and whenever the flag reads \texttt{f} (test not performed), the paired
 value is missing \emph{by design}. Across all six lab pairs the
-consistency check found \textbf{zero anomalies} (no value without a test,
-no missing value after a test): the data is incomplete but internally
-consistent. The extreme case is \textbf{TBG, 100\% missing in all 3,772
-rows} (its flag is \texttt{f} everywhere, i.e.\ the test was never
-administered). After removing TBG and its constant flag, 1,129 rows
+consistency check found \textbf{zero anomalies}: the data is incomplete
+but internally consistent. The extreme case is \textbf{TBG, 100\% missing
+in all 3,772 rows} (its flag reads \texttt{f} in every row). After
+removing TBG and its constant flag, 1,129 rows
 (29.9\%) still carry at least one missing value
 (Figs.~\ref{fig:sick-dist}--\ref{fig:sick-missing}).
 
