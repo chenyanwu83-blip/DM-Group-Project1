@@ -5,56 +5,24 @@
 \textbf{Provenance and licence.} We use the Statlog German Credit data
 (\texttt{credit-g})~\cite{uci_credit_g_1994}, donated by Hans Hofmann (University of
 Hamburg, 1994) to the UCI Machine Learning Repository~\cite{dua2019uci} (UCI ID~144,
-DOI 10.24432/C5NC77). The working copy was retrieved on 2026-10-11 in the OpenML
-release variant (semantic column names and \texttt{good}/\texttt{bad} labels) and
-converted to CSV; it is identical in content to the original UCI encoding
-(Attribute1--20 with 1/2 labels), as verified by cross-checking shape, class
-distribution and column count against the official UCI copy. The SHA-256 digest of
-the raw CSV (\texttt{d0baf9fd\ldots5c25}) is recorded in the repository
-(\texttt{data/metadata/credit-g\_source.md}) and propagated into every split
-manifest and result file, so that data, splits and experiments remain mutually
-traceable. The dataset is released under the CC BY 4.0 licence and is cited
-accordingly.
+DOI 10.24432/C5NC77). The dataset is released under the CC BY 4.0 licence and is
+cited accordingly.
 
 \textbf{Attribute schema.} The dataset contains 1{,}000 applicants $\times$ 21
-columns: 20 features and the binary target \texttt{class} (\texttt{good} vs.\
-\texttt{bad}; the positive class is \texttt{bad} throughout this report).
-Table~\ref{tab:schema} summarises the schema; the full 21-row dictionary with
-business semantics, value sets and per-column missing counts is archived as
+columns: 13 nominal attributes, 7 numeric attributes and the binary target
+\texttt{class} (\texttt{good} vs.\ \texttt{bad}; the positive class is \texttt{bad}
+throughout this report). The full 21-row dictionary with business semantics, value
+sets and per-column missing counts is archived as
 \texttt{results/credit-g\_schema.xlsx}.
-
-\begin{table}[H]
-\centering
-\caption{Attribute schema of \texttt{credit-g} (1{,}000 records, 21 columns).
-Source: \texttt{results/credit-g\_schema.xlsx}.}
-\label{tab:schema}
-\begin{tabular}{p{1.6cm}p{1.1cm}p{10.2cm}}
-\toprule
-Type & Count & Attributes \\
-\midrule
-Target & 1 & \texttt{class} (good/bad; positive class = bad) \\
-Nominal & 13 & \texttt{checking\_status}, \texttt{credit\_history}, \texttt{purpose},
-\texttt{savings\_status}, \texttt{employment}, \texttt{personal\_status},
-\texttt{other\_parties}, \texttt{property\_magnitude}, \texttt{other\_payment\_plans},
-\texttt{housing}, \texttt{job}, \texttt{own\_telephone}, \texttt{foreign\_worker} \\
-Numeric & 7 & \texttt{duration}, \texttt{credit\_amount},
-\texttt{installment\_commitment}, \texttt{residence\_since}, \texttt{age},
-\texttt{existing\_credits}, \texttt{num\_dependents} \\
-\bottomrule
-\end{tabular}
-\end{table}
 
 \textbf{Class distribution and data quality.} Figure~\ref{fig:a_class} shows the
 class distribution: 700 \texttt{good} versus 300 \texttt{bad}, i.e., a 30\%
 positive rate and a moderate 70:30 imbalance. A systematic quality audit reports
-zero missing values and zero duplicated rows across all 21 columns, and the
-nominal/numeric split of Table~\ref{tab:schema} (13 + 7 plus the target) matches
-the schema registry exactly. Since nothing is missing, \texttt{credit-g} requires
-no imputation and no row or column deletion --- in contrast to the \texttt{sick}
-dataset discussed next. The 70:30 ratio also fixes the reference points used
-later: a majority-class baseline already scores 0.70 accuracy (revisited in
-Section~\ref{sec:results}), and all resampling and cost-sensitive strategies are
-motivated by this imbalance.
+zero missing values and zero duplicated rows across all 21 columns, so
+\texttt{credit-g} requires no imputation and no row or column deletion. The 70:30
+ratio also fixes the reference points used later: a majority-class baseline already
+scores 0.70 accuracy (revisited in Section~\ref{sec:results}), and all resampling
+and cost-sensitive strategies are motivated by this imbalance.
 
 % Source: figures/fig_a_class.png = figures/fig1_class_distribution.png (src/a4_creditg_eda.py)
 \begin{figure}[H]
@@ -67,15 +35,13 @@ motivated by this imbalance.
 \label{fig:a_class}
 \end{figure}
 
-\textbf{Descriptive statistics.} Table~\ref{tab:numstats} gives the five-number
-summary of the seven numeric attributes. Three of them are genuinely continuous
-(\texttt{duration}, \texttt{credit\_amount}, \texttt{age}) and four are ordinal
-grade fields on 1--4 or 1--2 scales. All continuous attributes are right-skewed:
-for \texttt{credit\_amount} the median (2{,}320 DM) is far below the mean (3{,}271
-DM) and the maximum (18{,}424 DM), and \texttt{duration} shows the same pattern
-mildly (median 18 vs.\ mean 20.9 months); Figure~\ref{fig:a_numeric} visualises
-the same long right tails. This skew directly informs the discretisation choice
-below.
+\textbf{Descriptive statistics.} Of the seven numeric attributes, three are
+genuinely continuous (\texttt{duration}, \texttt{credit\_amount}, \texttt{age}) and
+four are ordinal grade fields on 1--4 or 1--2 scales. Figure~\ref{fig:a_numeric}
+shows that all three continuous attributes are right-skewed --- for
+\texttt{credit\_amount} the median (2{,}320 DM) lies far below the mean (3{,}271 DM)
+and the maximum (18{,}424 DM) --- a skew that directly informs the discretisation
+choice below.
 
 % Source: figures/fig_a_numeric.png = figures/fig3_numeric_hist.png (src/a4_creditg_eda.py)
 \begin{figure}[H]
@@ -88,30 +54,10 @@ below.
 \label{fig:a_numeric}
 \end{figure}
 
-\begin{table}[H]
-\centering
-\caption{Five-number summary of the numeric attributes of \texttt{credit-g}
-(source: \texttt{results/stats/credit-g\_stats.md}; means shown for reference).}
-\label{tab:numstats}
-\begin{tabular}{lrrrrrr}
-\toprule
-Attribute & min & Q1 & median & Q3 & max & mean \\
-\midrule
-duration & 4 & 12.0 & 18.0 & 24.0 & 72 & 20.9 \\
-credit\_amount & 250 & 1{,}365.5 & 2{,}319.5 & 3{,}972.2 & 18{,}424 & 3{,}271.3 \\
-installment\_commitment & 1 & 2.0 & 3.0 & 4.0 & 4 & 3.0 \\
-residence\_since & 1 & 2.0 & 3.0 & 4.0 & 4 & 2.8 \\
-age & 19 & 27.0 & 33.0 & 42.0 & 75 & 35.5 \\
-existing\_credits & 1 & 1.0 & 1.0 & 2.0 & 4 & 1.4 \\
-num\_dependents & 1 & 1.0 & 1.0 & 1.0 & 2 & 1.2 \\
-\bottomrule
-\end{tabular}
-\end{table}
-
 Among the nominal attributes, \texttt{checking\_status} shows the clearest
 relationship with the target. Figure~\ref{fig:a_checking} sorts its four values by
 default rate: the \texttt{bad} share falls monotonically from 49.3\% (overdrawn
-accounts, \texttt{<0}, 135 of 274) to 39.0\% (\texttt{0<=X<200}), 22.2%
+accounts, \texttt{<0}, 135 of 274) to 39.0\% (\texttt{0<=X<200}), 22.2\%
 (\texttt{>=200}) and 11.7\% (no checking account, 46 of 394), straddling the 30\%
 overall rate. This gradient is consistent with domain intuition (weaker account
 standing, higher default risk) and is later corroborated by tree-based feature
@@ -130,9 +76,8 @@ checking account the lowest (11.7\%). Source:
 \label{fig:a_checking}
 \end{figure}
 
-\textbf{Preprocessing decisions.} Four decisions were fixed in a written
-specification before the main experiment matrix and are applied inside every
-pipeline fit (never on the full data):
+\textbf{Preprocessing decisions.} Four preprocessing decisions are adopted for
+\texttt{credit-g}:
 \begin{enumerate}
   \item \emph{No cleaning.} The quality audit (0 missing, 0 duplicated) removes the
   need for imputation or deletion; the raw table enters the pipelines unchanged.
@@ -153,17 +98,30 @@ pipeline fit (never on the full data):
 \end{enumerate}
 
 A controlled ablation confirms the branch assignment of decisions 2 and 3 (RQ3).
-Logistic regression under the one-hot branch (61 features after expansion) reached
-accuracy 0.752, F1 0.531 and ROC-AUC 0.785, against 0.718, 0.406 and 0.738 for
-ordinal encoding with raw numerics (20 features), evaluated by stratified 10-fold
-cross-validation (seed 42; positive class \texttt{bad}; fold-level paired $t$-tests,
-$n = 10$, uncorrected: F1 $p = 0.021$, AUC $p = 0.008$, accuracy $p = 0.101$). A
-supplementary attribution control (ordinal encoding with standardised numerics,
-F1 0.415) stays close to the ordinal branch, showing that the gap comes from the
-encoding itself --- ordinal codes impose an artificial order on nominal attributes
-and distort the linear decision boundary --- rather than from scaling; the
-un-scaled ordinal branch additionally fails to converge within 1{,}000
-optimisation iterations. One-hot encoding with standardised numerics is therefore
-used for all linear/kernel models and ordinal codes with raw numerics for all
-tree-based models throughout the main matrix. Full fold-level results are archived
-in \texttt{results/a6\_onehot\_comparison.csv} and \texttt{results/a6\_onehot\_folds.csv}.
+Table~\ref{tab:a_encoding} compares logistic regression under the two encodings by
+stratified 10-fold cross-validation (seed 42; positive class \texttt{bad}): one-hot
+encoding with standardised numerics outperforms ordinal encoding with raw numerics
+on every metric, and the gains in F1 and ROC-AUC are statistically significant
+under fold-level paired $t$-tests ($n = 10$, uncorrected). One-hot encoding with
+standardised numerics is therefore used for all linear/kernel models and ordinal
+codes with raw numerics for all tree-based models throughout the main matrix. Full
+fold-level results are archived in \texttt{results/a6\_onehot\_comparison.csv} and
+\texttt{results/a6\_onehot\_folds.csv}.
+
+\begin{table}[H]
+\centering
+\caption{Encoding ablation on \texttt{credit-g} (logistic regression, stratified
+10-fold CV, seed 42, positive class = \texttt{bad}; means over $n = 10$ folds).
+Source: \texttt{results/a6\_onehot\_comparison.csv}.}
+\label{tab:a_encoding}
+\begin{tabular}{lrrrr}
+\toprule
+Encoding & Features & Accuracy & F1 (\texttt{bad}) & ROC-AUC \\
+\midrule
+One-hot + standardised numerics & 61 & \textbf{0.752} & \textbf{0.531} & \textbf{0.785} \\
+Ordinal + raw numerics & 20 & 0.718 & 0.406 & 0.738 \\
+\midrule
+Paired $t$-test $p$ ($n = 10$ folds) & --- & 0.101 & 0.021 & 0.008 \\
+\bottomrule
+\end{tabular}
+\end{table}
