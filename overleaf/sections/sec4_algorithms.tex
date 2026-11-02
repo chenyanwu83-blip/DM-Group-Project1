@@ -1,2 +1,78 @@
 \section{Basic Concepts of Algorithms}
-% C owns this file: classifiers and imbalance strategies.
+\label{sec:algorithms}
+
+Our main matrix combines four classifiers with four imbalance-handling
+strategies. The four classifiers were chosen to span complementary
+families of decision-boundary assumptions.
+
+\subsection{Classifiers}
+\textbf{Decision Tree (DT).} We grow a CART tree with the entropy
+impurity criterion and prune it by cost-complexity pruning with
+$\alpha=0.01$. This split-and-prune scheme differs from Weka's J48.
+An unpruned tree easily overfits the training data, so the light
+pruning keeps the model interpretable while limiting overfitting.
+
+\textbf{Random Forest (RF).} The forest averages 100 de-correlated
+trees, each grown on a bootstrap sample of the training fold.
+Averaging reduces variance without inflating bias, and the resulting
+boundary is an ensemble-smoothed version of the single-tree boundary.
+In our plain baselines RF handles imbalance best on sick and stays
+competitive with LR on credit-g.
+
+\textbf{Logistic Regression (LR).} A linear decision boundary passed
+through a sigmoid, trained by regularised log-loss. Class
+probabilities therefore fall directly out of the training objective
+rather than a post-hoc wrapper. The linear boundary is also the most
+sensitive to how nominal attributes are encoded.
+
+\textbf{Support Vector Classifier (SVC).} A maximum-margin classifier
+with an RBF kernel and $C=1.0$. SVC has no native probabilities, so
+\texttt{probability=True} wraps an internal Platt calibration.
+Scikit-learn fits the calibration sigmoid with its own internal
+cross-validation, which is separate from both the 5-fold threshold
+search of Section~\ref{ssec:strategies} and the 10-fold evaluation.
+We route all four models through \texttt{predict\_proba} so that AUC
+and threshold moving share one uniform interface at the cost of extra
+training time. AUC itself could equally be computed from the raw
+decision values.
+
+\subsection{Imbalance-Handling Strategies}
+\label{ssec:strategies}
+\textbf{plain} keeps the empirical class distribution and each
+classifier's default \texttt{predict} rule. For the RBF SVC this rule
+is the sign of the decision function rather than a probability
+threshold. Plain serves as the reference arm for every comparison.
+
+\textbf{SMOTE} over-samples the minority class by interpolating
+between minority neighbours and their nearest neighbours. The sampler
+sits inside the \texttt{imblearn} pipeline, so synthesis is confined
+to the training folds. Because synthesis happens in the encoded
+feature space, interpolated one-hot or ordinal coordinates need not
+correspond to a natural category value. We list this as a known
+limitation of the frozen design.
+
+\textbf{Cost-sensitive learning} reweights the training loss. On
+credit-g we apply the official 5:1 cost matrix, that is $5\times$FN
+against $1\times$FP, via \texttt{class\_weight}. Sick has no official
+costs, so an equal-weight control is used there.
+
+\textbf{Threshold moving} keeps training identical to plain and moves
+only the operating point. A threshold $\tau$ is selected on inner
+5-fold out-of-fold probabilities of the training fold over the grid
+$0.05$ to $0.95$, maximising F1, and is then locked. It is the only
+strategy that never touches training, so it cleanly measures how much
+the default 0.5 threshold leaves on the table.
+
+\subsection{Ensemble Methods: Bagging and Boosting}
+\label{ssec:ensemble-concepts}
+Beyond the four base classifiers we conduct an exploratory ensemble
+study. \textbf{Bagging} trains several instances of a base learner on
+bootstrap samples and aggregates their majority votes, which reduces
+variance. A random forest is bagging combined with random feature
+subspaces. \textbf{Boosting}, here AdaBoost, builds learners
+sequentially and re-weights the instances the previous ones
+misclassified. This acts as an implicit form of cost-sensitive
+learning on hard, often minority, examples. Both ensembles use the
+same pruned decision tree as the base learner, with
+$n_{\text{estimators}}=100$ matching the random-forest budget for
+comparability.
