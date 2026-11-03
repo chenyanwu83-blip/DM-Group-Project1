@@ -94,34 +94,39 @@
 ## 第 3 段 · A（2:30）
 
 > Thanks, Ling. After all those missing values, let me show you something
-> much cleaner: **credit-g**, one thousand loan applications from a German
-> bank — Statlog project, 1994, UCI ID 144. **1,000 rows, 21 attributes**,
-> mostly categorical, **zero missing values, zero duplicates**. The class
-> is 700 good versus 300 bad — 70 to 30 — and we treat **bad** as the
-> positive class, because catching the risky loan is the valuable side.
+> much cleaner: **credit-g** — one thousand loan applications from a German
+> bank, from 1994, UCI ID 144. **1,000 rows, 21 columns**, mostly
+> categorical, and **zero missing values, zero duplicates**. The class is
+> 700 good versus 300 bad — 70 to 30. We treat **bad** as the positive
+> class — the official cost matrix says missing a bad loan costs **five
+> times** more than rejecting a good one.
 >
-> One thing stands out in exploration: **checking status** and **loan
-> duration** are the strongest signals — you can see it in these two
-> plots. If someone has no checking account and asks for a long loan,
-> the risk goes up.
+> One thing stands out: **checking status**. On this plot, the four groups
+> are sorted by default rate, and it goes down step by step — **people
+> with an account below zero default 49% of the time; people with no
+> checking account, only 12%**. The average is 30%, in the middle. Less
+> money in the account, more risk — just what a bank would expect.
 >
-> And here is the experiment I ran on this dataset. The question: with
-> mixed attributes, **does encoding actually matter?** I took the same
-> logistic regression and fed it two versions of the same data. Version
-> one: one-hot encoding plus standardization — 61 columns. Version two:
-> the raw categories, just numbered — 20 columns. Same model, same folds,
-> only the encoding differs.
+> Now, the experiment I ran. The question: with mixed data — numbers and
+> categories — **does encoding matter?** I took the same logistic
+> regression and gave it two versions of the same data. Version one:
+> one-hot encoding plus scaling — 61 columns. Version two: the categories
+> just turned into numbers — 20 columns. Same model, same folds, same
+> seed — **only the encoding is different**.
 >
-> The result is clear: **F1 jumps from 0.41 to 0.53** — that is
-> significant, p = 0.021 — and AUC improves too, p = 0.008. And we
-> checked: the gap comes from **the encoding, not the scaling**. So on
-> mixed data, a preprocessing choice can move a model up or down the
-> ranking — that's our answer to research question four.
+> The result is clear: **F1 jumps from 0.41 to 0.53**, and AUC goes up
+> as well — both gains are statistically significant. We also checked:
+> the gap comes from **the encoding, not the scaling**. Why?
+> When you turn categories into numbers, you create an order that does
+> not exist — and a linear model believes that order. Tree models don't
+> care, so they keep the simple numbers. So on mixed data, how you encode
+> can change which model wins — that's our answer to **research question
+> three**.
 >
 > So now you've seen both datasets — one messy, one clean. **C will show
 > you how we model both with one shared pipeline.**
 
-【讲法：自己的数据自己的实验，按幻灯片讲即可；0.41→0.53 用手势比出"跳"；最后一句左右手分别代表两个数据集】
+【讲法：本段与 docs/A10_讲稿与幻灯要点_v1.0.md 同源（A 认领修订 11-02：修正探索段方向、RQ 改新编号、去掉 duration 超卖；晚间改为短句口语版约 300 词）。49% 和 12% 两个数字对着幻灯上排好序的四根柱子点，**方向别说反——账户低于零（<0）最高、无账户最低**；0.41→0.53 用手势比出"跳"；**p 值数字不念**（幻灯 A3 表第三行有），只说 "both gains are statistically significant"，被问再报 F1 p=0.021 / AUC p=0.008（accuracy p=0.101 不显著，别说"全部显著"）；"research question three" 是新版编号（旧 RQ4 已改称 RQ3）；最后一句左右手分别代表两个数据集】
 
 ---
 
