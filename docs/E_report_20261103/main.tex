@@ -1,0 +1,21 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{setspace}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\setstretch{1.5}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt}
+\emergencystretch=2em
+\hyphenpenalty=10000\exhyphenpenalty=10000
+\pagestyle{empty}
+\begin{document}
+\section*{Abstract}
+Class imbalance complicates the evaluation of credit assessment and thyroid screening data. We compared decision trees, random forests, logistic regression and support vector classifiers on two UCI datasets using SMOTE, class weighting and threshold adjustment alongside plain training. Consistent comparisons were supported by shared validation splits and preprocessing fitted within training folds, while Apriori provided interpretable associations. Cost sensitive logistic regression achieved the highest mean F1 in the German Credit main experiment, whereas random forest with SMOTE led the sick main experiment. The strategy comparison shows that improvements in recall can involve losses in precision, so accuracy alone is insufficient. An additional ensemble study produced a higher exploratory F1 on sick, without establishing superiority through a direct statistical comparison. Apriori identified attribute combinations with elevated bad proportions that complemented tree model explanations. Together, these findings support evaluating methods against the dataset and decision objective, with independent validation needed before practical use.
+\section*{6.6 Association Rule Evidence}
+\input{sec6_apriori}\newpage
+\section*{7.2 Limitations}
+The findings support internal comparison rather than deployment claims. Only two datasets and one split seed were studied, and retained duplicate sick records may appear across validation folds. If configuration selection used cross validation over all records, the overlapping holdout cannot provide fully independent confirmation of that selection. Ordinary SMOTE can also create artificial categorical representations, but its contribution to performance changes was not isolated experimentally. The ensemble extension and Apriori analysis remain exploratory, and the higher ensemble F1 was not tested directly against that of the main experiment winner. These limitations restrict claims about generalisation and the causes of model differences.
+\section*{7.3 Future Work}
+Future work should first test the selected configurations on independent data or use nested cross validation across several seeds. A controlled comparison with SMOTENC could assess whether preserving categorical values improves resampling. Threshold selection should also be compared under the stated decision objective, including the official credit cost matrix where applicable. Finally, before the Apriori findings inform decisions, rule stability should be checked on separate samples.
+\end{document}
