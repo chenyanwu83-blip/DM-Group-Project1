@@ -1,4 +1,4 @@
-# credit-g 质量统计（A3，供 D 核对）
+# credit-g 质量统计（A3）
 
 生成方式：`src/a2a3_creditg_schema_stats.py`，数据 `data/raw/credit-g.csv`（SHA-256 见 data/metadata/credit-g_source.md）
 

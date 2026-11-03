@@ -1,8 +1,8 @@
-"""A2+A3｜credit-g 字段字典与质量统计（角色 A 交付物）
+"""credit-g 字段字典与质量统计。
 
 产出：
 - results/credit-g_schema.xlsx（sheet1 字段字典 / sheet2 数值五数概括）
-- results/stats/credit-g_stats.md（质量统计，供 D 核对指标口径）
+- results/stats/credit-g_stats.md（质量统计表）
 """
 
 from pathlib import Path
@@ -77,7 +77,7 @@ def main() -> None:
 
     n_nominal = (schema["类型"] != "数值").sum()
     n_numeric = (schema["类型"] == "数值").sum()
-    stats = f"""# credit-g 质量统计（A3，供 D 核对）
+    stats = f"""# credit-g 质量统计（A3）
 
 生成方式：`src/a2a3_creditg_schema_stats.py`，数据 `data/raw/credit-g.csv`（SHA-256 见 data/metadata/credit-g_source.md）
 

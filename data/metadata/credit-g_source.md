@@ -18,7 +18,7 @@
 - 类别分布：{'good': 700, 'bad': 300}（预期 good 700 : bad 300）
 - 与 ucimlrepo 官方副本交叉核验：shape 一致=通过；类别分布一致(1=good,2=bad)=通过；列数一致(命名变体除外)=通过；列名为 OpenML 语义命名（UCI 官方为 Attribute1-20 编码），属同一数据的两个变体
 
-## 引用格式（BibTeX，供 E 入引用库）
+## 引用格式（BibTeX）
 
 ```bibtex
 @misc{uci_creditg,

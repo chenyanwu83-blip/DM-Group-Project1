@@ -1,15 +1,14 @@
-"""A6｜credit-g 对照实验①：OneHotEncoder 有/无（角色 A 交付物）
+"""credit-g 编码对照实验：LogisticRegression 上 OneHot 有/无。
 
 按 configs/spec_creditg.md §4 执行：
 - LogisticRegression(max_iter=1000, random_state=42) × {编码② OneHot+StandardScaler vs 编码③ Ordinal+数值原样}
   × StratifiedKFold(10, shuffle=True, random_state=42)
 - scoring = accuracy / F1(pos_label='bad') / ROC-AUC（y 编码 bad=1, good=0）
-- 折级配对 t 检验（scipy.stats.ttest_rel，未校正，n=10，仅作差异概览；主矩阵的 Nadeau & Bengio
-  校正检验由 C5 负责）
+- 折级配对 t 检验（scipy.stats.ttest_rel，未校正，n=10，仅作差异概览）
 
 产出（results/）：
-- a6_onehot_comparison.csv        汇总表（均值±标准差，对齐 D2 模板口径）
-- a6_onehot_folds.csv             折级明细（供 D 复核与后续检验）
+- a6_onehot_comparison.csv        汇总表（均值±标准差）
+- a6_onehot_folds.csv             折级明细
 - stats/a6_onehot_conclusion.md   结论段（中文结论 + 英文报告段落，数字自动回填）
 """
 
@@ -31,7 +30,7 @@ CSV = ROOT / "data" / "raw" / "credit-g.csv"
 RESULTS = ROOT / "results"
 
 SEED = 42
-POS = "bad"  # D1 协议正类
+POS = "bad"  # 正类
 
 NUMERIC = [
     "duration", "credit_amount", "installment_commitment",
@@ -45,7 +44,7 @@ NOMINAL = [
 
 
 def build_pipe(encoding: str) -> Pipeline:
-    """onehot/ordinal 均出自 A5 规格单（冻结）；ordinal_scaled 为 A6 补充归因组（非冻结配置），
+    """onehot/ordinal 均出自规格单（冻结）；ordinal_scaled 为补充归因组（非冻结配置），
     用于把"编码效应"与"缩放效应"拆开。"""
     if encoding == "onehot":
         pre = ColumnTransformer([
@@ -82,7 +81,7 @@ if __name__ == "__main__":
     skf = StratifiedKFold(n_splits=10, shuffle=True, random_state=SEED)
     scoring = ["accuracy", "f1", "roc_auc"]  # y 已编码 bad=1，f1 等价 f1_score(pos_label='bad')
 
-    # 切分一致性自检：与 D 锁定的折表逐折核对（文件存在时；fold_id 为 1 基）
+    # 切分一致性自检：与锁定折表逐折核对（文件存在时；fold_id 为 1 基）
     split_note = ""
     locked = RESULTS / "cv_folds_credit-g.csv"
     if locked.exists():
@@ -90,7 +89,7 @@ if __name__ == "__main__":
         base = int(lk.fold_id.min())
         same = all(set(lk.loc[lk.fold_id == f + base, "row_idx"]) == set(t.tolist())
                    for f, (_, t) in enumerate(skf.split(X, y)))
-        split_note = (f"切分自检：与 D 锁定折表 cv_folds_credit-g.csv 逐折{'一致' if same else '不一致'}"
+        split_note = (f"切分自检：与锁定折表 cv_folds_credit-g.csv 逐折{'一致' if same else '不一致'}"
                       "（同配方 StratifiedKFold(10, shuffle, seed=42)）。\n")
         print(split_note, end="")
 
@@ -103,7 +102,7 @@ if __name__ == "__main__":
     for config_id, (encoding, note) in configs.items():
         t0 = perf_counter()
         with warnings.catch_warnings():
-            # 收敛状况以 n_iter 全量拟合记录为准，不刷屏
+            # 收敛状况以全量拟合的 n_iter 为准
             warnings.simplefilter("ignore", ConvergenceWarning)
             cv = cross_validate(build_pipe(encoding), X, y, cv=skf, scoring=scoring)
         runtime = perf_counter() - t0
@@ -158,7 +157,7 @@ if __name__ == "__main__":
     print(f"\nΔ(onehot−ordinal): acc {d['accuracy']:+.4f} (p={pv['accuracy']:.3f}) | "
           f"f1 {d['f1']:+.4f} (p={pv['f1']:.3f}) | auc {d['roc_auc']:+.4f} (p={pv['roc_auc']:.3f})")
 
-    # 结论第 1 句按实际方向措辞，避免跑前写死
+    # 结论首句按实际差异方向措辞
     wins = [m for m in scoring if d[m] > 0]
     if len(wins) == len(scoring):
         verdict = "在三项指标上全面优于"
@@ -199,14 +198,14 @@ LogisticRegression(max_iter=1000, random_state=42)；分层 10 折 CV(shuffle, s
 补充归因组 A6.3（序数+标准化，非冻结配置）：acc {c['accuracy'][0]:.4f}±{c['accuracy'][1]:.4f} /
 F1 {c['f1'][0]:.4f}±{c['f1'][1]:.4f} / AUC {c['roc_auc'][0]:.4f}±{c['roc_auc'][1]:.4f}。
 
-## 结论（4 句）
+## 结论
 
 1. {s1}{conv_note}。
 2. 归因：{attribution}
 3. 对 RQ4 的含义：混合属性数据集上"编码方式与模型族匹配"是必要决策——线性/核模型走 OneHot+标准化（规格单②），树模型直接吃序数编码（规格单③），两分支已在 A5 规格单固化进主矩阵流水线。
 4. 与主矩阵衔接：本对照属 plain 策略下的编码消融，A7 的 16 配置沿用规格单②③分支，不再改动。
 
-## 报告段落（EN，供 sec3a_creditg.tex）
+## 报告段落（EN）
 
 To quantify the effect of encoding (RQ4), we ran LogisticRegression under two preprocessing
 branches of our frozen specification: (a) one-hot expansion of the 13 nominal attributes with
@@ -220,8 +219,6 @@ shows that the gap is mainly attributable to the encoding itself rather than to 
 codes impose an artificial order on nominal attributes, which distorts the linear decision
 boundary. One-hot encoding is therefore retained for all linear/kernel models in the main
 experiment matrix, while tree-based models keep raw ordinal codes.
-
-—— A 角色 {pd.Timestamp.today().date()} 生成；D 请按 D1 口径复核指标方向（正类 bad、概率列方向）。
 """
     RESULTS.joinpath("stats").mkdir(exist_ok=True)
     (RESULTS / "stats" / "a6_onehot_conclusion.md").write_text(md, encoding="utf-8")

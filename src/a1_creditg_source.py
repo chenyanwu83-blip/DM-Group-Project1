@@ -1,8 +1,8 @@
-"""A1｜credit-g 来源核验与哈希记录（角色 A 交付物）
+"""credit-g 数据来源核验与哈希记录。
 
 产出 data/metadata/credit-g_source.md：
-- 本地 data/raw/credit-g.csv 的 SHA-256（供 E 引用库、报告来源关卡）
-- 用 ucimlrepo 官方副本交叉核验 shape / 列名 / 类别分布（网络失败不影响出报告）
+- 本地 data/raw/credit-g.csv 的 SHA-256
+- 用 ucimlrepo 官方副本交叉核验 shape / 类别分布（网络失败时只记本地哈希）
 """
 
 import hashlib
@@ -38,7 +38,7 @@ def official_cross_check(local: pd.DataFrame) -> tuple[bool, str]:
         ok = all(checks.values())
         detail = "；".join(f"{k}={'通过' if v else '不一致'}" for k, v in checks.items())
         return ok, detail + "；列名为 OpenML 语义命名（UCI 官方为 Attribute1-20 编码），属同一数据的两个变体"
-    except Exception as e:  # 网络问题不阻塞交付
+    except Exception as e:  # 网络失败时只记本地哈希，不中断
         return False, f"官方副本拉取失败（{type(e).__name__}: {e}），仅记录本地哈希"
 
 
@@ -69,7 +69,7 @@ def main() -> None:
 - 类别分布：{class_dist}（预期 good 700 : bad 300）
 - 与 ucimlrepo 官方副本交叉核验：{cross_detail}
 
-## 引用格式（BibTeX，供 E 入引用库）
+## 引用格式（BibTeX）
 
 ```bibtex
 @misc{{uci_creditg,

@@ -99,7 +99,7 @@
 > So now you've seen both datasets — one messy, one clean. **C will show
 > you how we model both with one shared pipeline.**
 
-【讲法：本段与 docs/A10_讲稿与幻灯要点_v1.0.md 同源（A 认领修订 11-02：修正探索段方向、RQ 改新编号、去掉 duration 超卖；晚间改为短句口语版约 300 词）。49% 和 12% 两个数字对着幻灯上排好序的四根柱子点，**方向别说反——账户低于零（<0）最高、无账户最低**；0.41→0.53 用手势比出"跳"；**p 值数字不念**（幻灯 A3 表第三行有），只说 "both gains are statistically significant"，被问再报 F1 p=0.021 / AUC p=0.008（accuracy p=0.101 不显著，别说"全部显著"）；"research question three" 是新版编号（旧 RQ4 已改称 RQ3）；最后一句左右手分别代表两个数据集】
+【讲法：本段与 docs/A10_讲稿与幻灯要点_v1.0.md 同源。49% 和 12% 两个数字对着幻灯上排好序的四根柱子点，**方向别说反——账户低于零（<0）最高、无账户最低**；0.41→0.53 用手势比出"跳"；**p 值数字不念**（幻灯 A3 表第三行有），只说 "both gains are statistically significant"，被问再报 F1 p=0.021 / AUC p=0.008（accuracy p=0.101 不显著，别说"全部显著"）；"research question three" 用新版编号；最后一句左右手分别代表两个数据集】
 
 ---
 
