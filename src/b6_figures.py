@@ -16,7 +16,7 @@ CSV_PATH = ROOT / "data" / "raw" / "sick.csv"
 df = pd.read_csv(CSV_PATH, na_values="?")
 FIG_DIR.mkdir(exist_ok=True)
 
-# ── 图① 类别分布 ──────────────────────────────────────────────
+#  图① 类别分布 
 counts = df["Class"].value_counts()
 fig, ax = plt.subplots(figsize=(5, 3.6))
 bars = ax.bar(counts.index, counts.values,
@@ -32,7 +32,7 @@ fig.savefig(FIG_DIR / "fig_b_class.pdf")
 fig.savefig(FIG_DIR / "fig_b_class.png", dpi=150)
 plt.close(fig)
 
-# ── 图② 逐列缺失率（只画有缺失的列，TBG 标红）────────────────
+#  图② 逐列缺失率（只画有缺失的列，TBG 标红）
 na_pct = (df.isna().mean() * 100).sort_values()
 na_pct = na_pct[na_pct > 0]
 colors = ["#C44E52" if c == "TBG" else "#4C72B0" for c in na_pct.index]
@@ -49,7 +49,7 @@ fig.savefig(FIG_DIR / "fig_b_missing.pdf")
 fig.savefig(FIG_DIR / "fig_b_missing.png", dpi=150)
 plt.close(fig)
 
-# ── 图③ TSH / FTI 按类别箱线图（TSH 用对数轴压长尾）───────────
+#  图③ TSH / FTI 按类别箱线图（TSH 用对数轴压长尾）
 fig, axes = plt.subplots(1, 2, figsize=(9, 3.8))
 groups = [df.loc[df["Class"] == c, "TSH"].dropna() for c in ("negative", "sick")]
 axes[0].boxplot(groups, tick_labels=["negative", "sick"])
