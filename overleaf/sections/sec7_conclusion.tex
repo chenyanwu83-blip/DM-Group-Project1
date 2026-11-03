@@ -1,2 +1,31 @@
-\section{Conclusion and Future Work}
-% D drafts this file; E helps align conclusions with measured results and limitations.
+\setcounter{section}{6}\refstepcounter{section}\addcontentsline{toc}{section}{7 Conclusion and Future Work}
+\section*{7 Conclusion and Future Work}
+
+\subsection*{7.1 Findings}
+
+\begin{enumerate}
+\item \textbf{(RQ1) Selection depends on the dataset.} Cost-weighted LR leads the
+credit-g main matrix at F1 0.597; RF + SMOTE leads sick at 0.897. Section 6.2 supports
+recall gains more strongly than F1 gains. No intervention improves every model on both
+datasets.
+\item \textbf{(RQ2) Accuracy needs minority-class evidence.} The reference rows in
+Tables 6.1--6.2 illustrate the limitation of accuracy. Positive-class precision, recall
+and F1, together with relevant error costs, reveal the decision trade-offs.
+\item \textbf{(RQ3) One-hot encoding favours the tested LR pipeline; imputation
+preserves sick records.} One-hot reaches F1 0.531 against 0.406 with ordinal codes on
+credit-g LR; imputation retains all 3{,}772 sick records with the best AUC among the
+three tested missing-data schemes (0.974). These conclusions are scoped to the tested
+configurations; dataset differences and shared explanatory fields do not establish
+causal mechanisms.
+\item \textbf{(RQ4) The champions cut holdout cost and missed positives.} On the
+holdout, credit-g cost falls to 0.570 from 0.887 for plain LR and 1.500 for
+always-approve ZeroR, and the sick champion misses 3 of 69 positives with ten false
+alarms. Section 6.4 bounds these results to internal evaluation because model
+selection and final testing were not fully independent.
+\end{enumerate}
+
+
+\subsection*{7.2 Limitations}
+\input{sections/sec7_2_limitations}
+\subsection*{7.3 Future Work}
+\input{sections/sec7_3_future_work}

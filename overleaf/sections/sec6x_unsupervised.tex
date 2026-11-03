@@ -1,7 +1,3 @@
-\subsection{Association Rule Analysis}
-\label{sec:apriori}
-
-% E: Insert the verified credit-g Apriori data preparation and parameter settings.
-% Report representative class=bad rules with support, confidence, and lift.
-% Interpret the rules as associations, not causal effects.
-% Compare selected patterns with C's decision tree and random forest outputs.
+\subsection*{6.6 Association Rule Evidence}
+\phantomsection\makeatletter\def\@currentlabel{6.6}\makeatother
+\paragraph{Association rule evidence.}\label{sec:apriori} Apriori found simple combinations associated with the bad label and added to the supervised model explanations. The leading rule combined the highest duration band with savings below 100. Among 124 matching records, 71 were labelled bad. Support was 0.071, confidence 0.573 and lift 1.91, compared with an overall bad proportion of 0.30. We retained six rules with confidence of at least 0.50 and a gain of at least five percentage points over the stronger single condition. We discretised three continuous fields, then mined frequent itemsets from 1,000 Boolean transactions using minimum support 0.05 and at most three items per itemset. Some fields also appeared in decision tree paths and ranked highly in random forest importance, but the tree reproduced no complete selected rule. This overlap helps interpretation, but does not independently validate the rules. The rules were selected using all records and establish neither causation nor predictive accuracy.
