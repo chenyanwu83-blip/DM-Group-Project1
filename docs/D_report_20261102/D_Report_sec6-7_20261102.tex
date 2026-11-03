@@ -1,31 +1,6 @@
-% D_Report_sec6-7_20261102.tex —— 2026-11-02
-% 基线 = D_Report_Final_20261102.docx+ 11-02 晚确认的三处修正:
-%   [1] 删除 "6.1 Main Results continued" 临时排版标题
-%   [2] 6.3 标题 "Cross Dataset" -> "Cross-Dataset"
-%   [3] 6.4 标题 "Trade offs" -> "Trade-offs"
-% 数字与 4 张图逐字取自 Final（此前已对 results/*.csv 台账全量核验，零矛盾；
-%   sick LR SMOTE recall 0.606->0.870 / precision 0.803->0.373 本轮复算亦与 F1 0.521 吻合）。
-% 图 = 同目录 fig_6_1..fig_6_4 PNG（自 Final docx 提取的最新渲染版，混淆矩阵轴向已修正）。
-% 编译: pdfLaTeX / XeLaTeX 均可（Overleaf 直接编译）; Word 版由 pandoc 3.8 转出。
-% 修订 2（按第一轮模拟评阅四项）: [a] 表内数值整值改单一数学对象+固定列宽（修复 Word 断行）;
-%   [b] 6.2 注释补 Section 5 指向; [c] 6.3-1/6.5-1 重写为发现先行（86.3%/44.1%/88.7%/0.6%;
-%   bag 0.987/0.785 vs ada 0.931/0.937）; [d] 7.1 RQ3/RQ4 标题改结果句, 0.570 标注 holdout。
-% 修订 3: [e] 四条表注由 noindent{small} 改普通段落——pandoc 曾在 docx 中整段丢失表注
-%   (tex/PDF 一直有, Word 版没有); sick 代价臂注释改 "equal-cost 1:1 control" 显式化实验设计。
-% 修订 4（第二轮模拟评阅, 87->90 路径）:
-%   [f] 表宽修复: tabcolsep 6pt->4pt + 表体 footnotesize + 重算列宽——原 p{} 列宽漏算每列
-%       2x6pt 填充, 表 6.1/6.2/6.4/6.5 总宽 6.9-7.3in 超出 6.27in 正文宽度, 横线顶到页缘;
-%   [g] 每张图/表连同图注/表题包进 minipage（不可跨页拆开）, 消除图注断页与近空尾页;
-%   [h] 6.3-1: "Section 6.4 prices both" -> "evaluates the decision trade-offs of both
-%       configurations"（sick 无官方代价矩阵）; 正文只留百分比, 计数指向图 6.4;
-%   [i] 6.5-1 末句 "resampling buys recall, and precision pays for it" 过度推广 ->
-%       "The precision--recall trade-off depends on the model, even under the same
-%       resampling strategy.";
-%   [j] Table 6.5 补 credit-g 最高均值加粗（Bagging+SMOTE 0.548, 此前漏加粗与表注不符）;
-%   [k] 7.1 RQ3 "the best AUC" -> "best AUC among the three tested missing-data schemes"。
-% 修订 5: [l] 6.3-3 并入 B 交付的脚注三要素（B8_sec6_footnote_for_D_v1.0, 批注 #12/#13）:
-%   ±SD、19 of 231 分母、决策句 "Decision: impute inside the pipeline"、csv 出处;
-%   保留本稿独有的 marker 臂 AUC 0.965。评审 D5 + 批注 #12/#13 闭环（B 可标 ✅）。
+% D_Report_sec6-7_20261102.tex —— 第 6 章 + 7.1 节（D 负责部分）
+% 所有数字均与 results/*.csv 核对过；图在同级目录 fig_6_1..fig_6_4。
+% 编译: pdfLaTeX / XeLaTeX 均可（Overleaf 直接编译）; Word 版由 pandoc 转出。
 \documentclass[12pt]{article}
 \usepackage[a4paper,margin=1in]{geometry}
 \usepackage{booktabs}

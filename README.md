@@ -55,17 +55,17 @@ pip install -r requirements.txt
 
 ## 4. 怎么复现（按顺序跑这 10 条命令）
 
-我们为了让结果能一模一样地复现，做了四件事：切分文件生成一次就锁死、随机种子固定 42、超参提前冻结、依赖版本锁定。所以只要环境版本一样，按下面顺序跑，出来的数字应该和仓库里的一模一样（唯一的例外是每行的 runtime_sec，那本来就是计时）。**注意：代码只读锁定切分，绝不重新划分；M3（10 月 23 日）之后也不允许再加实验或改配置。**
+我们为了让结果能一模一样地复现，做了四件事：切分文件生成一次就锁死、随机种子固定 42、超参提前冻结、依赖版本锁定。所以只要环境版本一样，按下面顺序跑，出来的数字应该和仓库里的一模一样（唯一的例外是每行的 runtime_sec，那本来就是计时）。**注意：代码只读锁定切分，绝不重新划分；10 月 23 日冻结之后也不允许再加实验或改配置。**
 
 ```bash
 python baseline_check.py                                # 0. 版本与双机基线核对
 python -m src.run_experiment --baseline                 # 1. C3: plain 8 配置×2协议 + ZeroR 参照
 python -m src.run_experiment --matrix --strategy threshold   # 2. C4: threshold 8 配置
 python -m src.run_experiment --matrix --strategy smote  # 3. A7/B7: smote 8 配置
-python -m src.run_experiment --matrix --strategy cost   # 4. A7/B7: cost 8 配置（主矩阵 32 齐单侧16×2）
+python -m src.run_experiment --matrix --strategy cost   # 4. A7/B7: cost 8 配置（主矩阵 32 个配置到此跑齐）
 python src/b7x_ensemble_study.py --dataset sick --all   # 5. 集成 sick 侧 4 配置×2协议
 python src/b7x_ensemble_study.py --dataset creditg --all  # 6. A 镜像 credit-g 侧
-python -m src.stats_test                                # 7. C5: NB 校正全配对检验（锚点不过拒绝出表）
+python -m src.stats_test                                # 7. C5: NB 校正全配对检验（自检不过就不出表）
 python -m src.c11_ensemble_ttest                        # 8. C11: 集成 2 对预指定检验
 python -m src.c6_run_log                                # 9. C6: 重建运行日志总表
 ```

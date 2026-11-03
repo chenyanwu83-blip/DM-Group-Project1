@@ -3,7 +3,7 @@
 - **负责人**: D（评估侧）
 - **日期**: 2026-11-01
 - **触发**: 全组决议（2026-10-29）新版四条 RQ 生效（commit 4579859, `docs/RQ_定义与映射_v1.0.md`），其中新 RQ4（新样本决策，LO7）官方落点 = ch6 + ch7 = D 的 sec6/sec7
-- **交付物**: `docs/D7_sec6_results_draft_v2.0.tex`、`docs/D7_sec7_conclusion_draft_v2.0.tex`（本清单为其对账附件）
+- **产出**: `docs/D7_sec6_results_draft_v2.0.tex`、`docs/D7_sec7_conclusion_draft_v2.0.tex`（本清单为其对账附件）
 - **冻结令合规**: 零新实验、零数字重算——全部数字取自已入库冻结资产，仅做只读核对与文字重排
 
 ---

@@ -3,8 +3,8 @@
 Input  : C3-2 plain baseline results (8 configs + 2 ZeroR refs, cv10 + holdout),
          D2 split assets (holdout_idx / cv_folds / split_manifest.json),
          D2 evaluate.py (metrics recomputed with the same locked functions).
-Output : results/plain_metrics_v1.csv        (D3 deliverable 1)
-         results/d3_direction_check_v1.csv   (D3 deliverable 2, per-check PASS/FAIL)
+Output : results/plain_metrics_v1.csv        (output 1)
+         results/d3_direction_check_v1.csv   (output 2, per-check PASS/FAIL)
 
 Run from repository root:
     python src/d3_plain_metrics.py
