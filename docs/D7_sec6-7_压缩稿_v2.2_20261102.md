@@ -1,6 +1,6 @@
 # D Report sec6+sec7 · v2.2 压缩稿（2026-11-02）
 
-**基线** = `D_Report_Complete_Tables_20261102.docx`。数字全部逐字保留（已对 `results/all_metrics_v1.csv`、`b4_missing_comparison.csv`、tex v2.1 的数字复核），只动结构、句式与限定语。正文（不含表格图注）1,572 词 → 约 1,340 词（−15%）；页数大头在表，正文已到「不减难度」的下限。
+**基线** = 11-02 的 Complete_Tables 版（本地 docx 工作稿）。数字全部逐字保留（已对 `results/all_metrics_v1.csv`、`b4_missing_comparison.csv`、tex v2.1 的数字复核），只动结构、句式与限定语。正文（不含表格图注）1,572 词 → 约 1,340 词（−15%）；页数大头在表，正文已到「不减难度」的下限。
 
 **本版改动**（相对 Complete_Tables 版）：
 1. 每条要点改为「粗体断言开头 + 最多一句限定」；删 6.1 重复对冲句、6.2 第 4 条（未定义的 accuracy–recall rule，ZeroR 已在 6.1 讲过）、6.2 第 3 条并入第 1 条尾句

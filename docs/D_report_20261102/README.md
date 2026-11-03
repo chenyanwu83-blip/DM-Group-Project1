@@ -33,7 +33,6 @@ recall 0.606→0.870 / precision 0.803→0.373 与 F1 0.521 的复算）。
 
 ## 和其他版本的关系
 
-- `03_报告修改_截止1104/D_Report_sec6-7_v2.3_20261102.docx/.pdf`：同一内容的
-  docx/PDF 版本。
-- `docs/D7_sec6_results_draft_v2.2.tex`：更早的长稿（6.1–6.7 老结构），供 E 整合
-  overleaf 时参考取舍。
+- 另有同内容的 Word/PDF 版本（v2.3，随交付另行提交，不入库）。
+- `docs/D7_sec6_results_draft_v2.1.tex` 起的 D7 草稿系列：更早的长稿（6.1–6.7 老结构），
+  供 E 整合 overleaf 时参考取舍。
