@@ -48,48 +48,29 @@
 
 ---
 
-## 第 2 段 · B（2:30）
+## 第 2 段 · B（2:30 · 定稿 v1.4）
 
-> Thanks, zyj. So — **sick**, from the UCI Thyroid Disease collection:
-> **3,772 patient records, 30 attributes**. And right away you can see the
-> problem on this slide: **3,541 negative, only 231 sick — roughly 94 to
-> 6**. Two quick notes on wording, because we want to be precise: "sick"
-> here means *sick-euthyroid* — thyroid disease with normal hormone levels
-> — **not** hypothyroidism. And "negative" just means the screening found
-> nothing — it does **not** mean perfectly healthy.
->
-> Now, when I first opened this dataset, it looked really bad: **every
-> single row had missing values**. But once I dug into *why*, the picture
-> completely changed — and this is the part I want you to remember. Each
-> lab test comes as a pair: a flag saying whether the test was done, and
-> the value itself. If the flag says *false*, the value is missing —
-> because **the test was simply never done**. It's not lost data; it's
-> data that never existed. The clearest case is **TBG — 100% missing in
-> all 3,772 rows**. I checked all six lab pairs: **zero contradictions**.
-> So this dataset is incomplete, but it's honest.
->
-> And that changes how you handle it. You cannot impute TBG — there is
-> nothing to impute from — so we **remove** it. For the rest, about 30%
-> of rows still have gaps. Should we just delete those rows? I tested it:
-> you would throw away **30% of the patients — including 19 real sick
-> patients — and the F1 does not improve**. Not worth it. So we **fill the
-> gaps instead** — means for numbers, most-frequent for categories.
->
-> Here's the detail people often miss: **where** you fill the gaps matters
-> just as much. Everything — **imputation, encoding, scaling, and SMOTE —
-> lives inside the pipeline**, fitted only on training folds, never on the
-> data being tested. The whole team shares the **same locked splits**, so
-> every number you see today is directly comparable.
->
-> One last thing — a nice surprise from the ensemble study I ran:
-> **AdaBoost plus SMOTE reached an F1 of 0.937**, beating our best
-> main-matrix model — re-weighting hard examples worked even better than
-> re-sampling. That's the sick side. Now **hzy will show you our other
-> dataset, credit-g — and a clean experiment on why encoding matters.**
+> Thanks, zyj. So — sick, from the UCI Thyroid Disease collection: 3,772 patient records, 30 attributes. And the problem jumps out on this slide: 3,541 negative against just 231 sick — roughly 94 to 6.
 
-【讲法：本段与 docs/B10 v1.1 一致（开场一句按新顺序微调为第一数据集）。故事线推进；"never done / never existed / honest" 放慢；"Not worth it" 前停半拍；数字全部 D8 对账过】
+> Two quick notes on wording: “sick” here means sick-euthyroid — normal thyroid function, but abnormal thyroid blood tests, usually from other serious illness — and it is NOT hypothyroidism. And “negative” just means the screening found nothing, not perfect health.
 
----
+> Now, when I first opened this dataset, it looked really bad — every single row had missing values. But once I dug into why, everything changed — and this is the part worth remembering.
+
+> Every lab test comes as a pair: a flag saying whether the test was done, and the value itself. So a false flag doesn't mean we lost the value. It means the test was never done. Data that never existed.
+
+> The clearest case is TBG: 100% missing across all 3,772 rows. And I checked all six lab pairs — zero contradictions. So the dataset is incomplete, but it’s honest.
+
+> And so that's how we handle it. You can't impute TBG — there's nothing to impute from — so we remove it.
+
+> For the rest, about 30% of rows still have gaps — so should we just delete those rows? I tested it: you'd throw away 30% of the patients, including 19 real sick patients, while F1 doesn't even improve. Not worth it. So we fill the gaps instead — means for numbers, most-frequent for categories.
+
+> And here's the part people often miss: where you fill the gaps matters as much as how. Everything — imputation, encoding, scaling, SMOTE — lives inside the pipeline, fitted only on training folds, never on the test data. And because we all share the same locked splits, every number you'll see today is directly comparable.
+
+> One last surprise from our ensemble study: AdaBoost plus SMOTE reached F1 0.937, beating our best main-matrix model — re-weighting beat re-sampling. That's the sick side. Now hzy will show you credit-g, and a clean experiment on why encoding matters.
+
+【讲法】Slide 1 指右侧数字块；Slide 2 是全场最有戏的一段（先压低声音说“it looked really bad”，再抬起语气说“everything changed”）；Slide 3 反问句要像真在问观众；Slide 4 观点句抬头说；Slide 5 语气轻松，交棒词说清楚。
+
+> **本段 324 词 · 2′24″–2′36″（125–135 词/分）**
 
 ## 第 3 段 · A（2:30）
 
@@ -220,8 +201,8 @@
 
 | 交棒点 | 结尾交棒句（上一人） | 开头接榫句（下一人） |
 |---|---|---|
-| E→B | "Let's start with the messier one — Ling will take you into sick." | "Thanks, zyj. So — sick, from the UCI Thyroid Disease collection…" |
-| B→A | "…Now hzy will show you our other dataset, credit-g — and a clean experiment on why encoding matters." | "Thanks, Ling. After all those missing values, let me show you something much cleaner…" |
+| E→B | "Let's start with the messier one — Ling will take you into sick." | "Thanks, zyj. So — sick, from the UCI Thyroid Disease collection: 3,772 patient records, 30 attributes." |
+| B→A | "…Now hzy will show you credit-g, and a clean experiment on why encoding matters." | "Thanks, Ling. After all those missing values, let me show you something much cleaner…" |
 | A→C | "…one messy, one clean. C will show you how we model both with one shared pipeline." | "Thanks, hzy. Two very different datasets — but we insisted on one shared recipe…" |
 | C→D | "That's the machine. Now cyn will show you what it earned." | "Thanks, cyw. So — what did all this earn us? Three findings." |
 | D→E | "To wrap this up — back to zyj." | "Thanks, cyn. Three things to take home." |

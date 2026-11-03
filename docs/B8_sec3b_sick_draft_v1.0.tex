@@ -5,6 +5,10 @@
 %   [D3/#10] 出处段轻量压缩: 保留"7,200 条不适用"澄清(批注#10 明确要求保留), 压缩 Quinlan 版说明。
 %   [#11] 审计段再收紧: 删两处括号补充(zero anomalies 的展开 / TBG flag 的机制复述), 机制主线不动。
 %   未动(护城河): 配对机制、zero anomalies、TBG 100%、B4 结论句、RF 精度保持伏笔。
+%   [11-02 会议 #12/#13 定稿] B4 三方案对照回归数据章: 分点决策(enumerate) + tab:b_imputation
+%        (对称 credit-g 的 tab:a_encoding 书写形式); 对照结论句写入正文(changed vs confirmed the decision)。
+%        D5 的"数字移出"被本决定取代, sec6 不再重复落位(给 D 的脚注文件已标注留作对账参考)。
+%   [11-03] sick-euthyroid 医学语义按 A9 复核意见修正(UCI thyroid.theory 出处)。
 % 恢复方法:
 %   tail -n +14 "docs/B8_sec3b_sick_draft_v1.0.tex" > overleaf/sections/sec3b_sick.tex
 % 数字来源: results/stats/sick_missing_audit.csv(B3) / results/b4_missing_comparison.csv(B4) /
@@ -26,9 +30,13 @@ including the class). The class is severely imbalanced: 3,541
 \textit{negative} versus 231 \textit{sick-euthyroid}, i.e.\ 6.1\%
 positives (94:6); we treat \textit{sick} as the positive class
 throughout. Two semantic notes we keep strict in wording:
-\textit{sick-euthyroid} denotes euthyroid illness --- it is
-\emph{not} hypothyroidism --- and \textit{negative} means no thyroid
-abnormality detected in this screening, not ``perfectly healthy''. 61
+\textit{sick-euthyroid} denotes a euthyroid patient whose
+thyroid-related blood tests are abnormal --- notably low T3 --- while the
+thyroid gland itself is not diseased; the pattern usually reflects severe
+non-thyroidal illness such as chronic renal failure, diabetes or anaemia
+(UCI \texttt{thyroid.theory}). It is \emph{not} hypothyroidism, which is a
+separate sub-dataset. \textit{negative} means no thyroid abnormality
+detected in this screening, not ``perfectly healthy''. 61
 duplicate rows exist in the official distribution; we keep them to remain
 consistent with the official instance count and disclose them as a
 data-quality issue.
@@ -47,22 +55,54 @@ removing TBG and its constant flag, 1,129 rows
 (Figs.~\ref{fig:sick-dist}--\ref{fig:sick-missing}).
 
 \subsubsection{Handling decisions}
-The handling follows the mechanism. (i)~TBG and its constant flag are
-\emph{removed}, not imputed --- a column with zero observations cannot be
-imputed without fabricating data; column removal involves no statistics
-and is leakage-free. (ii)~All remaining columns are imputed
-\emph{inside} the imblearn pipeline (numeric by mean, nominal by mode),
-so imputation statistics are fitted on training folds only, alongside
-encoding, scaling and SMOTE; the whole project evaluates on group-locked
-splits. We also compared three ways of handling the remaining gaps,
-using the decision tree as the test bed: imputing inside the folds,
-dropping incomplete rows, and treating ``missing'' as its own category
-(scikit-learn trees cannot accept \texttt{NaN} values, unlike Weka's
-J48). Dropping rows turned out to discard 29.9\% of the patients for no
-measurable benefit, so we impute. The full comparison, with per-fold
-numbers and the AUC contrast, is reported together with the results in
-Section~\ref{sec:results}.
+Three decisions follow directly from the audit, in the same
+decision-plus-ablation style as the credit-g preprocessing above:
 
+\begin{enumerate}
+\item \textbf{Remove} TBG and its constant flag. A column with zero
+observations cannot be imputed without fabricating data; column removal
+involves no statistics and is leakage-free.
+\item \textbf{Impute} the remaining columns \emph{inside} the imblearn
+pipeline (numeric by mean, nominal by mode), so imputation statistics
+are fitted on training folds only, alongside encoding, scaling and
+SMOTE.
+\item \textbf{Keep} the 61 duplicate rows, staying consistent with the
+official instance count (disclosed above as a data-quality note).
+\end{enumerate}
+
+Decision~2 was validated by the same style of controlled ablation as the
+credit-g encoding choice (Table~\ref{tab:a_encoding}): one decision
+tree, one locked protocol, three missing-value treatments
+(Table~\ref{tab:b_imputation}). Dropping incomplete rows discards
+1{,}129 patients --- 19 of them positive --- for an F1 difference within
+one standard deviation and the lowest AUC, and the two cohorts are not
+even the same patients. Treating ``missing'' as its own category (an
+option here because scikit-learn trees, unlike Weka's J48, reject
+\texttt{NaN} values) performs no better. Fold-internal imputation keeps
+all 3{,}772 instances and attains the best AUC, and was therefore locked
+in the preprocessing spec (full fold-level results archived in
+\texttt{results/b4\_missing\_comparison.csv}). The contrast with
+credit-g is instructive: there the ablation \emph{changed} the decision
+(which encoding to use), whereas here it \emph{confirmed} the default
+--- the informative question on sick is not which treatment wins on F1,
+but what deleting rows would cost.
+
+\begin{table}[htbp]
+\centering
+\caption{Missing-value treatments on sick (decision tree, entropy,
+\texttt{ccp\_alpha}=0.01; cv10, mean$\pm$std, ddof$=0$; positive
+= sick-euthyroid).}
+\label{tab:b_imputation}
+\begin{tabular}{lccc}
+\toprule
+Treatment & Rows & F1 & ROC-AUC \\
+\midrule
+Fold-internal imputation (adopted) & 3{,}772 & 0.830$\pm$0.049 & \textbf{0.974} \\
+Drop incomplete rows & 2{,}643 & 0.843$\pm$0.069 & 0.964 \\
+``Missing'' as explicit category & 3{,}772 & 0.828$\pm$0.044 & 0.965 \\
+\bottomrule
+\end{tabular}
+\end{table}
 Finally, among the four base classifiers the random forest is the only
 one whose precision is preserved under SMOTE (0.94$\to$0.91, vs.\
 0.95$\to$0.60 for a single tree); Section~\ref{sec:results} sharpens this
