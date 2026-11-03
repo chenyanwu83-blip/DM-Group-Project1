@@ -1,14 +1,7 @@
 """
-B5 · 打印 sick 统一流水线结构（交 C 嵌入 + C8 防泄漏检查留证）
-===============================================================
-构建与组长方案 C2/C4 一致的 imblearn Pipeline，把结构 print 出来：
-  - 预处理（插补/编码/标准化）→ 可选采样器（SMOTE）→ 分类器
-  - 所有统计量（均值/众数/标准差/SMOTE 合成点）都只在训练折 fit，
-    验证折只做 transform —— 这就是"防数据泄漏"的机器可读证据。
-
-运行方式：
-    conda activate cds535
-    python src/b5_print_pipeline.py
+打印 sick 数据集的统一 imblearn 流水线结构：
+预处理（插补/编码/标准化）、可选 SMOTE、分类器三段。
+所有预处理都在 Pipeline 内，只在训练折上拟合，验证折只做转换。
 """
 from pathlib import Path
 
@@ -27,13 +20,13 @@ ROOT = Path(__file__).resolve().parents[1]
 SEED = 42
 
 df = pd.read_csv(ROOT / "data" / "raw" / "sick.csv", na_values="?")
-df.columns = [c.replace(" measured", "_measured") for c in df.columns]  # 兼容组仓库空格版列名
-df = df.drop(columns=["TBG", "TBG_measured"])          # B3 决策：全缺列删除
+df.columns = [c.replace(" measured", "_measured") for c in df.columns]
+df = df.drop(columns=["TBG", "TBG_measured"])          # 全缺列删除
 X = df.drop(columns=["Class"])
 NUM = ["age", "TSH", "T3", "TT4", "T4U", "FTI"]
 CAT = [c for c in X.columns if c not in NUM]
 
-# 预处理 A：树模型用（插补 + 序数编码；树不吃 one-hot 也不需要标准化）
+# 树模型的预处理：插补 + 序数编码
 pre_tree = ColumnTransformer([
     ("num", SimpleImputer(strategy="mean"), NUM),
     ("cat", Pipeline([("imp", SimpleImputer(strategy="most_frequent")),
@@ -41,7 +34,7 @@ pre_tree = ColumnTransformer([
                                              unknown_value=-1))]), CAT),
 ], remainder="drop")
 
-# 预处理 B：Logistic / SVC 用（插补 + 标准化 + 独热编码）
+# 线性模型的预处理：插补 + 标准化 + 独热编码
 pre_linear = ColumnTransformer([
     ("num", Pipeline([("imp", SimpleImputer(strategy="mean")),
                       ("sc", StandardScaler())]), NUM),
@@ -57,9 +50,7 @@ MODELS = {
     "SVC": SVC(kernel="rbf", C=1.0, probability=True, random_state=SEED),
 }
 
-print("=" * 74)
-print("B5 · sick 统一流水线结构（4 模型 × 4 策略 = 16 配置的骨架）")
-print("=" * 74)
+print("sick 统一流水线结构")
 
 for name, clf in MODELS.items():
     pre = pre_tree if name in ("DecisionTree", "RandomForest") else pre_linear
@@ -67,16 +58,15 @@ for name, clf in MODELS.items():
     print(f"\n── {name} · plain ──")
     print(pipe_plain)
 
-print("\n── 加 SMOTE 后的结构（以 Logistic+SMOTE 为例；重采样仅发生在训练折）──")
+print("\n加 SMOTE 后的结构（以 Logistic 为例，重采样只在训练折）")
 print(Pipeline([("pre", pre_linear),
                 ("smote", SMOTE(random_state=SEED)),
                 ("clf", MODELS["Logistic"])]))
 
 print("""
-说明（对应 configs/spec_sick.md 规格单）：
-  · 删全缺列（TBG、TBG_measured）在 Pipeline 外做——不依赖任何统计量，无泄漏风险
-  · 插补 / 编码 / 标准化 / SMOTE 全部在 Pipeline 内 → imblearn 保证它们只 fit 训练折
-  · 代价敏感策略：sick 侧按方案用等代价对照 class_weight={'sick':1,'negative':1}
-    （结果应≈plain，用作流水线正确性的 sanity check）
-  · 阈值移动策略：训练折内再切 80/20 选 τ，锁定后才在测试折用（详见 run_experiment.py）
+说明：
+  删全缺列在 Pipeline 外做，不依赖统计量，无泄漏风险。
+  插补/编码/标准化/SMOTE 都在 Pipeline 内，只在训练折上拟合。
+  代价敏感策略用等权重对照 class_weight={'sick':1,'negative':1}，结果应与 plain 一致。
+  阈值移动策略：在训练折内选阈值，锁定后再用于测试（见 run_experiment.py）。
 """)

@@ -9,7 +9,7 @@
 | # | 讲者 | 时长 | 内容 | 页数 |
 |---|---|---|---|---|
 | 1 | E | 2:00 | 开场：团队/分工/双数据集总览/RQ | 2 |
-| 2 | B | 2:30 | sick 数据集 + 数据质量专题 + 集成彩蛋 | 3 |
+| 2 | B | 2:30 | sick 数据集 + 数据质量专题 + 集成结果 | 3 |
 | 3 | A | 2:30 | credit-g 数据集 + A6 编码对照实验 | 3 |
 | 4 | C | 3:00 | 统一流水线 + 防泄漏 + 现场 demo | 3-4 |
 | 5 | D | 3:00 | 结果三发现 + 跨数据集对比表 + Ensemble Study | 4 |
@@ -48,7 +48,7 @@
 
 ---
 
-## 第 2 段 · B（2:30 · LOCKED v1.6 用户最终版）
+## 第 2 段 · B（2:30 · 定稿 v1.6）
 
 > Thanks, zyj. So — sick, from the UCI Thyroid Disease collection: 3,772 patient records, 30 attributes. And the problem jumps out on this slide: 3,541 negative against just 231 sick — roughly 94 to 6. There are two quick notes on wording, because we want to be precise: first, “sick” here means sick-euthyroid — normal thyroid function, but abnormal thyroid blood tests, usually from other serious illness — and it is NOT hypothyroidism. And “negative” just means the screening found nothing, not perfect health.
 
@@ -60,9 +60,9 @@
 
 > One last surprise from our ensemble study: AdaBoost plus SMOTE reached F1 0.937, beating our best main-matrix model — re-weighting beat re-sampling. That’s the sick side. Now hzy will show you credit-g, and a clean experiment on why encoding matters.
 
-【讲法】Slide 1 指右侧数字块；Slide 2 是全场最有戏的一段（先压低声音说“it looked really bad”，再抬起语气说“everything changed”）；Slide 3 反问句要像真在问观众；Slide 4 观点句抬头说；Slide 5 语气轻松，交棒词说清楚。
+【讲法】Slide 1 指数字块；Slide 2 先压低再说“everything changed”；Slide 3 反问句看向观众；Slide 4 观点句抬头；Slide 5 交棒词说清楚。
 
-> **本段 338 词 · 2′30″–2′42″（125–135 词/分）· v1.6 LOCKED 逐字定稿，不再改动**
+> **本段 338 词 · 约 2.5 分钟 · v1.6 定稿**
 
 ## 第 3 段 · A（2:30）
 

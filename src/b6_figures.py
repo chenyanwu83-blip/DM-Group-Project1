@@ -1,21 +1,11 @@
 """
-B6 · sick 三张探索图（英文图面 → 直接进英文报告；同时存 PDF + PNG）
-====================================================================
-  ① fig_b_class.pdf    类别分布条形图（negative 3,541 : sick 231 ≈ 94:6）
-  ② fig_b_missing.pdf  逐列缺失率条形图（TBG=100% 用红色标出）
-  ③ fig_b_box.pdf      TSH、FTI 按类别箱线图（TSH 极右偏 → 对数轴）
-
-图注（B6 交付物，直接译入报告；每张图 ≥2 句解读，满足课程"图必须解读"要求）
-已写在本文件末尾的 FIGURE_CAPTIONS 里，运行时一并打印。
-
-运行方式：
-    conda activate cds535
-    python src/b6_figures.py
+生成 sick 数据集的三张探索图（类别分布、逐列缺失率、箱线图），
+保存 PDF 和 PNG 到 figures/ 目录。
 """
 from pathlib import Path
 
 import matplotlib
-matplotlib.use("Agg")            # 无窗口环境也能出图（VSCode 里更稳）
+matplotlib.use("Agg")            # 无窗口环境出图
 import matplotlib.pyplot as plt
 import pandas as pd
 
@@ -79,7 +69,7 @@ fig.savefig(FIG_DIR / "fig_b_box.png", dpi=150, bbox_inches="tight")
 plt.close(fig)
 
 FIGURE_CAPTIONS = """
-图注（译成英文写入 Overleaf 的 sec3b_sick.tex，配合 \\caption{}）：
+图注素材（写入报告时的英文图注）：
 
 Fig 1  Class distribution of sick: 3,541 negative vs 231 sick-euthyroid
        (≈94:6). The severe imbalance explains why accuracy alone is
@@ -99,7 +89,7 @@ Fig 3  TSH (log scale) and FTI by class. The two classes overlap heavily
        multivariate models rather than single-threshold screening.
 """
 
-print("✅ 三张图已保存到 figures/：")
+print("三张图已保存到 figures/：")
 for f in sorted(FIG_DIR.glob("fig_b_*")):
     print("   ", f.name)
 print(FIGURE_CAPTIONS)

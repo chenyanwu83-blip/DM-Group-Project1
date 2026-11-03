@@ -1,19 +1,8 @@
 """
-B1 · sick.csv 数据获取/校验（V3 组仓库适配版 · 2026-10-15 更新）
-================================================================
-10-15 起组仓库已有 C 用 load_data.py 从 arff 统一生成的 data/raw/sick.csv
-（列名为 'TSH measured' 带空格版，SHA-256 = 3cc14348…，与 D 的
-split_manifest.json 锚定）。本脚本默认只做【校验】，不重写数据——
-避免破坏全组的切分哈希锚点。
-
-用法：
-    python src/b1_make_sick_csv.py            # 校验现有 csv（日常用这个）
-    python src/b1_make_sick_csv.py --force    # 强制重新生成（仅数据损坏时）
-
-生成路线（--force 时）：
-    路线 A（主）：Weka 自带 sick.arff → CSV（本机已有 arff）
-    路线 B（备用）：UCI 官网 zip，拼接 sick.data(2800) + sick.test(972)
-    注：ucimlrepo.fetch_ucirepo(id=102) 官方不支持导入（实测报错），全组勿用。
+生成或校验 data/raw/sick.csv，并计算 SHA-256。
+默认只校验现有文件的哈希是否与 results/split_manifest.json 一致，不重写数据。
+加 --force 参数时重新生成：优先用本地 Weka 自带 sick.arff 转换，
+否则从 UCI 官网下载 zip，拼接 sick.data 和 sick.test（ucimlrepo 不支持该数据集）。
 """
 import csv
 import hashlib
@@ -24,11 +13,11 @@ import urllib.request
 import zipfile
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parents[1]          # VS-Code/ 项目根
+ROOT = Path(__file__).resolve().parents[1]          # 项目根目录
 RAW_DIR = ROOT / "data" / "raw"
 CSV_PATH = RAW_DIR / "sick.csv"
 
-# 组仓库规范列名（与 C 的 load_data.py 一致：measured 列用空格，非下划线）
+# 列名与组内 load_data.py 一致
 COLUMNS = [
     "age", "sex", "on thyroxine", "query on thyroxine",
     "on antithyroid medication", "sick", "pregnant", "thyroid surgery",
@@ -53,7 +42,7 @@ def from_weka_arff():
     arff_path = next((p for p in candidates if p.exists()), None)
     if arff_path is None:
         return None
-    print(f"[路线A] 找到 Weka 自带文件：{arff_path}")
+    print(f"使用本地 arff：{arff_path}")
     rows, in_data = [], False
     for line in arff_path.read_text(encoding="utf-8").splitlines():
         low = line.strip().lower()
@@ -69,7 +58,7 @@ def from_weka_arff():
 
 def from_uci_zip():
     url = "https://archive.ics.uci.edu/static/public/102/thyroid+disease.zip"
-    print(f"[路线B] 未找到本地 arff，开始下载：{url}")
+    print(f"未找到本地 arff，从 UCI 下载：{url}")
     buf = urllib.request.urlopen(url, timeout=120).read()
     zf = zipfile.ZipFile(io.BytesIO(buf))
     rows = []
@@ -84,24 +73,22 @@ def from_uci_zip():
 
 
 def main() -> None:
-    # ── 默认：校验模式（不动数据）────────────────────────────
+    # 默认只做校验
     if "--force" not in sys.argv and CSV_PATH.exists():
         got = sha256_of(CSV_PATH)
         n_rows = sum(1 for _ in CSV_PATH.open()) - 1
         ok = got == CANON_SHA
-        print("=" * 60)
-        print("B1 · 数据校验（组仓库锁定版）")
-        print("=" * 60)
-        print(f"文件     ：{CSV_PATH}")
-        print(f"规模     ：{n_rows} 行 × 30 列")
-        print(f"SHA-256  ：{got}")
-        print(f"与组内锚定（split_manifest）：{'✅ 一致' if ok else '❌ 不一致！'}")
+        print("数据校验")
+        print(f"文件：{CSV_PATH}")
+        print(f"规模：{n_rows} 行 × 30 列")
+        print(f"SHA-256：{got}")
+        print(f"与 split_manifest 记录{'一致' if ok else '不一致'}")
         if not ok:
-            print("  数据被改动过。先 git checkout -- data/raw/sick.csv 恢复，")
-            print("  恢复不了再 python src/b1_make_sick_csv.py --force 重建。")
+            print("数据被改动过，可用 git checkout -- data/raw/sick.csv 恢复，")
+            print("或运行 python src/b1_make_sick_csv.py --force 重新生成")
         return
 
-    # ── --force：重新生成────────────────────────────────────
+    # 重新生成
     RAW_DIR.mkdir(parents=True, exist_ok=True)
     rows = from_weka_arff() or from_uci_zip()
     assert len(rows) == 3772, f"行数异常：{len(rows)}（应为 3772）"
@@ -113,9 +100,9 @@ def main() -> None:
         w.writerows(rows)
 
     got = sha256_of(CSV_PATH)
-    print(f"✅ 已重新生成：{CSV_PATH}（{len(rows)} 行 × 30 列）")
-    print(f"   SHA-256：{got}")
-    print(f"   与组内锚定：{'✅ 一致' if got == CANON_SHA else '⚠️ 不一致（重建后请通知 C 核对 manifest）'}")
+    print(f"已重新生成：{CSV_PATH}（{len(rows)} 行 × 30 列）")
+    print(f"SHA-256：{got}")
+    print(f"与 split_manifest 记录{'一致' if got == CANON_SHA else '不一致，需通知 C 核对 manifest'}")
 
 
 if __name__ == "__main__":

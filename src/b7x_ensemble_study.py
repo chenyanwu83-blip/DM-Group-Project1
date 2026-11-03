@@ -1,20 +1,8 @@
 """
-B · 集成增强研究 · sick 侧实验入口（V4 方案 · 2026-10-21 任务）
-================================================================
-依据《分工与时间线执行方案 V4.0 · 集成增强版》§1.3（超参一次锁定）：
-  模型   BaggingClassifier(DT) / AdaBoostClassifier(DT)
-         基学习器 = 主矩阵同款 DecisionTree(criterion='entropy',
-         ccp_alpha=0.01, random_state=42)；n_estimators=100（对齐 RF）
-  策略   plain / smote（SMOTE 在 imblearn Pipeline 内，仅训练折）
-  协议   cv10 + holdout —— 复用 D 的锁定切分，绝不重新划分
-  指标   统一走 src/evaluate.py；列与 results/template.csv 零偏差
-  产出   results/ensemble/{ds}_{bag,ada}_{plain,smote}_v1_run1_*.csv
-         + results/ensemble/preds/（独立命名空间，不碰主矩阵）
-
-用法（VS-Code 目录 + cds535 环境）：
-    python src/b7x_ensemble_study.py --dataset sick --model bag --strategy plain --protocol cv10  # 冒烟
-    python src/b7x_ensemble_study.py --dataset sick --all                                          # 4 配置全量
-    python src/b7x_ensemble_study.py --dataset creditg --all    # A 镜像 credit-g 侧时用
+集成学习对照实验（Bagging / AdaBoost）在 sick 数据集上的运行入口。
+基学习器与主矩阵相同的剪枝决策树，n_estimators=100；
+复用组内锁定的交叉验证切分和 evaluate.py 指标出口，
+结果保存到 results/ensemble/ 目录，不与主矩阵混用。
 """
 import argparse
 import json
@@ -55,7 +43,7 @@ def make_ens(model_key):
 
 
 def build_ens_pipe(short, model_key, strategy):
-    """组装：预处理(树通道) → (SMOTE) → 集成分类器。每折新建，折内拟合。"""
+    """组装预处理、可选 SMOTE 和集成分类器。每折新建，折内拟合。"""
     steps = [("pre", make_pre(short, linear=False))]
     if strategy == "smote":
         steps.append(("smote", SMOTE(random_state=SEED)))
@@ -64,7 +52,7 @@ def build_ens_pipe(short, model_key, strategy):
 
 
 def folds_table(short):
-    # 命名不对称沿用 C 的 run_experiment：折表用连字符名，索引用无连字符后缀
+    # 折表文件名用连字符版数据集名，索引文件用无连字符后缀
     return pd.read_csv(ROOT / "results" / f"cv_folds_{DATASETS[short]['dataset_d']}.csv")
 
 
