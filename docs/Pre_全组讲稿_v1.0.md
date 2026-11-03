@@ -48,29 +48,21 @@
 
 ---
 
-## 第 2 段 · B（2:30 · 定稿 v1.4）
+## 第 2 段 · B（2:30 · FINAL v1.5 用户定稿）
 
-> Thanks, zyj. So — sick, from the UCI Thyroid Disease collection: 3,772 patient records, 30 attributes. And the problem jumps out on this slide: 3,541 negative against just 231 sick — roughly 94 to 6.
+> Thanks, zyj. So — sick, from the UCI Thyroid Disease collection: 3,772 patient records, 30 attributes. And the problem jumps out on this slide: 3,541 negative against just 231 sick — roughly 94 to 6. There are two quick notes on wording, because we want to be precise: “sick” here means sick-euthyroid — normal thyroid function, but abnormal thyroid blood tests, usually from other serious illness — and it is NOT hypothyroidism. And “negative” just means the screening found nothing, not perfect health.
 
-> Two quick notes on wording: “sick” here means sick-euthyroid — normal thyroid function, but abnormal thyroid blood tests, usually from other serious illness — and it is NOT hypothyroidism. And “negative” just means the screening found nothing, not perfect health.
+> Now, when I first opened this dataset, it looked really bad — every single row had missing values. But once I dug into why, everything changed — and this is the part worth remembering. Every lab test comes as a pair: a flag saying whether the test was done, and the value itself. So a false flag doesn’t mean we lost the value, it means the test was never done. The clearest case is TBG: 100% missing across all 3,772 rows. And I checked all six lab pairs — zero contradictions. So the dataset is incomplete, but it’s honest.
 
-> Now, when I first opened this dataset, it looked really bad — every single row had missing values. But once I dug into why, everything changed — and this is the part worth remembering.
+> And so that is how we handle it. You can’t impute TBG — there’s nothing to impute from — so we remove it. For the rest, about 30% of rows still have gaps — so should we just delete those rows? I tested it: you’d throw away 30% of the patients, including 19 real sick patients, while F1 doesn’t even improve. Not worth it. So we fill the gaps instead — means for numbers, most-frequent for categories.
 
-> Every lab test comes as a pair: a flag saying whether the test was done, and the value itself. So a false flag doesn't mean we lost the value. It means the test was never done. Data that never existed.
+> And here’s the part people often miss: where you fill the gaps matters as much as how. Everything — imputation, encoding, scaling, SMOTE — lives inside the pipeline, fitted only on training folds, never on the test data. And because we all share the same locked splits, every number you’ll see today is directly comparable.
 
-> The clearest case is TBG: 100% missing across all 3,772 rows. And I checked all six lab pairs — zero contradictions. So the dataset is incomplete, but it’s honest.
-
-> And so that's how we handle it. You can't impute TBG — there's nothing to impute from — so we remove it.
-
-> For the rest, about 30% of rows still have gaps — so should we just delete those rows? I tested it: you'd throw away 30% of the patients, including 19 real sick patients, while F1 doesn't even improve. Not worth it. So we fill the gaps instead — means for numbers, most-frequent for categories.
-
-> And here's the part people often miss: where you fill the gaps matters as much as how. Everything — imputation, encoding, scaling, SMOTE — lives inside the pipeline, fitted only on training folds, never on the test data. And because we all share the same locked splits, every number you'll see today is directly comparable.
-
-> One last surprise from our ensemble study: AdaBoost plus SMOTE reached F1 0.937, beating our best main-matrix model — re-weighting beat re-sampling. That's the sick side. Now hzy will show you credit-g, and a clean experiment on why encoding matters.
+> One last surprise from our ensemble study: AdaBoost plus SMOTE reached F1 0.937, beating our best main-matrix model — re-weighting beat re-sampling. That’s the sick side. Now hzy will show you credit-g, and a clean experiment on why encoding matters.
 
 【讲法】Slide 1 指右侧数字块；Slide 2 是全场最有戏的一段（先压低声音说“it looked really bad”，再抬起语气说“everything changed”）；Slide 3 反问句要像真在问观众；Slide 4 观点句抬头说；Slide 5 语气轻松，交棒词说清楚。
 
-> **本段 324 词 · 2′24″–2′36″（125–135 词/分）**
+> **本段 337 词 · 2′30″–2′42″（125–135 词/分）· 2026-11-03 定稿（含 A9 医学定义修正）**
 
 ## 第 3 段 · A（2:30）
 
