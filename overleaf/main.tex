@@ -3,6 +3,8 @@
 % Packages
 \usepackage{graphicx}
 \usepackage{amsmath}
+\let\originaltimes\times
+\renewcommand{\times}{\ensuremath{\originaltimes}}
 \usepackage{geometry}
 \usepackage{fancyhdr}
 \usepackage{setspace}
@@ -10,6 +12,13 @@
 \usepackage{booktabs}
 \usepackage[hidelinks]{hyperref}
 \usepackage{float}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{tikz}
+\usetikzlibrary{positioning}
+\graphicspath{{figures/}}
+\setlength{\tabcolsep}{4pt}
+\emergencystretch=2em
 
 \geometry{margin=1in}
 \setstretch{1.5}
@@ -38,12 +47,12 @@
 \author{
     \begin{minipage}{\textwidth}
         \centering
-        Team name: to be confirmed \\
-        Member A (student ID to be confirmed) \\
-        Member B (student ID to be confirmed) \\
-        Member C (student ID to be confirmed) \\
-        Member D (student ID to be confirmed) \\
-        Member E (student ID to be confirmed)
+        Team name: Group 6 \\
+        HU Zhongyuan (3162304) \\
+        LING Tong (3162677) \\
+        CHEN Yanwu (3162744) \\
+        CHEN Yinan (3162550) \\
+        ZHANG Yijie (3162641)
     \end{minipage} \\[25pt]
     \begin{minipage}{\textwidth}
         \centering
@@ -63,8 +72,7 @@
 \newpage
 \thispagestyle{empty}
 \begin{abstract}
-% TODO(E): Replace with a 150--200 word abstract after D supplies verified results.
-\noindent This report compares data mining workflows on the UCI Statlog German Credit Data and the sick subset of the UCI Thyroid Disease collection. The final abstract will summarize the methods and verified findings after the experiments are complete.
+\input{sections/abstract}
 \newline
 
 \noindent \textbf{Keywords}: classification, class imbalance, association rules, UCI datasets

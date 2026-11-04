@@ -4,8 +4,8 @@ Input  : frozen main-matrix results (4 models x 4 strategies x 2 datasets + 2 Ze
          refs, cv10 + holdout) and exploratory ensemble results
          (results/ensemble/, bag/ada x plain/smote x 2 datasets x 2 protocols),
          D2 split assets, D2 evaluate.py templates.
-Output : results/all_metrics_v1.csv       (D4 deliverable 1, main matrix only)
-         results/ensemble_metrics_v1.csv  (D4 deliverable 2, ensemble, kept
+Output : results/all_metrics_v1.csv       (output 1, main matrix only)
+         results/ensemble_metrics_v1.csv  (output 2, ensemble, kept
                                            separate from the main table)
          results/d4_audit_check_v1.csv    (per-check PASS/FAIL record)
 
@@ -13,7 +13,7 @@ Run from repository root:
     python src/d4_all_metrics.py
 
 No model is trained here. Every number is read from the frozen summary CSVs and
-independently re-derived from the archived fold-level CSVs (双侧复算, ddof=0);
+independently re-derived from the archived fold-level CSVs (both sides, ddof=0);
 tau values are parsed out of the folds `notes` column (the single source of
 truth, per D3 §5.2 the summary keeps no tau copy).
 """

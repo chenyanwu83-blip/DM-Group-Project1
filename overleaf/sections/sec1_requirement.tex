@@ -1,7 +1,25 @@
 \section{Group Project Requirement}
 \label{sec:requirement}
 
-This group studies two datasets from the UCI Machine Learning Repository: Statlog German Credit Data and the sick subset of the Thyroid Disease collection~\cite{dua2019uci,uci_credit_g_1994,uci_thyroid_1986}. Each dataset will follow a documented preprocessing, modeling, and evaluation workflow. The report will compare the datasets and include four supervised algorithms, an association-rule component, cross-validation, an independent evaluation protocol, figures, and a reproducible comparison table.
+This group studies two datasets from the UCI Machine Learning Repository: Statlog German Credit Data and the sick subset of the Thyroid Disease collection~\cite{dua2019uci,uci_credit_g_1994,uci_thyroid_1986}. Each dataset follows a documented preprocessing, modeling, and evaluation workflow. The study includes four supervised algorithms, Apriori association rules, cross-validation, a locked holdout assessment, figures, and a reproducible comparison across models and datasets. An exploratory ensemble study is reported separately from the main experiment matrix.
 
-% TODO(E): Add the confirmed five-member task division and contribution table.
-% Check the final report against every row of Table 3 in the teacher's requirements.
+The five members divide data preparation, modeling, evaluation, and report integration as shown in Table~\ref{tab:task-division}. The detailed contributions and approximate workload shares appear in the final appendix.
+
+\begin{table}[htbp]
+\centering
+\small
+\caption{Group 6 task division. The contribution appendix records the final individual workload shares.}
+\label{tab:task-division}
+\begin{tabular}{@{}p{0.20\linewidth}p{0.18\linewidth}p{0.52\linewidth}@{}}
+\toprule
+Member (ID) & Role & Main responsibility \\
+\midrule
+HU Zhongyuan (3162304) & A & credit-g audit, preprocessing, ensemble runs, and dataset writing \\
+LING Tong (3162677) & B & sick audit, preprocessing, ensemble runs, and dataset writing \\
+CHEN Yanwu (3162744) & C & Classifier pipelines, ensemble methods and tests, experiment runs, and method writing \\
+CHEN Yinan (3162550) & D & Evaluation, figures, main and ensemble comparisons, and results writing \\
+ZHANG Yijie (3162641) & E & Apriori analysis, report integration, references, and presentation coordination \\
+\bottomrule
+\end{tabular}
+\end{table}
+

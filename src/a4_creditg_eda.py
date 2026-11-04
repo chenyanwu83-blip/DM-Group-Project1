@@ -1,10 +1,10 @@
-"""A4｜credit-g 三张探索图 + 图注（角色 A 交付物）
+"""credit-g 探索性分析：三张图 + 图注。
 
-figures/ 下产出（草图，E 后期统一编号样式）：
-- fig1_class_distribution.png   类别分布
-- fig2_checking_status_class.png checking_status × class 堆叠柱状
+figures/ 下产出：
+- fig1_class_distribution.png    类别分布
+- fig2_checking_status_class.png checking_status × class 堆叠柱状（按 bad 率排序）
 - fig3_numeric_hist.png          duration/credit_amount/age 直方图（bins=20）
-- credit-g_fig_captions.md      图注（英文 caption 供 Overleaf + 中文解读，数字自动回填）
+- credit-g_fig_captions.md       图注（英文 caption + 中文解读，数字自动生成）
 """
 
 from pathlib import Path
@@ -66,7 +66,7 @@ def main() -> None:
         f"| {k} | {int(ct.loc[k].sum())} | {int(ct.loc[k]['bad'])} | {ct.loc[k]['bad'] / ct.loc[k].sum():.1%} |"
         for k in bad_rate.index
     )
-    captions = f"""# credit-g 图注（A4 交付，数字由 src/a4_creditg_eda.py 自动生成）
+    captions = f"""# credit-g 图注（数字由 src/a4_creditg_eda.py 自动生成）
 
 ## fig1_class_distribution.png
 - **Caption (EN)**: Class distribution of the credit-g dataset: {dist['good']} good vs. {dist['bad']} bad ({dist['bad'] / n:.0%} positive rate), a 70:30 class imbalance.
@@ -80,11 +80,11 @@ def main() -> None:
 |---|---|---|---|
 {rate_lines}
 
-  bad 率从 {bad_rate.iloc[0]:.1%}（{worst}）单调降至 {bad_rate.iloc[-1]:.1%}（{best}），横跨整体 30% 基线两侧——验证 checking_status 为最强预测特征之一；报告 ch3 可引用该表。
+  bad 率从 {bad_rate.iloc[0]:.1%}（{worst}）单调降至 {bad_rate.iloc[-1]:.1%}（{best}），横跨整体 30% 基线两侧——验证 checking_status 为最强预测特征之一。
 
 ## fig3_numeric_hist.png
 - **Caption (EN)**: Histograms (bins=20) of duration, credit_amount and age. All three are right-skewed; credit_amount ranges from {df.credit_amount.min():.0f} to {df.credit_amount.max():.0f} DM.
-- **解读**：三个数值属性均右偏（中位数 {df.credit_amount.median():.0f} DM ≪ 最大 {df.credit_amount.max():.0f} DM），支持 A5 规格单在等频离散化（quantile binning）中使用分位数切分而非等宽，避免高频箱塌缩。
+- **解读**：三个数值属性均右偏（中位数 {df.credit_amount.median():.0f} DM ≪ 最大 {df.credit_amount.max():.0f} DM），支持在等频离散化（quantile binning）中用分位数切分而非等宽，避免高频箱塌缩。
 """
     (FIG_DIR / "credit-g_fig_captions.md").write_text(captions, encoding="utf-8")
     print("已生成 3 张图 + 图注：", FIG_DIR)

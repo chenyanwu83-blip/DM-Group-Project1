@@ -174,7 +174,7 @@ def aggregate_folds(fold_records, *, config_id, dataset, model, strategy,
     """One configuration, one run, one dataset, one protocol per call.
 
     cv10 requires exactly 10 fold metric dictionaries; holdout requires 1.
-    Proposed D1 convention: numpy population SD (ddof=0), matching C1.
+    SD convention: numpy population SD (ddof=0), as agreed with C.
     Holdout SD is NaN (blank in CSV), never an invented zero.
     """
     if protocol not in {"cv10", "holdout"} or dataset not in DATASETS:

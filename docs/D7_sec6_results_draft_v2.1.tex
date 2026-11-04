@@ -1,30 +1,21 @@
-% D7 草稿 v2.1（2026-11-01）: 按组长评审《报告对比评审与修改意见_对照Samples》+ 16 页路线图修订。
-% 基线 = v2.0, 改动如下（零新实验, 所有新增数字取自冻结资产, 已逐项核对见 D9 v1.0 §2 + 本轮新增核对）:
-%   [D7] 删除 6.1 协议复述整节（与 §5.3 重复, 省约 0.8 页）: 仅保留新信息（正类约定/threshold τ 约定/
-%        ZeroR 定位/数字出处）压成 \section 下的导语段, 协议只在 §5.3 讲一次。
-%   [A1★] 6.7 新增 holdout 小表 tab:holdout（2 行×recall/precision/F1/cost）——摘要三个 holdout 数字
-%        （82%/0.57/95.7%）的正文落点, 组长评审最高优先级项。
-%   [M5] 全文协议标注: 6.2(ii) 0.514/0.884 标 cv10 pooled; 6.7 全部标 holdout; 表标题均带协议。
-%   [M7] 6.4 统计簿记压缩: NB 校正一句 + Holm 分指标结论一句 + 120 对逐族清点移脚注（引 results/ttest/ C5 台账）。
-%   [M4] 记号统一: 全文一律 "30.0% positives"/"6.1% positives"; neg:pos 换算（2.3:1/15.3:1）仅保留
-%        6.5 Imbalance 段首处一次; 图 2 caption 与 flip 段的 ratio 写法已改百分比。
-%   [M6] 6.6 开头接收 ensemble setup 段（自 C 的 §5.4 迁入: 复用锁定切分与统一管线、独立命名空间、
-%        排除出主统计族）——写回时需 C 同步从 sec5 删除该段。
-%   [A6] 6.6 末尾加运行成本一句: 84 次运行共 116 s、最贵 sick ada+SMOTE cv10 28.9 s（results/run_log_v1.csv 实测）。
-%   [D5落点] 6.5 Missingness 段补插补消融数字（results/b4_missing_comparison.csv 实测:
-%        插补 0.830±0.049/AUC 0.974 vs 删行 0.843±0.069/0.964, n=3772/2643; 标记值 0.828/0.965）——
-%        B 从 sec3b 删数字后, 正文正式落点在此。
-%   [保持] M9 的 10 单元句（v2.0 已按实测口径: 4 ZeroR 参照格 + 6 个 credit-g plain 格, 无 SMOTE——
-%        不采用组长猜测的 "plain 与 SMOTE 列" 表述）; D4 落点（编码消融数字）v2.0 已在 6.5。
-% 写回方法(待用户核验后): cp 本文件 overleaf/sections/sec6_results.tex（去注释头）;
-%   sec6 与 sec7 必须成对写回（6.7 引用 sec7 的 \label{sec:conclusion}）; 写回前 PULL FIRST。
-% 源提交: 053de96+af8d4e3+6944ab5+4579859+v2.0(2026-11-01 push 47e506f)
+% D7 sec6 草稿 v2.1（2026-11-01）, 相对 v2.0 的改动（零新实验, 新增数字都取自冻结的结果文件）:
+%   删掉 6.1 里与 §5.3 重复的协议复述, 压成导语段;
+%   6.7 新增 holdout 小表（摘要三个 holdout 数字 82%/0.57/95.7% 的正文落点）;
+%   全文协议标注补齐（cv10 pooled / holdout）, 表标题均带协议;
+%   6.4 统计描述压成两句, 120 对清点移脚注（引 results/ttest/ 的 C5 记录）;
+%   记号统一为 "30.0% positives"/"6.1% positives" 这类百分比写法;
+%   6.6 开头接收集成 setup 段（自 C 的 §5.4 迁入, 写回时 C 需同步从 sec5 删掉该段）;
+%   6.6 末尾加运行成本一句: 84 次运行共 116 s、最贵 sick ada+SMOTE cv10 28.9 s（run_log_v1.csv）;
+%   6.5 Missingness 段补插补消融数字（b4_missing_comparison.csv: 插补 0.830±0.049/AUC 0.974
+%        vs 删行 0.843±0.069/0.964, n=3772/2643; 标记值 0.828/0.965）。
+% 写回 overleaf 时: cp 本文件 overleaf/sections/sec6_results.tex（去注释头）;
+%   sec6 与 sec7 要成对写回（6.7 引用 sec7 的 \label{sec:conclusion}）, 写回前先 pull。
 
 \section{Results and Evaluation}
 \label{sec:results}
-% D owns this file: metrics, figures, cross-dataset comparison, and statistical analysis.
-% RQ 口径: docs/RQ_定义与映射_v1.0.md(2026-10-29 全组决议) — credit-g/sick/显著性三节答 RQ1/RQ2,
-% 跨数据集节兼答 RQ3 交叉引用, holdout 节答 RQ4。评估协议只在 §5.3 讲一次（组长评审 D7）。
+% D 负责本文件: 指标、图、跨数据集对比与统计检验。
+% RQ 对应关系见 docs/RQ_定义与映射_v1.0.md（2026-10-29 全组定的版本）— credit-g/sick/显著性
+% 三节答 RQ1/RQ2, 跨数据集节兼答 RQ3, holdout 节答 RQ4; 评估协议只在 §5.3 讲一次。
 
 Throughout this section the positive class is \texttt{bad} for credit-g and \texttt{sick} for sick; F1, precision and recall refer to it, and AUC is computed from out-of-fold positive-class probabilities. Threshold-adjusted models selected their threshold $\tau$ on development folds only (observed range 0.20--0.60), and their AUC is bitwise identical to the plain model's --- $\tau$ moves the operating point, not the score ranking. A ZeroR majority-class baseline appears as a reference row in each table, not as a competitor. Every number traces to the archived result files named in the table captions. Sections~\ref{sec:results-creditg}--\ref{sec:results-sig} answer RQ1 (strategy and model selection under imbalance and asymmetric cost) and RQ2 (when accuracy misleads and which metrics should decide); Section~\ref{sec:results-flip} additionally carries the encoding and feature-importance cross-references of RQ3; Section~\ref{sec:results-holdout} answers RQ4 (decision quality on unseen samples).
 

@@ -1,0 +1,55 @@
+% D7 sec7 草稿 v2.2（2026-11-02）: 按整合意见修 1 处。基线 = v2.1, 仅下列改动, 其余逐字一致。
+%   [D-c] RQ2 finding: "accuracy alone would have ranked every serious model below the trivial one" 与数据相反
+%        (credit-g plain 准确率 0.71-0.77 高于 ZeroR 0.700, sick 亦然) -> "would have left every serious model
+%        within a few points of the trivial one", 与本条前文 "within a few points of ZeroR accuracy" 口径一致。
+% 以下保留 v2.1 头注释与全部内容备查。写回 overleaf 前先 pull, 与 sec6 v2.2 成对。
+% D7 sec7 草稿 v2.1（2026-11-01）, 相对 v2.0 的改动——
+%   Limitation 3 双重否定改直白; Findings 后加应用落点段（决策支持场景 3 句,
+%   数字: 5:1 官方代价、6.1% 患病率、57.3% 规则; 复现链指 README 十条命令）;
+%   给 E 的摘要注释块补协议标签（cv10 pooled / hold-out）, 防止摘要里 0.57 与 0.514 混用。
+% 其余正文与 v2.0 一致（数字已按 D8/D9 清单全部对过）。
+% 写回 overleaf 时: cp 本文件 overleaf/sections/sec7_conclusion.tex（去注释头）;
+%   与 sec6 v2.1 成对写回（sec6 的 6.7 引用本文件 \label{sec:conclusion}）, 写回前先 pull。
+
+\section{Conclusion and Future Work}
+\label{sec:conclusion}
+% D drafts this file; E helps align conclusions with measured results and limitations.
+%
+% === 4-sentence verified results summary for E (abstract / sec1 use; 2026-11-01, D, v2.1 + protocol tags) ===
+% 1. (RQ1) On credit-g (30% positives) the winner is cost-sensitive logistic regression trained with
+%    the official 5:1 cost (cv10 F1 0.597, recall 0.863 vs 0.470 plain; pooled cv10 cost 0.884 -> 0.514),
+%    while on sick (6.1% positives) it is SMOTE-resampled random forest (cv10 F1 0.897, recall 0.888)
+%    --- the winner flips across datasets and none of size, attribute composition, missingness, or
+%    imbalance alone predicts it.
+% 2. (RQ1/RQ2) All three imbalance strategies reliably buy recall (9 of 12 pre-specified paired
+%    comparisons significant, Nadeau--Bengio corrected), but F1 gains flip sign on sick for
+%    SMOTE x (DT/LR): the precision price, not the recall gain, is dataset-dependent.
+% 3. (RQ2) Accuracy hides everything this project measures: ZeroR reaches 70%/94% accuracy with
+%    zero recall, and the pre-registered trap rule (acc >= 0.70, recall <= 0.40) flags ten archived
+%    units; decision metrics must come from the task asymmetry (official cost on credit-g,
+%    positive recall on sick), with AUC/PR as ranking evidence.
+% 4. (RQ4, hold-out) On the locked hold-outs, evaluated once, the champions make quantified, defensible
+%    decisions on unseen samples: lr_cost catches 82% of bad applicants at cost 0.57 (best plain 0.89,
+%    always-approve 1.50) and rf_smote catches 66/69 patients (recall 0.957, precision 0.868).
+% === end summary ===
+
+\subsection{Findings}
+
+This project compared four classifiers (DT, RF, LR, SVC) under three imbalance-handling strategies (SMOTE, cost-sensitive learning, threshold adjustment) on two locked UCI benchmarks: the moderately imbalanced, fully observed credit-g (30\% positives) and the extremely imbalanced, noisy sick (6.1\% positives, 29.9\% of rows with missing values). Under a frozen 10-fold cross-validation protocol with overlap-corrected paired tests, four findings --- one per research question --- are robust:
+
+\begin{enumerate}
+  \item \textbf{(RQ1) The winner flips across datasets.} credit-g rewards \emph{linear + cost-sensitive} learning (\texttt{lr\_cost}, F1 $0.597$, with the official 5:1 cost folded into training); sick rewards \emph{ensemble + resampling} (\texttt{rf\_smote}, F1 $0.897$). Four dataset properties --- size, attribute composition, missingness, and imbalance --- jointly explain the flip; the single-variable reading ``more imbalance needs more resampling'' predicts the opposite of what we observe (Section~\ref{sec:results-flip}).
+  \item \textbf{(RQ1/RQ2) Strategies buy recall; datasets set the precision price.} Recall improves in all twelve pre-specified strategy-vs-plain comparisons (nine significant), but F1 flips sign on sick precisely where SMOTE meets linear or small-tree models ($-0.166$ for LR, $p=0.002$). Imbalance interventions are not free and not portable.
+  \item \textbf{(RQ2) Accuracy hides everything this project measures.} ZeroR reaches 70\%/94\% accuracy on credit-g/sick with zero recall; the pre-registered trap rule (accuracy $\geq 0.70$, recall $\leq 0.40$) flags ten archived units, and plain tree models sit within a few points of ZeroR accuracy while detecting a quarter of the minority class. Evaluating minority-class pipelines by accuracy alone would have left every serious model within a few points of the trivial one; decision metrics must instead come from the task's asymmetry --- the official cost on credit-g, positive-class recall on sick --- with ROC/PR curves as the ranking evidence.
+  \item \textbf{(RQ4) The learnt models make reliable, quantified decisions on unseen samples.} Evaluated once on the locked hold-outs, the credit-g champion catches 82\% of bad applicants and cuts the official cost to 0.57 (best plain 0.89, always-approve 1.50), and the sick champion catches 66 of 69 patients (recall 0.957) at precision 0.87. Both decision regimes --- loss control and miss prevention --- survive contact with genuinely new data with error profiles a deployment decision can be argued from (Section~\ref{sec:results-holdout}).
+\end{enumerate}
+
+Beyond the benchmark comparison, both champions map onto concrete decision support. A loan officer screening an applicant profile with \texttt{lr\_cost} receives a recommendation whose errors are priced by the official 5:1 matrix (a missed default costs five times a wrongly declined good customer); a thyroid screening workflow can use \texttt{rf\_smote} as a second read that routes 6.1\%-prevalence suspects to clinician review with a small, auditable false-alarm pool. No system was built for this course project; the repository's ten-command reproduction chain regenerates every number, and the Apriori rules (Section~\ref{sec:apriori}) give a human reviewer a readable reason to agree or disagree with either model.
+
+\subsection{Limitations}
+
+Four limitations bound these conclusions. First, the \textbf{ensemble study is exploratory}: it was added after the main matrix was frozen, is kept in a separate results namespace, and only two comparisons were pre-specified; its cells are excluded from the main statistical family and from Holm correction, and the sick champion-vs-ensemble gap ($0.937$ vs $0.897$) is descriptive, untested. Second, \textbf{SMOTE operates on one-hot-encoded categorical attributes}, where linear interpolation creates fractional categories that are not realisable data points; this is a plausible mechanism for the observed SMOTE$\times$LR collapse but was not manipulated experimentally. Third, the design uses \textbf{one locked split seed (42)} and deliberately conservative overlap-corrected tests; a non-significant result therefore means our strict threshold was not met --- for example the credit-g strategy gains, raw $p=0.03$--$0.07$ --- not that the effect is absent. Fourth, the \textbf{RQ4 evidence is a single evaluation per dataset on same-period hold-outs} (300 and 1{,}132 instances): it certifies decision quality under the training distribution only --- drift between training and deployment is outside what a one-shot hold-out can measure.
+
+\subsection{Future Work}
+
+The clearest next step is \textbf{SMOTE-NC} (or another mixed-type synthesiser), which interpolates only in the numeric subspace and samples categorical values by mode --- directly targeting the interpolation-noise mechanism identified above; the prediction it tests is that LR/DT SMOTE losses on sick shrink while RF is unaffected. Beyond that: threshold selection by expected-cost minimisation on the credit-g cost matrix (rather than F1 on development folds); calibrated probabilities to make threshold and cost interventions comparable across models; a nested-CV replication over multiple split seeds to attach uncertainty to the winner-flip itself; and, operationally, a deployment loop for the RQ4 champions --- drift monitoring with scheduled re-validation, since the hold-out certifies only the collection-period distribution.

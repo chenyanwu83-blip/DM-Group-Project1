@@ -43,10 +43,10 @@ source ~/venvs/dm-group/bin/activate
 ## 交付物位置
 - data/metadata/credit-g_source.md — A1 来源记录（SHA-256 + BibTeX）
 - results/credit-g_schema.xlsx — A2 字段字典（21 列）+ 数值五数概括
-- results/stats/credit-g_stats.md — A3 质量统计（shape/类别分布/缺失/重复，供 D 核对）
+- results/stats/credit-g_stats.md — A3 质量统计（shape/类别分布/缺失/重复）
 - figures/fig1~fig3 + credit-g_fig_captions.md — A4 探索图与图注（数字自动生成）
 - configs/spec_creditg.md — A5 预处理规格单 v1.0（2026-10-12 冻结）
-- results/a6_onehot_comparison.csv + a6_onehot_folds.csv + stats/a6_onehot_conclusion.md — A6 对照实验①结果与结论（2026-10-17，含补充归因组，D 复核口径）
+- results/a6_onehot_comparison.csv + a6_onehot_folds.csv + stats/a6_onehot_conclusion.md — A6 对照实验①结果与结论（2026-10-17，含补充归因组）
 
 ## 常见问题
 - **pip/ensurepip 报 `invalid literal for int()` 或 mac_ver 空**：本机 Homebrew Python 在 macOS 26 上解析版本号失败，改用 uv（它会自动下载可用的托管 Python）。

@@ -1,4 +1,4 @@
-# credit-g 图注（A4 交付，数字由 src/a4_creditg_eda.py 自动生成）
+# credit-g 图注（数字由 src/a4_creditg_eda.py 自动生成）
 
 ## fig1_class_distribution.png
 - **Caption (EN)**: Class distribution of the credit-g dataset: 700 good vs. 300 bad (30% positive rate), a 70:30 class imbalance.
@@ -15,8 +15,8 @@
 | >=200 | 63 | 14 | 22.2% |
 | no checking | 394 | 46 | 11.7% |
 
-  bad 率从 49.3%（<0）单调降至 11.7%（no checking），横跨整体 30% 基线两侧——验证 checking_status 为最强预测特征之一；报告 ch3 可引用该表。
+  bad 率从 49.3%（<0）单调降至 11.7%（no checking），横跨整体 30% 基线两侧——验证 checking_status 为最强预测特征之一。
 
 ## fig3_numeric_hist.png
 - **Caption (EN)**: Histograms (bins=20) of duration, credit_amount and age. All three are right-skewed; credit_amount ranges from 250 to 18424 DM.
-- **解读**：三个数值属性均右偏（中位数 2320 DM ≪ 最大 18424 DM），支持 A5 规格单在等频离散化（quantile binning）中使用分位数切分而非等宽，避免高频箱塌缩。
+- **解读**：三个数值属性均右偏（中位数 2320 DM ≪ 最大 18424 DM），支持在等频离散化（quantile binning）中用分位数切分而非等宽，避免高频箱塌缩。
