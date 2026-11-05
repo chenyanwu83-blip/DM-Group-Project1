@@ -1,23 +1,25 @@
-# Pre · 全组讲稿 v1.0（2026-10-29 · 新顺序 E→B→A→C→D→E 三明治）
+# Pre · 全组讲稿 v1.1（2026-11-05 · 顺序按组长 11-04 意见改为 E→A→B→C→D→E）
 
-> **使用规则**：① 每人可自由修改**自己段落**的内容与语气；② **衔接句（开头的接榫句 + 结尾的交棒句）是全场锚点，请勿单独改动**——要改请在群里统一确认，避免台上接不上；③ 所有数字来自锁定资产（D8 对账 0 FAIL），改数字前先对 `results/`；④ 全场 14′30″ + 30″ 转场 = 15′，**每人 ≥2 分钟是课程硬线**。
+> **使用规则**：① 每人可自由修改**自己段落**的内容与语气；② **衔接句（开头的接榫句 + 结尾的交棒句）是全场锚点，请勿单独改动**——要改请在群里统一确认，避免台上接不上；③ 所有数字来自锁定资产（D8 对账 0 FAIL），改数字前先对 `results/`；④ 全场 13′30″ + 转场 ≈ 14′（11-04 组长调序调时：E 开场 1′30″、A 2′00″），**每人 ≥2 分钟是课程硬线**。
 > 各段【讲法】为排练提示，不讲出。占位符：〔组名〕〔你的名字〕按实际替换。
-> **语速校准**：全稿约 1,300 词，按 120 词/分钟的从容语速 + C 的 1.5′ demo + 转场停顿 ≈ 13′，对 15′ 留 2′ 缓冲——宁短勿超；每人可就自己幻灯片自然扩写 20–30 秒，但别加新论点。
+> **语速校准**：全稿约 1,250 词（A 段已改 2′00″ 版），按 120 词/分钟的从容语速 + C 的 1.5′ demo + 转场停顿 ≈ 12′30″，对 15′ 留足缓冲——宁短勿超；每人可就自己幻灯片自然扩写 20–30 秒，但别加新论点。
 
 ## 总时间表
 
 | # | 讲者 | 时长 | 内容 | 页数 |
 |---|---|---|---|---|
-| 1 | E | 2:00 | 开场：团队/分工/双数据集总览/RQ | 2 |
-| 2 | B | 2:30 | sick 数据集 + 数据质量专题 + 集成结果 | 3 |
-| 3 | A | 2:30 | credit-g 数据集 + A6 编码对照实验 | 3 |
+| 1 | E | 1:30 | 开场：团队/分工/双数据集总览/新四问 | 2-3 |
+| 2 | A | 2:00 | credit-g 数据集 + A6 编码对照实验 + Apriori 呼应 | 3 |
+| 3 | B | 2:30 | sick 数据集 + 数据质量专题 + 集成结果 | 3 |
 | 4 | C | 3:00 | 统一流水线 + 防泄漏 + 现场 demo | 3-4 |
 | 5 | D | 3:00 | 结果三发现 + 跨数据集对比表 + Ensemble Study | 4 |
 | 6 | E | 1:30 | 收尾：结论/局限/未来工作/引导 Q&A | 1-2 |
 
 ---
 
-## 第 1 段 · E 开场（2:00）
+## 第 1 段 · E 开场（1:30）
+
+> ⚠️ **待 E 改三处（组长 11-04 已下令，正文下方仍是旧版）**：① 四问换新四问——RQ1 不平衡+代价下怎么选模型与策略 / RQ2 准确率何时失效 / RQ3 混合属性如何决定编码与特征 / RQ4 学到的模型对新样本决策可靠吗（保持报告序 RQ1–4）；② 结尾交棒句改 "Let's start with the cleaner one — hzy takes credit-g."（现在 A 紧随开场）；③ 时长 2:00 → 1:30。PPT：S3 目录页改 A 前 B 后、"Models and experimental design" 挂 CHEN Yinan、"Results" 挂 CHEN Yanwu（槽位对调）；四问压进 overview 页或单开一页。
 
 > Good afternoon. We are 〔组名〕 — five people, one project, two datasets,
 > and one big question: **what does class imbalance do to data mining?**
@@ -48,7 +50,44 @@
 
 ---
 
-## 第 2 段 · B（2:30 · 定稿 v1.6）
+## 第 2 段 · A（2:00 · 与 docs/A10 v1.1 同源）
+
+> Thanks, zyj — yes, the cleaner one first. **credit-g**: one thousand
+> loan applications from a German bank. **1,000 rows, 21 columns —
+> thirteen categorical, seven numeric, plus the class**. **Zero missing
+> values, zero duplicates**. The class is **700 good versus 300 bad** —
+> 70 to 30. We treat **bad** as the positive class, and the official
+> cost matrix says missing a bad loan costs **five times** more than
+> rejecting a good one.
+>
+> One thing stands out: **checking status**. The four groups are sorted
+> by default rate, and it goes down step by step — **an account below
+> zero: 49% default. No checking account at all: only 12%.** The
+> average, 30%, sits right in the middle.
+>
+> Now, my experiment. Mixed data — numbers and categories — so **does
+> encoding matter?** Same logistic regression, two versions of the same
+> data: one-hot plus scaling, 61 columns; or categories as plain
+> numbers, 20 columns. Same model, same folds, same seed — **only the
+> encoding changes**.
+>
+> **F1 jumps from 0.41 to 0.53**, and AUC rises as well — **both gains
+> are statistically significant**, and the gap comes from **the
+> encoding, not the scaling**. So on mixed data, **encoding decides
+> which linear model wins** — that's our answer to **research question
+> three**. And it's not only the models: the Apriori rules echo the
+> same fields — **all three of the forest's top features reappear among
+> the six retained rules** — zyj will come back to this. Encoding and
+> rules point to the same key fields. Next, the harder side — **Ling
+> will take you into sick.**
+
+【讲法：本段与 docs/A10_讲稿与幻灯要点_v1.0.md（v1.1）同源。49% 和 12% 两个数字对着幻灯上排好序的四根柱子点，**方向别说反——账户低于零（<0）最高、无账户最低**；0.41→0.53 用手势比出"跳"；**p 值数字不念**（幻灯 A3 表第三行有），只说 "both gains are statistically significant"，被问再报 F1 p=0.021 / AUC p=0.008（accuracy p=0.101 不显著，别说"全部显著"）；**Apriori 句逐字照念（组长定稿口径），禁说成"验证了 RF / 解释了前三的顺序"**——最强规则与 top-3 只重合 duration 一个字段；末句 "the harder side" 停半拍、音量抬高交给 Ling】
+
+---
+
+## 第 3 段 · B（2:30 · 定稿 v1.6）
+
+> ⚠️ **待 Ling 改两处衔接**（顺序改 E→A→B 后，B 接 A、交 C，正文下方仍是旧版衔接口径）：① 开场 "Thanks, zyj." → "Thanks, hzy."（可顺势接 A 交棒的 "the harder side"）；② 结尾 "Now hzy will show you credit-g…" → 改交 C（cyw），如 "Now cyw will show you how we model both datasets with one shared pipeline."
 
 > Thanks, zyj. So — sick, from the UCI Thyroid Disease collection: 3,772 patient records, 30 attributes. And the problem jumps out on this slide: 3,541 negative against just 231 sick — roughly 94 to 6. There are two quick notes on wording, because we want to be precise: first, “sick” here means sick-euthyroid — normal thyroid function, but abnormal thyroid blood tests, usually from other serious illness — and it is NOT hypothyroidism. And “negative” just means the screening found nothing, not perfect health.
 
@@ -64,46 +103,11 @@
 
 > **本段 338 词 · 约 2.5 分钟 · v1.6 定稿**
 
-## 第 3 段 · A（2:30）
-
-> Thanks, Ling. After all those missing values, let me show you something
-> much cleaner: **credit-g** — one thousand loan applications from a German
-> bank, from 1994, UCI ID 144. **1,000 rows, 21 columns**, mostly
-> categorical, and **zero missing values, zero duplicates**. The class is
-> 700 good versus 300 bad — 70 to 30. We treat **bad** as the positive
-> class — the official cost matrix says missing a bad loan costs **five
-> times** more than rejecting a good one.
->
-> One thing stands out: **checking status**. On this plot, the four groups
-> are sorted by default rate, and it goes down step by step — **people
-> with an account below zero default 49% of the time; people with no
-> checking account, only 12%**. The average is 30%, in the middle. Less
-> money in the account, more risk — just what a bank would expect.
->
-> Now, the experiment I ran. The question: with mixed data — numbers and
-> categories — **does encoding matter?** I took the same logistic
-> regression and gave it two versions of the same data. Version one:
-> one-hot encoding plus scaling — 61 columns. Version two: the categories
-> just turned into numbers — 20 columns. Same model, same folds, same
-> seed — **only the encoding is different**.
->
-> The result is clear: **F1 jumps from 0.41 to 0.53**, and AUC goes up
-> as well — both gains are statistically significant. We also checked:
-> the gap comes from **the encoding, not the scaling**. Why?
-> When you turn categories into numbers, you create an order that does
-> not exist — and a linear model believes that order. Tree models don't
-> care, so they keep the simple numbers. So on mixed data, how you encode
-> can change which model wins — that's our answer to **research question
-> three**.
->
-> So now you've seen both datasets — one messy, one clean. **C will show
-> you how we model both with one shared pipeline.**
-
-【讲法：本段与 docs/A10_讲稿与幻灯要点_v1.0.md 同源。49% 和 12% 两个数字对着幻灯上排好序的四根柱子点，**方向别说反——账户低于零（<0）最高、无账户最低**；0.41→0.53 用手势比出"跳"；**p 值数字不念**（幻灯 A3 表第三行有），只说 "both gains are statistically significant"，被问再报 F1 p=0.021 / AUC p=0.008（accuracy p=0.101 不显著，别说"全部显著"）；"research question three" 用新版编号；最后一句左右手分别代表两个数据集】
-
 ---
 
 ## 第 4 段 · C（3:00）
+
+> ⚠️ **待 C 改一处衔接**：开场 "Thanks, hzy." → "Thanks, Ling."（顺序改 E→A→B 后 C 接 B）。
 
 > Thanks, hzy. Two very different datasets — but we insisted on **one
 > shared recipe**, so that every number is comparable.
@@ -198,9 +202,9 @@
 
 | 交棒点 | 结尾交棒句（上一人） | 开头接榫句（下一人） |
 |---|---|---|
-| E→B | "Let's start with the messier one — Ling will take you into sick." | "Thanks, zyj. So — sick, from the UCI Thyroid Disease collection: 3,772 patient records, 30 attributes." |
-| B→A | "…Now hzy will show you credit-g, and a clean experiment on why encoding matters." | "Thanks, Ling. After all those missing values, let me show you something much cleaner…" |
-| A→C | "…one messy, one clean. C will show you how we model both with one shared pipeline." | "Thanks, hzy. Two very different datasets — but we insisted on one shared recipe…" |
+| E→A | "Let's start with the cleaner one — hzy takes credit-g."（⚠️ E 待改，组长 11-04 定；原为 "…the messier one — Ling…"） | "Thanks, zyj — yes, the cleaner one first…" |
+| A→B | "…Next, the harder side — Ling will take you into sick." | "Thanks, hzy. So — sick…"（⚠️ Ling 待改，原 "Thanks, zyj."） |
+| B→C | "…That's the sick side. Now cyw will show you…"（⚠️ Ling 待改，原 "Now hzy will show you credit-g…"） | "Thanks, Ling. Two very different datasets…"（⚠️ C 待改，原 "Thanks, hzy."） |
 | C→D | "That's the machine. Now cyn will show you what it earned." | "Thanks, cyw. So — what did all this earn us? Three findings." |
 | D→E | "To wrap this up — back to zyj." | "Thanks, cyn. Three things to take home." |
 
@@ -208,4 +212,4 @@
 - **11-06 彩排①**：按本稿新顺序完整走一遍；A 是重点观察对象——卡壳即启动预案（A6 并给 D 一句话带过，A 保底讲满 2′ 数据介绍）
 - **11-08 彩排②**：全真计时 15′；超支弹性位=D 段（先砍 Ensemble 表讲解，保对比表主叙事）；E 收尾固定 1′30″ 不膨胀
 - demo 双保险：现场 Jupyter + 录屏备份（C 准备）；Q&A 按共享题库（每题库含 3 道 bagging/boosting 题）
-- 稿件版本：B 段与 docs/B10_讲稿与幻灯要点_v1.1.md 同源；A/C/D/E 段为本次新拟初稿，**各自认领后可改内容、留衔接**
+- 稿件版本（11-05）：A 段与 `docs/A10_讲稿与幻灯要点_v1.0.md` v1.1 同源（按组长 11-04 意见改 2′00″ 版，Apriori 呼应为组长定稿口径）；B 段与 `docs/B10_讲稿与幻灯要点_v1.1.md` 同源；C/D/E 段为初稿，**各自认领后可改内容、留衔接**——顺序改 E→A→B 后，E 的四问与交棒、B 的开头结尾、C 的开头衔接待各自落实（见各段 ⚠️ 标注）
